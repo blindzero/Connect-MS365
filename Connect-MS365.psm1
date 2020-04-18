@@ -1,5 +1,28 @@
-function Connect-MS365 {
+<#
+.SYNOPSIS
+Connects to a given online service of Microsoft.
 
+.DESCRIPTION
+Connects to a given online service of Microsoft.
+One or multiple service names can be chosen.
+
+.PARAMETER Service
+Specifies the service to connect to.
+
+.INPUTS
+None. You cannot pipe objects to Add-Extension.
+
+.OUTPUTS
+// <OBJECTTYPE>. TBD.
+
+.EXAMPLE
+Connect-MS365 -Service MSOL
+
+.LINK
+https://github.com/blindzero/Connect-MS365
+
+#>
+function Connect-MS365 {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$True, Position = 1)]
@@ -7,37 +30,6 @@ function Connect-MS365 {
         [string[]]
         $Service
     )
-
-    <#
-    .SYNOPSIS
-
-    Connects to a given online service of Microsoft.
-
-    .DESCRIPTION
-
-    Connects to a given online service of Microsoft.
-    One or multiple service names can be chosen.
-
-    .PARAMETER Service
-    Specifies the service to connect to.
-
-    .INPUTS
-
-    None. You cannot pipe objects to Add-Extension.
-
-    .OUTPUTS
-
-    // <OBJECTTYPE>. TBD.
-
-    .EXAMPLE
-
-    PS> Connect-MS365 -Service MSOL
-
-    .LINK
-
-    http://github.com/blindzero/Connect-MS365
-
-    #>
 
     Write-Verbose "Gathering Credentials object to sign in at chosen service $Service"
     $Credential = Get-Credential -Message "Enter your credentials to log in at $Service"
@@ -59,4 +51,5 @@ function Connect-MS365 {
 # Export only the functions using PowerShell standard verb-noun naming.
 # Be sure to list each exported functions in the FunctionsToExport field of the module manifest file.
 # This improves performance of command discovery in PowerShell.
-#Export-ModuleMember -Function Connect-MS365
+
+Export-ModuleMember -Function Connect-MS365

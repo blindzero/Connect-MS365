@@ -16,7 +16,7 @@ Powershell module to connect to all MS365 services and install required packages
 - SecurityCenter
 - Installer for Modules
 
-## v1.0.0
+## v0.0.1
 
 Initial version
 

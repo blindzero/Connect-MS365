@@ -40,6 +40,6 @@ For further details please see [03-CONTRIBUTE](/docs/03-CONTRIBUTE.md)
 
 <!-- TOC URLs -->
 [Purpuse]: #purpose
-[Documentation]: #documentations
+[Documentation]: #documentation
 [License]: #license
 [Contribute]: #contribute

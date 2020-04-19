@@ -80,9 +80,8 @@ Task Analyze -Depends Build {
 
 Task Pester -Depends Build {
     Push-Location
-    Set-Location -PassThru $outputModDir
     if (!($env:BHProjectPath)) {
-        Set-BuildEnvironment -Path $PSScriptRoot\..
+        Set-BuildEnvironment -Path $PSScriptRoot
     }
 
     $origModulePath = $env:PSModulePath
@@ -93,7 +92,8 @@ Task Pester -Depends Build {
     Remove-Module -Name $moduleName -ErrorAction SilentlyContinue -Verbose:$false
     Import-Module -Name $outputModDir -Force -Verbose:$false
     $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResults.xml'
-    $testResults = Invoke-Pester -Path $tests -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
+    Set-Location -PassThru $outputModVerDir | Out-Null
+    $testResults = Invoke-Pester -Path $tests -Tag Integration -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
 
     if ($testResults.FailedCount -gt 0) {
         $testFailedCount = $testResults.FailedCount
@@ -113,7 +113,7 @@ Task CreateMarkdownHelp -Depends Compile {
 
 Task UpdateMarkdownHelp -Depends Compile, CreateMarkdownHelp {
     Import-Module -Name $outputModDir -Verbose:$false -Global
-    $mdFiles = Update-MarkdownHelpModule -Path $outputModDocsDir -Verbose:$true
+    $mdFiles = Update-MarkdownHelpModule -Path $outputModDocsDir -Verbose:$false
     "`tMarkdown help files updated at [$mdFiles]"
 } -description 'Update markdown help files'
 

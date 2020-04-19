@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Clean",
+            "label": "Build: Clean",
             "type": "shell",
             "windows": {
                 "command": "${workspaceFolder}\\build.ps1"
@@ -15,7 +15,7 @@
             "group": "build"
         },
         {
-            "label": "Compile",
+            "label": "Build: Compile",
             "type": "shell",
             "windows": {
                 "command": "${workspaceFolder}\\build.ps1"
@@ -27,7 +27,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Build",
+            "label": "Build: Build",
             "type": "shell",
             "windows": {
                 "command": "${workspaceFolder}\\build.ps1"
@@ -38,10 +38,11 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": []
         },
         {
-            "label": "Test",
+            "label": "Build: Test",
             "type": "shell",
             "windows": {
                 "command": "${workspaceFolder}\\build.ps1"
@@ -49,7 +50,25 @@
             "args": [
                 "Test"
             ],
-            "group": "build"
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Tests: Units",
+            "type": "shell",
+            "windows": {
+                "command": "Invoke-Pester -Script ${workspaceFolder}\\tests -PesterOption @{IncludeVSCodeMarker=$true} -Tag Unit",
+                "options": {
+                    "cwd": "${workspaceFolder}\\src"
+                }
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$pester"
+            ]
         },
         {
             "label": "Publish",
@@ -60,7 +79,8 @@
             "args": [
                 "Publish"
             ],
-            "group": "build"
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }

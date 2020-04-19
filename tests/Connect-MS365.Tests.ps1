@@ -5,7 +5,7 @@ if (!($env:BHProjectPath)) {
 $moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
 $ModuleManifest = "$($pwd)\$($moduleName).psd1"
 
-Describe "$moduleName Module Base Tests" -Tags ('Unit','Integration') {
+Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {
         It "Has root module $moduleName.psm1" {
             "$pwd\$moduleName.psm1" | Should -Exist
@@ -21,9 +21,18 @@ Describe "$moduleName Module Base Tests" -Tags ('Unit','Integration') {
             $errors.Count | Should -Be 0
         }
     }
+    Context "Module Paramter Tests" {
+        if (!(Get-Command $moduleName -ErrorAction SilentlyContinue)) {
+            Import-Module "$($pwd)\$($moduleName).psm1"
+        }
+
+        It "Has Parameter -Service" {
+            Get-Command $moduleName | Should -HaveParameter Service -Mandatory
+        }
+    }
 }
 
-Describe "$moduleName Doc Tests" -Tags ('Integration') {
+Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
             Test-ModuleManifest -Path $ModuleManifest | Should Not BeNullOrEmpty

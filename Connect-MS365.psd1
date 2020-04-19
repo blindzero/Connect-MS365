@@ -81,7 +81,7 @@ AliasesToExport = @()
 # DscResourcesToExport = @()
 
 # List of all modules packaged with this module
-ModuleList = @(Connect-MS365.psm1)
+ModuleList = @('Connect-MS365.psm1')
 
 # List of all files packaged with this module
 FileList = @(

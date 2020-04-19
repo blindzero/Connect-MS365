@@ -7,7 +7,7 @@
             "label": "Clean",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}\\build.ps1",
+                "command": "${workspaceFolder}\\build.ps1"
             },
             "args": [
                 "Clean"
@@ -18,33 +18,33 @@
             "label": "Compile",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}\\build.ps1",
+                "command": "${workspaceFolder}\\build.ps1"
             },
             "args": [
                 "Compile"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+            "group": "build",
             "problemMatcher": []
         },
         {
             "label": "Build",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}\\build.ps1",
+                "command": "${workspaceFolder}\\build.ps1"
             },
             "args": [
                 "Build"
             ],
-            "group": "build"
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "label": "Test",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}\\build.ps1",
+                "command": "${workspaceFolder}\\build.ps1"
             },
             "args": [
                 "Test"
@@ -55,7 +55,7 @@
             "label": "Publish",
             "type": "shell",
             "windows": {
-                "command": "${workspaceFolder}\\build.ps1",
+                "command": "${workspaceFolder}\\build.ps1"
             },
             "args": [
                 "Publish"

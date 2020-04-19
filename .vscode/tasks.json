@@ -41,6 +41,17 @@
             "group": "build"
         },
         {
+            "label": "Test",
+            "type": "shell",
+            "windows": {
+                "command": "${workspaceFolder}\\build.ps1",
+            },
+            "args": [
+                "Test"
+            ],
+            "group": "build"
+        },
+        {
             "label": "Publish",
             "type": "shell",
             "windows": {

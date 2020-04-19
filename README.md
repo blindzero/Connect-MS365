@@ -1,15 +1,17 @@
 # Connect-MS365
-Powershell module to connect to all MS365 services and install required packages.
+Powershell module to connect to all MS365 services and install required modules or packages.
 
 ## Purpose
 
-Didn't you had the experience that you find it quite complicated if you have to deal with multiple of the different Microsoft cloud-based services and have to remember the specific modules to add, commands to use to connect and so on?
-So did I and I found myself always looking them up again and again, especially for those used more rarely.
+Did you ever the experience that it's complicated to deal with multiple of the different Microsoft cloud-based services and have to remember the specific modules to add, commands to use to connect?
+So did I and found myself always looking them up again and again, especially for those used more rarely.
 
-That's all what this module is about: it delivers one central CmdLet function that can be executed to connect to one or many of Microsoft's services and you don't have to care about the single service connection commands anymore.
-Additionally it checks and installs the right module right away if necessary.
+That's all what this module is about: it delivers one central CmdLet function which can be executed to connect to one or many of Microsoft's services and you don't have to care about the single service connection commands.
+Additionally it checks and installs the right modules or packages if necessary.
 
-It is inspired by Connect-Office365 by [Bradley Wyatt](https://github.com/bwya77) which I found and used quite a while. As it wasn't published it was something I had to keep, maintain and distribute in our team again and again. Additionally I wanted to add some other advanced functions like installing and updating the dependant Microsoft modules.
+It is inspired by Connect-Office365 by [Bradley Wyatt](https://github.com/bwya77) which I found and used for a while.
+As it wasn't published it was something I had to keep and distribute again and again.
+Additionally I wanted to add some advanced functions like installing and updating the dependant Microsoft modules.
 
 ## Documentation
 

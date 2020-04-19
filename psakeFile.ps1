@@ -30,7 +30,6 @@ Properties {
     $outputModDocsDir   = Join-Path -Path $outputModVerDir -ChildPath "docs"
     $extHelpPath        = Join-Path -Path $outputModVerDir -ChildPath "en-us"
     $moduleGuid         = $manifest.GUID
-
 }
 
 Task default -depends Test
@@ -149,10 +148,8 @@ Task Compile -Depends Clean {
     Write-Verbose -Message 'Creating psm1...'
     $psm1 = Copy-Item -Path (Join-Path -Path $srcDir -ChildPath "$($moduleName).psm1") -Destination $outputModVerDir -PassThru
 
-    Get-ChildItem -Path (Join-Path -Path $srcDir -ChildPath "Private") -Recurse |
-        Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
-    Get-ChildItem -Path (Join-Path -Path $srcDir -ChildPath "Public") -Recurse |
-        Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
+    Get-ChildItem -Path $srcPrivateDir -Recurse | Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
+    Get-ChildItem -Path $srcPublicDir -Recurse | Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
 
     Copy-Item -Path $manifestFile -Destination $outputModVerDir
 

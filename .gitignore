@@ -2,3 +2,7 @@
 build/
 out/
 BuildOutput/
+
+# VSCode settings to ignore
+.vscode/extensions.json
+.vscode/launch.json

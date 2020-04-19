@@ -21,8 +21,7 @@ if ($Bootstrap.IsPresent) {
     Get-PackageProvider -Name Nuget -ForceBootstrap | Out-Null
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     if (!(Get-Module -Name PSDepend -ListAvailable)) {
-        $argList = "-Command &{Install-Module -Name PSDepend -Repository PSGallery}"
-        Start-Process powershell -ArgumentList $argList -Verb RunAs -Wait
+        Install-Module -Name PSDepend -Scope CurrentUser -Repository PSGallery
     }
     Import-Module -Name PSDepend -Verbose:$False
     Invoke-PSDepend -Path '.\dependencies.psd1' -Install -Import -Force -Recurse:$true -WarningAction SilentlyContinue

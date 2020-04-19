@@ -9,5 +9,4 @@
     psake               = 'latest'
     PSScriptAnalyzer    = 'latest'
     NuGet               = 'latest'
-    PowerShellGet       = 'latest'
 }

@@ -32,30 +32,15 @@ Properties {
     $moduleGuid         = $manifest.GUID
 }
 
-Task default -depends Test
+Task default -depends TestIntegration
 
 Task Init {
     "`nSTATUS: Testing with PowerShell version $psVersion"
     Get-Item ENV:BH*
-    # "General Settings"
-    # "`tUsing `$projectRoot    $projectRoot"
-    # "`tUsing `$moduleName     $moduleName"
-    # "`tUsing `$psVersion      $psVersion"
-    # "`tUsing `$pathSeparator  $pathSeparator"
-    # "Source"
-    # "`tUsing `$srcDir         $srcDir"
-    # "`tUsing `$srcPrivateDir  $srcPrivateDir"
-    # "`tUsing `$srcPublicDir   $srcPublicDir"
-    # "`tUsing `$manifestFile   $manifestFile"
-    # "`tUsing `$tests          $tests"
-    # "Outputs"
-    # "`tUsing `$outputDir      $outputDir"
-    # "`tUsing `$outputModDir   $outputModDir"
-    # "`tUsing `$outputModVerDir $outputModVerDir"
     "`n"
 } -description "Initialize build environment"
 
-Task Test -Depends Init, Analyze, Pester -description "Run test suite"
+Task TestIntegration -Depends Init, Analyze, PesterIntegration -description "Run test suite"
 
 Task Analyze -Depends Build {
     $analysis   = Invoke-ScriptAnalyzer -Path $outputModVerDir -Verbose:$false
@@ -77,7 +62,7 @@ Task Analyze -Depends Build {
     }
 } -description 'Run-PSScriptAnalyzer'
 
-Task Pester -Depends Build {
+Task PesterIntegration -Depends Build {
     Push-Location
     if (!($env:BHProjectPath)) {
         Set-BuildEnvironment -Path $PSScriptRoot
@@ -96,12 +81,12 @@ Task Pester -Depends Build {
 
     if ($testResults.FailedCount -gt 0) {
         $testFailedCount = $testResults.FailedCount
-        Write-Error -Message "$testFailedCount Pester Tests failed!"
+        Write-Error -Message "$testFailedCount Pester Integration Tests failed!"
         $testResults | Format-List
     }
     Pop-Location
     $env:PSModulePath = $origModulePath
-} -description 'Run Pester Tests'
+} -description 'Run Pester Integration Tests'
 
 Task CreateMarkdownHelp -Depends Compile {
     Import-Module -Name $outputModDir -Verbose:$false -Global
@@ -122,7 +107,7 @@ Task CreateExternalHelp -Depends CreateMarkdownHelp {
 
 Task GenerateHelp -Depends UpdateMarkdownHelp, CreateExternalHelp
 
-Task Publish -Depends Test {
+Task Publish -Depends TestIntegration {
     "`tPublishing Version [$($manifest.ModuleVersion)] to PSGallery"
     Publish-Module -Path $outputModVerDir -NuGetApiKey $env:NUGET_API_KEY -Repository PSGallery
 } -description 'Publish module to PSGallery'

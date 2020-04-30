@@ -22,3 +22,8 @@ Initial version
 
 - Microsoft Online
 - Installs MSOnline module if not available
+
+## v0.0.2
+
+- Manifest tags compatible for powershellgallery.com upload by removing spaces
+- removing Umlauts

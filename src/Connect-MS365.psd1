@@ -12,7 +12,7 @@
 RootModule = 'Connect-MS365.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.1'
+ModuleVersion = '0.0.2'
 
 # Supported PSEditions
 CompatiblePSEditions = @('PSEdition_Desktop','Desktop')
@@ -21,10 +21,10 @@ CompatiblePSEditions = @('PSEdition_Desktop','Desktop')
 GUID = '57ba2e99-b943-4f13-86a6-adca8db16f93'
 
 # Author of this module
-Author = 'matthias fleschütz'
+Author = 'matthias fleschuetz'
 
 # Copyright statement for this module
-Copyright = '(c) 2020 matthias fleschütz. All rights reserved.'
+Copyright = '(c) 2020 matthias fleschuetz. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Powershell module to connect to all MS365 services and install required packages.'
@@ -97,12 +97,12 @@ PrivateData = @{
         # Tags applied to this module. These help with module discovery in online galleries.
         Tags = @(
             'PSEdition_Desktop','Windows',
-            'Microsoft 365','MS 365','Microsoft365','MS365',
-            'O365','Office 365','Office365','Microsoft Online','MSOL',
-            'Exchange Online','ExchangeOnline','EOL',
-            'Microsoft Teams','Teams',
-            'Skype for Business','SfB','S4B','Skype4B',
-            'Azure','Microsoft Azure','AzureAD','Azure AD','AAD')
+            'Microsoft_365','MS_365','Microsoft365','MS365',
+            'O365','Office_365','Office365','Microsoft_Online','MSOL',
+            'Exchange_Online','ExchangeOnline','EOL',
+            'Microsoft_Teams','Teams',
+            'Skype_for_Business','SfB','S4B','Skype4B',
+            'Azure','Microsoft_Azure','AzureAD','Azure_AD','AAD')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/blindzero/Connect-MS365/blob/master/LICENSE'

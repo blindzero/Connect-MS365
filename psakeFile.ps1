@@ -88,6 +88,32 @@ Task PesterIntegration -Depends Build {
     $env:PSModulePath = $origModulePath
 } -description 'Run Pester Integration Tests'
 
+Task PesterUnit -Depends Compile {
+    Push-Location
+    if (!($env:BHProjectPath)) {
+        Set-BuildEnvironment -Path $PSScriptRoot
+    }
+
+    $origModulePath = $env:PSModulePath
+    if ( $env:PSModulePath.Split($pathSeparator) -notcontains $outputDir ) {
+        $env:PSModulePath = ($outputDir + $pathSeparator + $origModulePath)
+    }
+
+    Remove-Module -Name $moduleName -ErrorAction SilentlyContinue -Verbose:$false
+    Import-Module -Name $outputModDir -Force -Verbose:$false
+    $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResultsUnit.xml'
+    Set-Location -PassThru $outputModVerDir | Out-Null
+    $testResults = Invoke-Pester -Path $tests -Tag Unit -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
+
+    if ($testResults.FailedCount -gt 0) {
+        $testFailedCount = $testResults.FailedCount
+        Write-Error -Message "$testFailedCount Pester Integration Tests failed!"
+        $testResults | Format-List
+    }
+    Pop-Location
+    $env:PSModulePath = $origModulePath
+} -description 'Run Pester Unit Tests'
+
 Task CreateMarkdownHelp -Depends Compile {
     Import-Module -Name $outputModDir -Verbose:$false -Global
     $mdFiles = New-MarkdownHelp -Module $moduleName -OutputFolder $outputModDocsDir -Verbose:$false

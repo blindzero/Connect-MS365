@@ -46,11 +46,14 @@ function Connect-MS365 {
         #used later to determine different connection commands and is not using PScredential object
         [Parameter(Mandatory=$False, Position = 2, ParameterSetName = 'MFA')]
         [Switch]
-        $MFA
+        $MFA,
+        [Parameter(Mandatory = $False, Position = 3, ParameterSetName = 'Credential')]
+        [PSCredential]
+        $Credential
     )
 
     # dont gather PSCredential object if MFA is set
-    If ($MFA -ne $True) {
+    If (($MFA -ne $True) -and (!($Credential))) {
         Write-Verbose "Gathering PSCredentials object for non MFA sign on"
         $Credential = Get-Credential -Message "Please enter your Office 365 credentials"
     }

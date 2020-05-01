@@ -1,7 +1,7 @@
 function Connect-MSOL {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory=$False,Position=1)]
         [PSCredential]
         $Credential
     )
@@ -37,17 +37,26 @@ function Connect-MSOL {
 
     #>
 
-    $ServiceName = $MyInvocation.MyCommand.ToString().Replace("Connect-","")
-    while (!(Test-MS365Module -Service $ServiceName)) {
-        Install-MS365Module -Service $ServiceName
+    # testing if module is available
+    while (!(Test-MS365Module -Service $ServiceItem)) {
+        # and install if not available
+        Install-MS365Module -Service $ServiceItem
     }
     try {
-        Connect-MsolService -Credential $Credential -ErrorAction Stop
+        # if MFA is set connect without PScredential object as modern authentication will be used
+        if ($MFA) {
+            Connect-MsolService -ErrorAction Stop
+        }
+        # or pass PSCredential object it will asked if not created earlier
+        else {
+            Connect-MsolService -Credential $Credential -ErrorAction Stop
+        }
     }
     catch {
         $ErrorMessage = $_.Exception.Message
-        Write-Error -Message "Could not connect to $ServiceName.`n$ErrorMessage" -Category ConnectionError
+        Write-Error -Message "Could not connect to $ServiceItem.`n$ErrorMessage" -Category ConnectionError
         Break
     }
-    Set-WindowTitle -Service $ServiceName
+    # set service name into window title if successfully connected
+    Set-WindowTitle -Service $ServiceItem
 }

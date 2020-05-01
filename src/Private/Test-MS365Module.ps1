@@ -1,7 +1,9 @@
 function Test-MS365Module {
     [CmdletBinding()]
     param (
+        # service module to be tested, must be known service
         [Parameter(Mandatory=$True,Position=1)]
+        [ValidateSet('MSOL','EOL')]
         [String]
         $Service
     )
@@ -37,12 +39,16 @@ function Test-MS365Module {
 
     #>
 
+    # Set Splatting argument list for Get-Module used to determine if module is existing
     $GetModulesSplat = @{
         ListAvailable = $True
         Verbose	      = $False
     }
 
+    # TODO #10: changing to settings array containing module names making switch unnecessary
+
     Switch($Service) {
+        # Microsoft Online Service
         MSOL {
             If ($null -eq (Get-Module @GetModulesSplat -Name "MSOnline")) {
                 $False
@@ -51,6 +57,7 @@ function Test-MS365Module {
                 $True
             }
         }
+        # Exchange Online Service
         EOL {
             If ($null -eq (Get-Module @GetModulesSplat -Name "ExchangeOnlineManagement")) {
                 $False

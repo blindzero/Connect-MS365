@@ -1,7 +1,9 @@
 function Install-MS365Module {
     [CmdletBinding()]
     param (
+        # service module to be installed, must be known service
         [Parameter(Mandatory=$True,Position=1)]
+        [ValidateSet('MSOL','EOL')]
         [String]
         $Service
     )

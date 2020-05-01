@@ -4,7 +4,10 @@ Connects to a given online service of Microsoft.
 
 .DESCRIPTION
 Connects to a given online service of Microsoft.
-One or multiple service names can be chosen.
+One or multiple service names can be chosen. Supports connection handling for
+- Microsoft Online (MSOL)
+- Exchange Online (EOL)
+- Teams
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.

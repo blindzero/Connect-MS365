@@ -12,7 +12,7 @@
 RootModule = 'Connect-MS365.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.2'
+ModuleVersion = '0.0.3'
 
 # Supported PSEditions
 CompatiblePSEditions = @('PSEdition_Desktop','Desktop')
@@ -48,7 +48,7 @@ CLRVersion = '4.0'
 ProcessorArchitecture = 'Amd64'
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @('PowershellGet')
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()

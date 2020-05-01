@@ -3,7 +3,7 @@ function Install-MS365Module {
     param (
         # service module to be installed, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL')]
+        [ValidateSet('MSOL','EOL','Teams')]
         [String]
         $Service
     )
@@ -45,6 +45,9 @@ function Install-MS365Module {
         }
         EOL {
             $ModuleName = "ExchangeOnlineManagement"
+        }
+        Teams {
+            $ModuleName = "MicrosoftTeams"
         }
     }
 

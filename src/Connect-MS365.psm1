@@ -39,7 +39,7 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL')]
+        [ValidateSet('MSOL','EOL','Teams')]
         [string[]]
         $Service,
         #mfa parameter if mfa authentication is necessary
@@ -80,6 +80,16 @@ function Connect-MS365 {
                 }
                 else {
                     Connect-EOL -Credential $Credential
+                }
+                continue
+            }
+            # Exchange Online service
+            Teams {
+                if ($MFA) {
+                    Connect-Teams
+                }
+                else {
+                    Connect-Teams -Credential $Credential
                 }
                 continue
             }

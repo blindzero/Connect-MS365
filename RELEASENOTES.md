@@ -20,7 +20,7 @@ Powershell module to connect to all MS365 services and install required packages
 
 Initial version
 
-- Microsoft Online
+- Adding support for Microsoft Online service (MSOL)
 - Installs MSOnline module if not available
 
 ## v0.0.2
@@ -30,4 +30,9 @@ Initial version
 
 ## v0.0.3
 
-- Adding Support for MS Exchange Online service (EOL)
+- #1 Adding support for MS Exchange Online service (EOL)
+
+## v0.0.4
+
+- #3 Adding support for MS Teams service (Teams)
+- Adding additional docs for Installation and Usage

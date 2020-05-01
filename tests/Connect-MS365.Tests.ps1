@@ -54,6 +54,7 @@ Describe "Function Tests" -Tags ('Unit') {
     It "Functions not direct invokable Tests" {
         { Get-Command Connect-EOL } | Should Throw
         { Get-Command Connect-MSOL } | Should Throw
+        { Get-Command Connect-Teams } | Should Throw
         { Get-Command Test-MS365Module } | Should Throw
         { Get-Command Install-MS365Module } | Should Throw
         { Get-Command Set-WindowTitle } | Should Throw
@@ -68,6 +69,12 @@ Describe "Function Tests" -Tags ('Unit') {
             It "Has Parameter -Credential" {
                 Get-Command Connect-MSOL | Should -HaveParameter Credential -Type PSCredential
                 Get-Command Connect-MSOL | Should -HaveParameter Credential -Not -Mandatory
+            }
+        }
+        Context "Function Connect-Teams.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-Teams | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-Teams | Should -HaveParameter Credential -Not -Mandatory
             }
         }
         Context "Function Set-WindowTitle.ps1 Tests" {

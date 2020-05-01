@@ -36,12 +36,12 @@ function Set-WindowTitle {
     http://github.com/blindzero/Connect-MS365
 
     #>
-    If (($host.ui.RawUI.WindowTitle) -notlike "*MSOL*" ) {
+    If (($host.ui.RawUI.WindowTitle) -notlike "*$ServiceItem*" ) {
         If (($host.ui.RawUI.WindowTitle) -notlike "*Connected To:*") {
-                $host.ui.RawUI.WindowTitle += " - Connected To: $Service"
+                $host.ui.RawUI.WindowTitle += " - Connected To: $ServiceItem"
         }
         Else {
-            $host.ui.RawUI.WindowTitle += " - $Service"
+            $host.ui.RawUI.WindowTitle += " - $ServiceItem"
         }
     }
 }

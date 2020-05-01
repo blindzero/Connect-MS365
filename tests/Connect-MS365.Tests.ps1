@@ -50,6 +50,50 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     }
 }
 
+Describe "Function Tests" -Tags ('Unit') {
+    It "Functions not direct invokable Tests" {
+        { Get-Command Connect-EOL } | Should Throw
+        { Get-Command Connect-MSOL } | Should Throw
+        { Get-Command Test-MS365Module } | Should Throw
+        { Get-Command Install-MS365Module } | Should Throw
+        { Get-Command Set-WindowTitle } | Should Throw
+    }
+    InModuleScope -ModuleName $moduleName {
+        Context "Function Connect-EOL.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-EOL | Should -HaveParameter Credential
+            }
+        }
+        Context "Function Connect-MSOL.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-MSOL | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-MSOL | Should -HaveParameter Credential -Not -Mandatory
+            }
+        }
+        Context "Function Set-WindowTitle.ps1 Tests" {
+            It "Has Parameter -Service" {
+                Get-Command Set-WindowTitle | Should -HaveParameter Service -Type String -Mandatory
+            }
+        }
+        Context "Function Test-MS365Module.ps1 Tests" {
+            It "Has Parameter -Service" {
+                Get-Command Test-MS365Module | Should -HaveParameter Service -Type String -Mandatory
+            }
+            It "Validates Parameter -Service" {
+                {. Test-MS365Module -Service NonValid } | Should Throw
+            }
+        }
+        Context "Function Install-MS365Module.ps1 Tests" {
+            It "Has Parameter -Service" {
+                Get-Command Install-MS365Module | Should -HaveParameter Service -Type String -Mandatory
+            }
+            It "Validates Parameter -Service" {
+                {. Install-MS365Module -Service NonValid } | Should Throw
+            }
+        }
+    }
+}
+
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {

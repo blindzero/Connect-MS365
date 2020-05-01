@@ -38,10 +38,10 @@ function Set-WindowTitle {
     #>
     If (($host.ui.RawUI.WindowTitle) -notlike "*$ServiceItem*" ) {
         If (($host.ui.RawUI.WindowTitle) -notlike "*Connected To:*") {
-                $host.ui.RawUI.WindowTitle += " - Connected To: $ServiceItem"
+                $host.ui.RawUI.WindowTitle += " -- Connected To: $ServiceItem"
         }
         Else {
-            $host.ui.RawUI.WindowTitle += " - $ServiceItem"
+            $host.ui.RawUI.WindowTitle += " || $ServiceItem"
         }
     }
 }

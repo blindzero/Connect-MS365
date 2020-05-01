@@ -50,6 +50,8 @@ function Connect-MS365 {
         [Parameter(Mandatory=$False, Position = 2, ParameterSetName = 'MFA')]
         [Switch]
         $MFA,
+        #Credential parameter to receive previously created PSCredential object.
+        #Primarily needed for testing calls 
         [Parameter(Mandatory = $False, Position = 3, ParameterSetName = 'Credential')]
         [PSCredential]
         $Credential

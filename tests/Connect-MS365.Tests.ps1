@@ -29,6 +29,10 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
         It "Has Parameter -Service" {
             Get-Command $moduleName | Should -HaveParameter Service -Mandatory
         }
+
+        It "Has Parameter -MFA" {
+            Get-Command $moduleName | Should -HaveParameter MFA -Not -Mandatory
+        }
     }
 }
 

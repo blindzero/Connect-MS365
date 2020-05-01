@@ -41,6 +41,9 @@ function Install-MS365Module {
         MSOL {
             $ModuleName = "MSOnline"
         }
+        EOL {
+            $ModuleName = "ExchangeOnlineManagement"
+        }
     }
 
     $InstallCommand = "-Command &{ Install-Module -Name $ModuleName -Scope AllUsers }"

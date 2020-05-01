@@ -27,3 +27,7 @@ Initial version
 
 - Manifest tags compatible for powershellgallery.com upload by removing spaces
 - removing Umlauts
+
+## v0.0.3
+
+- Adding Support for MS Exchange Online service (EOL)

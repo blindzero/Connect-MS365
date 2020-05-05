@@ -88,7 +88,7 @@ function Connect-MS365 {
                 }
                 continue
             }
-            # Exchange Online service
+            # Teams service
             Teams {
                 if ($MFA) {
                     Connect-Teams

@@ -31,7 +31,7 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
         }
 
         It "Has Parameter -Service" {
-            Get-Command $moduleName | Should -HaveParameter Service -Mandatory -Type String[]
+            Get-Command $moduleName | Should -HaveParameter Service -Mandatory -Type String
         }
 
         It "Parameter -Service Validation" {
@@ -47,6 +47,11 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
             Get-Command $moduleName | Should -HaveParameter Credential -Not -Mandatory
             Get-Command $moduleName | Should -HaveParameter Credential -Type PSCredential
         }
+
+        It "Has Parameter -SPOOrgName" {
+            Get-Command $moduleName | Should -HaveParameter SPOOrgName -Not -Mandatory
+            Get-Command $moduleName | Should -HaveParameter SPOOrgName -Type String
+        }
     }
 }
 
@@ -55,6 +60,7 @@ Describe "Function Tests" -Tags ('Unit') {
         { Get-Command Connect-EOL } | Should Throw
         { Get-Command Connect-MSOL } | Should Throw
         { Get-Command Connect-Teams } | Should Throw
+        { Get-Command Connect-SPO } | Should Throw
         { Get-Command Test-MS365Module } | Should Throw
         { Get-Command Install-MS365Module } | Should Throw
         { Get-Command Set-WindowTitle } | Should Throw
@@ -75,6 +81,16 @@ Describe "Function Tests" -Tags ('Unit') {
             It "Has Parameter -Credential" {
                 Get-Command Connect-Teams | Should -HaveParameter Credential -Type PSCredential
                 Get-Command Connect-Teams | Should -HaveParameter Credential -Not -Mandatory
+            }
+        }
+        Context "Function Connect-SPO.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-SPO | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-SPO | Should -HaveParameter Credential -Not -Mandatory
+            }
+            It "Has Parameter -SPOOrgName" {
+                Get-Command Connect-SPO | Should -HaveParameter SPOOrgUrl -Type String
+                Get-Command Connect-SPO | Should -HaveParameter SPOOrgUrl -Mandatory
             }
         }
         Context "Function Set-WindowTitle.ps1 Tests" {

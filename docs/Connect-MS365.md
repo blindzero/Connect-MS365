@@ -14,17 +14,17 @@ Connects to a given online service of Microsoft.
 
 ### True (Default)
 ```
-Connect-MS365 [-Service] <String[]> [<CommonParameters>]
+Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [<CommonParameters>]
 ```
 
 ### MFA
 ```
-Connect-MS365 [-Service] <String[]> [-MFA] [<CommonParameters>]
+Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [-MFA] [<CommonParameters>]
 ```
 
 ### Credential
 ```
-Connect-MS365 [-Service] <String[]> [[-Credential] <PSCredential>] [<CommonParameters>]
+Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [[-Credential] <PSCredential>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,23 +34,44 @@ Supports connection handling for
 - Microsoft Online (MSOL)
 - Exchange Online (EOL)
 - Teams
+- SharePoint Online (SPO)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Connect-MS365 -Service MSOL
+Description: Connect to Microsoft Online without using MFA
 ```
+
+Connect-MS365 -Service MSOL
 
 ### EXAMPLE 2
 ```
-Connect-MS365 -Service MSOL -MFA
+Description: Connect to Microsoft Online by using MFA
 ```
+
+Connect-MS365 -Service MSOL -MFA
 
 ### EXAMPLE 3
 ```
-Connect-MS365 -Service MSOL,EOL -MFA
+Description: Connect to Microsoft Online and Exchange Online by using MFA
 ```
+
+Connect-MS365 -Service MSOL,EOL -MFA
+
+### EXAMPLE 4
+```
+Description: Connect to SharePoint Online without MFA to connect to MyName-admin.sharepoint.com
+```
+
+Connect-MS365 -Service SPO -SPOOrgName MyName
+
+### EXAMPLE 5
+```
+Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sharepoint.com
+```
+
+Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
 
 ## PARAMETERS
 
@@ -59,12 +80,28 @@ Specifies the service to connect to.
 May be a list of multiple services to use.
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SPOOrgName
+spoorg parameter for connection to SPO service
+needed by connect cmdlet to assemble admin Url
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: SPOOrg
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -80,7 +117,7 @@ Parameter Sets: MFA
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False

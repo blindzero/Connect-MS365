@@ -3,7 +3,7 @@ function Test-MS365Module {
     param (
         # service module to be tested, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL','Teams')]
+        [ValidateSet('MSOL','EOL','Teams','SPO')]
         [String]
         $Service
     )
@@ -69,6 +69,15 @@ function Test-MS365Module {
         # Teams
         Teams {
             If ($null -eq (Get-Module @GetModulesSplat -Name "MicrosoftTeams")) {
+                $False
+            }
+            Else {
+                $True
+            }
+        }
+        # SPO
+        SPO {
+            If ($null -eq (Get-Module @GetModulesSplat -Name "Microsoft.Online.SharePoint.PowerShell")) {
                 $False
             }
             Else {

@@ -8,6 +8,7 @@ One or multiple service names can be chosen. Supports connection handling for
 - Microsoft Online (MSOL)
 - Exchange Online (EOL)
 - Teams
+- SharePoint Online (SPO)
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.
@@ -22,13 +23,24 @@ None. You cannot pipe objects to Add-Extension.
 // <OBJECTTYPE>. TBD.
 
 .EXAMPLE
+Description: Connect to Microsoft Online without using MFA
 Connect-MS365 -Service MSOL
 
 .EXAMPLE
+Description: Connect to Microsoft Online by using MFA
 Connect-MS365 -Service MSOL -MFA
 
 .EXAMPLE
+Description: Connect to Microsoft Online and Exchange Online by using MFA
 Connect-MS365 -Service MSOL,EOL -MFA
+
+.EXAMPLE
+Description: Connect to SharePoint Online without MFA to connect to MyName-admin.sharepoint.com
+Connect-MS365 -Service SPO -SPOOrgName MyName
+
+.EXAMPLE
+Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sharepoint.com 
+Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
 
 .LINK
 https://github.com/blindzero/Connect-MS365
@@ -42,17 +54,23 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL','Teams')]
-        [string[]]
+        [ValidateSet('MSOL','EOL','Teams','SPO')]
+        [string]
         $Service,
+        #spoorg parameter for connection to SPO service
+        #needed by connect cmdlet to assemble admin Url
+        [Parameter(Mandatory=$False, Position = 2)]
+        [string]
+        [Alias('SPOOrg')]
+        $SPOOrgName,
         #mfa parameter if mfa authentication is necessary
         #used later to determine different connection commands and is not using PScredential object
-        [Parameter(Mandatory=$False, Position = 2, ParameterSetName = 'MFA')]
+        [Parameter(Mandatory=$False, Position = 3, ParameterSetName = 'MFA')]
         [Switch]
         $MFA,
         #Credential parameter to receive previously created PSCredential object.
         #Primarily needed for testing calls 
-        [Parameter(Mandatory = $False, Position = 3, ParameterSetName = 'Credential')]
+        [Parameter(Mandatory=$False, Position = 3, ParameterSetName = 'Credential')]
         [PSCredential]
         $Credential
     )
@@ -88,13 +106,35 @@ function Connect-MS365 {
                 }
                 continue
             }
-            # Exchange Online service
+            # Teams service
             Teams {
                 if ($MFA) {
                     Connect-Teams
                 }
                 else {
                     Connect-Teams -Credential $Credential
+                }
+                continue
+            }
+            # SPO service
+            SPO {
+                If (!($SPOOrgName)) {
+                    Write-Error 'To connect to SharePoint Online you have to provide the -SPOOrgName parameter.'
+                    continue
+                }
+                Else {
+                    Write-Verbose "Assembling SPOOrgUrl from $SPOOrgName"
+                    $SPOOrgUrl = "https://$($SPOOrgName)-admin.sharepoint.com"
+                    Write-Verbose "Created $SPOOrgUrl"
+                }
+                
+                if ($MFA) {
+                    Write-Verbose "Connecting to SharePoint Online at $SPOOrgUrl without Credential"
+                    Connect-SPO -SPOOrgUrl $SPOOrgUrl
+                }
+                else {
+                    Write-Verbose "Connecting to SharePoint Online at $SPOOrgUrl with $Credential"
+                    Connect-SPO -SPOOrgUrl $SPOOrgUrl -Credential $Credential
                 }
                 continue
             }

@@ -3,7 +3,7 @@ function Install-MS365Module {
     param (
         # service module to be installed, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL','Teams')]
+        [ValidateSet('MSOL','EOL','Teams','SPO')]
         [String]
         $Service
     )
@@ -48,6 +48,9 @@ function Install-MS365Module {
         }
         Teams {
             $ModuleName = "MicrosoftTeams"
+        }
+        SPO {
+            $ModuleName = "Microsoft.Online.SharePoint.PowerShell"
         }
     }
 

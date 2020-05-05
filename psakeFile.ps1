@@ -178,4 +178,6 @@ Task Build -depends Compile, UpdateMarkDownHelp, CreateExternalHelp {
     "`tModule XML help created at [$psm1File]"
     $addFiles = Copy-Item -Path $srcAdditionalFiles -Destination $outputModVerDir -PassThru
     "`tPut additional files [$addFiles]"
+    Copy-Item -Path $outputModDocsDir\*.md -Destination $srcDocsDir
+    "`tPut generated help $outputModDocsDir\*.md into $srcDocsDir"
 } -description 'Builds module by adding external help'

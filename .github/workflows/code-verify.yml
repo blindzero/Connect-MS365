@@ -15,4 +15,4 @@ jobs:
        uses: vchain-us/verify-action@master
        with:
          # List of SignerID(s) (separated by space) to authenticate against
-         signerID: 0xcc4b03808eb7a6d6aae005d678f70b657db90e58
+         signerID: cc4b03808eb7a6d6aae005d678f70b657db90e58

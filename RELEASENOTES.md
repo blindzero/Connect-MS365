@@ -36,3 +36,8 @@ Initial version
 
 - #3 Adding support for MS Teams service (Teams)
 - Adding additional docs for Installation and Usage
+
+## v0.0.5
+
+- #2 Adding support for SharePoint Online service (SPO)
+- Adding generated psm1 docs to docs dir in src

@@ -1,3 +1,12 @@
+![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/Connect-MS365?include_prereleases)
+![PowerShell Gallery](https://img.shields.io/powershellgallery/p/Connect-MS365)
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
+
+![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/1)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/blindzero/Connect-MS365)
+![GitHub issues](https://img.shields.io/github/issues-raw/blindzero/Connect-MS365)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/blindzero/Connect-MS365)
+
 # Connect-MS365
 Powershell module to connect to all MS365 services and install required modules or packages.
 

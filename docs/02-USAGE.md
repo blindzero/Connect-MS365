@@ -4,7 +4,11 @@
 
 When installed properly (see 01-INSTALLATION.md), the module Connect-MS365 should be automatically available within your system.
 
-Start Connect-MS365 by `Connect-MS365`
+Start Connect-MS365 by using
+
+```powershell
+Connect-MS365 -Service <list of services> [-SPOOrgName <name of sharepoint org>] [-MFA]
+```
 
 The service you want to connect is selected by `-Service` parameter, followed by one of the supported services
 

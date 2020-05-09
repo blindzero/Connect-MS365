@@ -18,6 +18,7 @@ The following requirements must be installed _prior_ installation of Connect-MS3
   ```powershell
   Find-Module PowerShellGet -ListAvailable
   ```
+
   Otherwise install with
   
   ```powershell
@@ -31,9 +32,7 @@ The following requirements must be installed _prior_ installation of Connect-MS3
 Installation from online [PowerShellGallery](https://powershellgallery.com) by using PowerShellGet function `Install-Module`.
 
 ```powershell
-
 Install-Module Connect-MS365
-
 ```
 
 #### Manual Installation
@@ -62,3 +61,7 @@ After installation open a new powershell session and verify the availability of 
 ```powershell
 Get-Module Connect-MS365 -ListAvailable
 ```
+
+## Usage
+
+see [02-USAGE.md](/docs/02-USAGE.md) for usage instructions

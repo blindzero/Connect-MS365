@@ -2,51 +2,65 @@
 
 Powershell module to connect to all MS365 services and install required packages.
 
-(c) 2020 by matthias@fleschuetz.de
+(c) 2020 by [matthias fleschuetz](https://github.com/blindzero)
 [https://github.com/blindzero/Connect-MS365](https://github.com/blindzero/Connect-MS365)
 
 ## ToDos / Wishlist
 
-- MFA Switch behaviour
-- Exchange Online
-- Azure AD
 - Azure
-- Teams
-- SharePoint Online
-- SecurityCenter
-- Installer for Modules
+- Module Updater
 
-## v0.0.1
+## v1.0.0
 
-Initial version
+### New
 
+All features from pre-release versions:
+
+- #5 Adding support for Office365 Security & Compliance Center
+- #6 Adding support for Azure ActiveDirectory (AzureAD, AAD) v2
+- #2 Adding support for SharePoint Online service (SPO)
+- Adding generated psm1 docs to docs dir in src
+- #1 Adding support for MS Exchange Online service (EOL)
 - Adding support for Microsoft Online service (MSOL) a.k.a. AzureAD v1
 - Installs MSOnline module if not available
 
-## v0.0.2
+### Fix
 
+- correction SCC function unit test to SCC script (calles wrong script for test)
 - Manifest tags compatible for powershellgallery.com upload by removing spaces
 - removing Umlauts
 
-## v0.0.3
+## v0.0.6
 
-- #1 Adding support for MS Exchange Online service (EOL)
+### New
 
-## v0.0.4
+- #5 Adding support for Office365 Security & Compliance Center
+- #6 Adding support for Azure ActiveDirectory (AzureAD, AAD) v2
 
-- #3 Adding support for MS Teams service (Teams)
-- Adding additional docs for Installation and Usage
+### Fix
+
+- correction SCC function unit test to SCC script (calles wrong script for test)
 
 ## v0.0.5
 
 - #2 Adding support for SharePoint Online service (SPO)
 - Adding generated psm1 docs to docs dir in src
 
-## v0.0.6
+## v0.0.4
 
-### New
-- #5 Adding support for Office365 Security & Compliance Center
-- #6 Adding support for Azure ActiveDirectory (AzureAD, AAD) v2
+- #3 Adding support for MS Teams service (Teams)
+- Adding additional docs for Installation and Usage
 
-### Fix
-- correction SCC function unit test to SCC script (calles wrong script for test)
+## v0.0.3
+
+- #1 Adding support for MS Exchange Online service (EOL)
+
+## v0.0.2
+
+- Manifest tags compatible for powershellgallery.com upload by removing spaces
+- removing Umlauts
+
+## v0.0.1
+
+- Adding support for Microsoft Online service (MSOL) a.k.a. AzureAD v1
+- Installs MSOnline module if not available

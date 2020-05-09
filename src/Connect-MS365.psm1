@@ -9,6 +9,7 @@ One or multiple service names can be chosen. Supports connection handling for
 - Exchange Online (EOL)
 - Teams
 - SharePoint Online (SPO)
+- Security and Compliance Center (SCC)
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.
@@ -42,6 +43,10 @@ Connect-MS365 -Service SPO -SPOOrgName MyName
 Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sharepoint.com 
 Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
 
+.EXAMPLE
+Description: Connect to Security and Compliance Center with MFA  
+Connect-MS365 -Service SCC -MFA
+
 .LINK
 https://github.com/blindzero/Connect-MS365
 
@@ -54,7 +59,7 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC')]
         [string]
         $Service,
         #spoorg parameter for connection to SPO service
@@ -113,6 +118,16 @@ function Connect-MS365 {
                 }
                 else {
                     Connect-Teams -Credential $Credential
+                }
+                continue
+            }
+            # Security and Compliance Center
+            SCC {
+                if ($MFA) {
+                    Connect-SCC
+                }
+                else {
+                    Connect-SCC -Credential $Credential
                 }
                 continue
             }

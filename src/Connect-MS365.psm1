@@ -91,6 +91,8 @@ function Connect-MS365 {
         $Credential = Get-Credential -Message "Please enter your Office 365 credentials"
     }
     
+    # TODO #10: changing to settings array containing module names making switch unnecessary
+
     # iterating through each service listed in service parameter
     # each service is passing PSCredential object if MFA not set or leaves it out if set
     ForEach ($ServiceItem in $Service) {
@@ -98,6 +100,9 @@ function Connect-MS365 {
         Switch($ServiceItem) {
             # Microsoft Online service
             MSOL {
+                $ServiceName = "Microsoft Online / AzureAD v1"
+                $ModuleName = "MSOnline"
+
                 if ($MFA) {
                     Connect-MSOL
                 }
@@ -108,6 +113,9 @@ function Connect-MS365 {
             }
             # Exchange Online service
             EOL {
+                $ServiceName = "Exchange Online"
+                $ModuleName = "ExchangeOnlineManagement"
+
                 if ($MFA) {
                     Connect-EOL
                 }
@@ -118,6 +126,9 @@ function Connect-MS365 {
             }
             # Teams service
             Teams {
+                $ServiceName = "Microsoft Teams"
+                $ModuleName = "MicrosoftTeams"
+
                 if ($MFA) {
                     Connect-Teams
                 }
@@ -128,6 +139,9 @@ function Connect-MS365 {
             }
             # Security and Compliance Center
             SCC {
+                $ServiceName = "Security & Compliance Center"
+                $ModuleName = "ExchangeOnlineManagement"
+
                 if ($MFA) {
                     Connect-SCC
                 }
@@ -138,6 +152,9 @@ function Connect-MS365 {
             }
             # AzureAD
             AAD {
+                $ServiceName = "AzureAD v2"
+                $ModuleName = "AzureAD"
+
                 if ($MFA) {
                     Connect-AAD
                 }
@@ -148,6 +165,9 @@ function Connect-MS365 {
             }
             # SPO service
             SPO {
+                $ServiceName = "SharePoint Online"
+                $ModuleName = "Microsoft.Online.SharePoint.PowerShell"
+
                 If (!($SPOOrgName)) {
                     Write-Error 'To connect to SharePoint Online you have to provide the -SPOOrgName parameter.'
                     continue

@@ -58,6 +58,10 @@ If you have to use MFA you may get errors when connection with standard options.
 
 When connecting the necessary module is checked and can be installed autoamtically if not available. No manual installation of modules...yah!
 
+### Module Updates
+
+For each module invocation the online available version is checked. If a newer version is available, user is prompted for (optional) update.
+
 ### Details
 
 For further details see [Connect-MS365.md](Connect-MS365.md)

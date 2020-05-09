@@ -10,6 +10,12 @@ Powershell module to connect to all MS365 services and install required packages
 - Azure
 - Module Updater
 
+## v1.1.0
+
+### New
+
+### Fixes
+
 ## v1.0.0
 
 ### New

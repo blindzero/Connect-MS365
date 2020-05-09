@@ -2,7 +2,7 @@
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/p/Connect-MS365)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
 
-![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/1)
+![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/2)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/blindzero/Connect-MS365)
 ![GitHub issues](https://img.shields.io/github/issues-raw/blindzero/Connect-MS365)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/blindzero/Connect-MS365)
@@ -25,6 +25,9 @@ Additionally I wanted to add some advanced functions like installing and updatin
 ## Documentation
 
 See the [docs](/docs) directory for full documentation.
+
+* Installation: [01-INSTALLATION.md](/docs/01-INSTALLATION.md)
+* Usage: [02-USAGE.md](/docs/02-USAGE.md)
 
 ## License
 

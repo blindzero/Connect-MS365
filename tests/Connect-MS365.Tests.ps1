@@ -101,6 +101,12 @@ Describe "Function Tests" -Tags ('Unit') {
                 Get-Command Connect-SCC | Should -HaveParameter Credential -Not -Mandatory
             }
         }
+        Context "Function Connect-AAD.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-AAD | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-AAD | Should -HaveParameter Credential -Not -Mandatory
+            }
+        }
         Context "Function Set-WindowTitle.ps1 Tests" {
             It "Has Parameter -Service" {
                 Get-Command Set-WindowTitle | Should -HaveParameter Service -Type String -Mandatory

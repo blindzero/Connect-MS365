@@ -41,3 +41,7 @@ Initial version
 
 - #2 Adding support for SharePoint Online service (SPO)
 - Adding generated psm1 docs to docs dir in src
+
+## v0.0.6
+
+- #5 Adding support for Office365 Security & Compliance Center

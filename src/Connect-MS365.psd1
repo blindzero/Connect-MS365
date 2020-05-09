@@ -103,7 +103,8 @@ PrivateData = @{
             'Microsoft_Teams','Teams',
             'Skype_for_Business','SfB','S4B','Skype4B',
             'SecurityComplianceCenter','IPP','SCC',
-            'Azure','Microsoft_Azure','AzureAD','Azure_AD','AAD')
+            'Azure','Microsoft_Azure',
+            'AzureAD','Azure_AD','AAD')
 
         # A URL to the license for this module.
         LicenseUri = 'https://github.com/blindzero/Connect-MS365/blob/master/LICENSE'

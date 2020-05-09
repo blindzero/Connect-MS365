@@ -3,38 +3,31 @@ function Test-MS365Module {
     param (
         # service module to be tested, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD')]
         [String]
-        $Service
+        $Module
     )
 
     <#
     .SYNOPSIS
-
     Checks if a module of a given service to connect is installed.
 
     .DESCRIPTION
-
     Checks if a module of a given service to connect is installed.
     Service name needs to be passed.
 
-    .PARAMETER Service
-    Name of service to check installed modules for.
+    .PARAMETER Module
+    Name of module to check installation.
 
     .INPUTS
-
     None. You cannot pipe objects to Add-Extension.
 
     .OUTPUTS
-
     // <OBJECTTYPE>. TBD.
 
     .EXAMPLE
-
-    Test-MS365Module -Service MSOL
+    Test-MS365Module -Module MSOnline
 
     .LINK
-
     http://github.com/blindzero/Connect-MS365
 
     #>
@@ -45,53 +38,54 @@ function Test-MS365Module {
         Verbose	      = $False
     }
 
-    # TODO #10: changing to settings array containing module names making switch unnecessary
+    # Finding installed module, will be $null if not available on system
+    $ModuleInstalled = (Get-Module @GetModulesSplat -Name $ModuleName)
+    # Extracting Version of installed module
+    if ($ModuleInstalled) {
+        $ModuleInstalledVer = $ModuleInstalled.Version.ToString()
+    }
+    # Finding available module online
+    $ModuleAvailable = (Find-Module -Name $ModuleName)
+    # Extracting Version of available module online
+    if ($ModuleAvailable) {
+        $ModuleAvailableVer = $ModuleAvailable.Version.ToString()
+    }
 
-    Switch($Service) {
-        # Microsoft Online Service
-        MSOL {
-            If ($null -eq (Get-Module @GetModulesSplat -Name "MSOnline")) {
-                $False
+    # initialize $TestResult
+    $TestResult = $Null
+
+    # return $false if module is not installed
+    If ($null -eq $ModuleInstalled) {
+        Write-Verbose "$ModuleName was not found."
+        $TestResult = $False
+    }
+    Else {
+        # otherwise compare installed and available version
+        If ($ModuleInstalledVer -lt $ModuleAvailableVer) {
+            # if newer version is available online prompt for update
+            do {
+                $confirm = Read-Host -Prompt "New $ModuleName version $ModuleAvailableVer is available (installed: $ModuleInstalledVer). Update? [Y/n]"
+                if ($confirm.Length -eq 0) {
+                    $confirm = "y"
+                }
+            } while (($confirm.ToLower() -ne "n") -and ($confirm.ToLower() -ne "y"))
+            # if confirmed ...
+            If (($confirm.Length -eq 0) -or ($confirm.toLower() -eq "y")) {
+                Write-Verbose "Updating Module $ModuleName from $ModuleInstalledVer to $ModuleAvailableVer"
+                # return $False to be catched and update triggered
+                $TestResult = $False
             }
+            # if not confimed only do verbose logging and return true as update is optional
             Else {
-                $True
+                Write-Verbose "Skipping update of $ModuleName"
+                $TestResult = $True
             }
         }
-        # Exchange Online Service or Security Compliance Center
-        {($_ -eq "EOL") -or ($_ -eq "SCC")} {
-            If ($null -eq (Get-Module @GetModulesSplat -Name "ExchangeOnlineManagement")) {
-                $False
-            }
-            Else {
-                $True
-            }
-        }
-        # Teams
-        Teams {
-            If ($null -eq (Get-Module @GetModulesSplat -Name "MicrosoftTeams")) {
-                $False
-            }
-            Else {
-                $True
-            }
-        }
-        # SPO
-        SPO {
-            If ($null -eq (Get-Module @GetModulesSplat -Name "Microsoft.Online.SharePoint.PowerShell")) {
-                $False
-            }
-            Else {
-                $True
-            }
-        }
-        # AzureAD
-        AAD {
-            If ($null -eq (Get-Module @GetModulesSplat -Name "AzureAD")) {
-                $False
-            }
-            Else {
-                $True
-            }
+        Else {
+            Write-Verbose "$ModuleName is latest available version $ModuleAvailableVer"
+            $TestResult = $True
         }
     }
+
+    return [Bool]$TestResult
 }

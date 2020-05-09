@@ -31,11 +31,12 @@ Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [[-Credential] <PSCre
 Connects to a given online service of Microsoft.
 One or multiple service names can be chosen.
 Supports connection handling for
-- Microsoft Online (MSOL)
+- Microsoft Online (MSOL) - aka AzureAD v1
 - Exchange Online (EOL)
 - Teams
 - SharePoint Online (SPO)
 - Security and Compliance Center (SCC)
+- Azure ActiveDirectory (AAD) v2
 
 ## EXAMPLES
 
@@ -80,6 +81,13 @@ Description: Connect to Security and Compliance Center with MFA
 ```
 
 Connect-MS365 -Service SCC -MFA
+
+### EXAMPLE 7
+```
+Description: Connect to Azure ActiveDirectory with MFA
+```
+
+Connect-MS365 -Service AAD -MFA
 
 ## PARAMETERS
 

@@ -5,11 +5,12 @@ Connects to a given online service of Microsoft.
 .DESCRIPTION
 Connects to a given online service of Microsoft.
 One or multiple service names can be chosen. Supports connection handling for
-- Microsoft Online (MSOL)
+- Microsoft Online (MSOL) - aka AzureAD v1
 - Exchange Online (EOL)
 - Teams
 - SharePoint Online (SPO)
 - Security and Compliance Center (SCC)
+- Azure ActiveDirectory (AAD) v2
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.
@@ -47,6 +48,10 @@ Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
 Description: Connect to Security and Compliance Center with MFA  
 Connect-MS365 -Service SCC -MFA
 
+.EXAMPLE
+Description: Connect to Azure ActiveDirectory with MFA  
+Connect-MS365 -Service AAD -MFA
+
 .LINK
 https://github.com/blindzero/Connect-MS365
 
@@ -59,7 +64,7 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO','SCC')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD')]
         [string]
         $Service,
         #spoorg parameter for connection to SPO service
@@ -128,6 +133,16 @@ function Connect-MS365 {
                 }
                 else {
                     Connect-SCC -Credential $Credential
+                }
+                continue
+            }
+            # AzureAD
+            AAD {
+                if ($MFA) {
+                    Connect-AAD
+                }
+                else {
+                    Connect-AAD -Credential $Credential
                 }
                 continue
             }

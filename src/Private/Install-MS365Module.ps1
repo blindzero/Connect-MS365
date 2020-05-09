@@ -3,7 +3,7 @@ function Install-MS365Module {
     param (
         # service module to be installed, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO','SCC')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD')]
         [String]
         $Service
     )
@@ -51,6 +51,9 @@ function Install-MS365Module {
         }
         SPO {
             $ModuleName = "Microsoft.Online.SharePoint.PowerShell"
+        }
+        AAD {
+            $ModuleName = "AzureAD"
         }
     }
 

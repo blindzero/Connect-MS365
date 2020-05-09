@@ -86,7 +86,8 @@ ModuleList = @('.\Connect-MS365.psm1')
 # List of all files packaged with this module
 FileList = @(
     'Connect-MS365.psd1','Connect-MS365.psm1',
-    'LICENSE','README.md','RELEASENOTES.md'
+    'LICENSE','README.md','RELEASENOTES.md',
+    'docs/Connect-MS365.md','en-us/Connect-MS365-help.xml'
     )
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
@@ -103,7 +104,7 @@ PrivateData = @{
             'Microsoft_Teams','Teams',
             'Skype_for_Business','SfB','S4B','Skype4B',
             'SecurityComplianceCenter','IPP','SCC',
-            'Azure','Microsoft_Azure',
+            'Azure','Microsoft_Azure','Az',
             'AzureAD','Azure_AD','AAD')
 
         # A URL to the license for this module.

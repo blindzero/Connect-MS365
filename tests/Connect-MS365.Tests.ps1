@@ -62,6 +62,7 @@ Describe "Function Tests" -Tags ('Unit') {
         { Get-Command Connect-Teams } | Should Throw
         { Get-Command Connect-SPO } | Should Throw
         { Get-Command Connect-SCC } | Should Throw
+        { Get-Command Connect-AAD } | Should Throw
         { Get-Command Test-MS365Module } | Should Throw
         { Get-Command Install-MS365Module } | Should Throw
         { Get-Command Set-WindowTitle } | Should Throw
@@ -96,8 +97,8 @@ Describe "Function Tests" -Tags ('Unit') {
         }
         Context "Function Connect-SCC.ps1 Tests" {
             It "Has Parameter -Credential" {
-                Get-Command Connect-Teams | Should -HaveParameter Credential -Type PSCredential
-                Get-Command Connect-Teams | Should -HaveParameter Credential -Not -Mandatory
+                Get-Command Connect-SCC | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-SCC | Should -HaveParameter Credential -Not -Mandatory
             }
         }
         Context "Function Set-WindowTitle.ps1 Tests" {

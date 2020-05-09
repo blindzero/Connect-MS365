@@ -31,7 +31,7 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
         }
 
         It "Has Parameter -Service" {
-            Get-Command $moduleName | Should -HaveParameter Service -Mandatory -Type String
+            Get-Command $moduleName | Should -HaveParameter Service -Mandatory -Type String[]
         }
 
         It "Parameter -Service Validation" {

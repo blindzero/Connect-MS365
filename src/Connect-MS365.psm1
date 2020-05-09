@@ -65,7 +65,7 @@ function Connect-MS365 {
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
         [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD')]
-        [string]
+        [string[]]
         $Service,
         #spoorg parameter for connection to SPO service
         #needed by connect cmdlet to assemble admin Url

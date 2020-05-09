@@ -19,6 +19,8 @@ Powershell module to connect to all MS365 services and install required packages
 
 ### Fixes
 
+- [#18 Service parameter not accepting multiple services](https://github.com/blindzero/Connect-MS365/issues/18)
+
 ## v1.0.0
 
 ### New

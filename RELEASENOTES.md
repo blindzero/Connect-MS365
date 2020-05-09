@@ -20,7 +20,7 @@ Powershell module to connect to all MS365 services and install required packages
 
 Initial version
 
-- Adding support for Microsoft Online service (MSOL)
+- Adding support for Microsoft Online service (MSOL) a.k.a. AzureAD v1
 - Installs MSOnline module if not available
 
 ## v0.0.2
@@ -44,4 +44,9 @@ Initial version
 
 ## v0.0.6
 
+### New
 - #5 Adding support for Office365 Security & Compliance Center
+- #6 Adding support for Azure ActiveDirectory (AzureAD, AAD) v2
+
+### Fix
+- correction SCC function unit test to SCC script (calles wrong script for test)

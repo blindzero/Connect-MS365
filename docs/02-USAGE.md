@@ -40,6 +40,12 @@ The service you want to connect is selected by `-Service` parameter, followed by
 
   _Old plain Remote PowerShell connections are not supported anymore! Please see the documentation for the new CmdLets available._
 
+* __AAD__ - Microsoft Azure ActiveDirectory / AzureAD
+
+  Uses [AzureAD](https://docs.microsoft.com/en-us/powershell/azure/active-directory/overview) module to connect to Microsoft Azure ActiveDirectory.
+
+  See the CmdLet reference for all available commands.
+
 ### Multi Factor Authentication (MFA)
 
 If you have to use MFA you may get errors when connection with standard options. Add `-MFA` switch to your Connect-MS365 command.

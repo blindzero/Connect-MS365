@@ -114,18 +114,12 @@ Describe "Function Tests" -Tags ('Unit') {
         }
         Context "Function Test-MS365Module.ps1 Tests" {
             It "Has Parameter -Service" {
-                Get-Command Test-MS365Module | Should -HaveParameter Service -Type String -Mandatory
-            }
-            It "Validates Parameter -Service" {
-                {. Test-MS365Module -Service NonValid } | Should Throw
+                Get-Command Test-MS365Module | Should -HaveParameter Module -Type String -Mandatory
             }
         }
         Context "Function Install-MS365Module.ps1 Tests" {
             It "Has Parameter -Service" {
-                Get-Command Install-MS365Module | Should -HaveParameter Service -Type String -Mandatory
-            }
-            It "Validates Parameter -Service" {
-                {. Install-MS365Module -Service NonValid } | Should Throw
+                Get-Command Install-MS365Module | Should -HaveParameter Module -Type String -Mandatory
             }
         }
     }

@@ -7,8 +7,6 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/blindzero/Connect-MS365)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/blindzero/Connect-MS365)
 
-![CodeNotary](https://github.com/blindzero/Connect-MS365/workflows/CodeNotary/badge.svg?event=push)
-
 # Connect-MS365
 Powershell module to connect to all MS365 services and install required modules or packages.
 

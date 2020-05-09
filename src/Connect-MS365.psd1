@@ -12,7 +12,7 @@
 RootModule = 'Connect-MS365.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.5'
+ModuleVersion = '0.0.6'
 
 # Supported PSEditions
 CompatiblePSEditions = @('PSEdition_Desktop','Desktop')
@@ -102,6 +102,7 @@ PrivateData = @{
             'Exchange_Online','ExchangeOnline','EOL',
             'Microsoft_Teams','Teams',
             'Skype_for_Business','SfB','S4B','Skype4B',
+            'SecurityComplianceCenter','IPP','SCC',
             'Azure','Microsoft_Azure','AzureAD','Azure_AD','AAD')
 
         # A URL to the license for this module.

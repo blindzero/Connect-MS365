@@ -3,7 +3,7 @@ function Test-MS365Module {
     param (
         # service module to be tested, must be known service
         [Parameter(Mandatory=$True,Position=1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC')]
         [String]
         $Service
     )
@@ -57,8 +57,8 @@ function Test-MS365Module {
                 $True
             }
         }
-        # Exchange Online Service
-        EOL {
+        # Exchange Online Service or Security Compliance Center
+        {($_ -eq "EOL") -or ($_ -eq "SCC")} {
             If ($null -eq (Get-Module @GetModulesSplat -Name "ExchangeOnlineManagement")) {
                 $False
             }

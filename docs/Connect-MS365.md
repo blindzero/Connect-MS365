@@ -35,6 +35,7 @@ Supports connection handling for
 - Exchange Online (EOL)
 - Teams
 - SharePoint Online (SPO)
+- Security and Compliance Center (SCC)
 
 ## EXAMPLES
 
@@ -72,6 +73,13 @@ Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sh
 ```
 
 Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
+
+### EXAMPLE 6
+```
+Description: Connect to Security and Compliance Center with MFA
+```
+
+Connect-MS365 -Service SCC -MFA
 
 ## PARAMETERS
 

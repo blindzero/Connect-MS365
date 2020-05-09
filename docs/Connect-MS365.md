@@ -14,17 +14,18 @@ Connects to a given online service of Microsoft.
 
 ### True (Default)
 ```
-Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [<CommonParameters>]
+Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [<CommonParameters>]
 ```
 
 ### MFA
 ```
-Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [-MFA] [<CommonParameters>]
+Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [-MFA] [<CommonParameters>]
 ```
 
 ### Credential
 ```
-Connect-MS365 [-Service] <String> [[-SPOOrgName] <String>] [[-Credential] <PSCredential>] [<CommonParameters>]
+Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [[-Credential] <PSCredential>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -96,7 +97,7 @@ Specifies the service to connect to.
 May be a list of multiple services to use.
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 

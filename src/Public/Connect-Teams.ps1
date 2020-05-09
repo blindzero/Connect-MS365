@@ -38,9 +38,9 @@ function Connect-Teams {
     #>
 
     # testing if module is available
-    while (!(Test-MS365Module -Service $ServiceItem)) {
+    while (!(Test-MS365Module -Module $ModuleName)) {
         # and install if not available
-        Install-MS365Module -Service $ServiceItem
+        Install-MS365Module -Module $ModuleName
     }
     try {
         # if MFA is set connect without PScredential object as modern authentication will be used

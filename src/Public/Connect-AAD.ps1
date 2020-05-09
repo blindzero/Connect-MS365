@@ -8,37 +8,30 @@ function Connect-AAD {
 
     <#
     .SYNOPSIS
-
     Connects to Microsoft Azure ActiveDirectory (AzureAD / AAD) service.
 
     .DESCRIPTION
-
     Connects to Microsoft Azure ActiveDirectory (AzureAD / AAD) service.
 
     .PARAMETER Credential
-
     PSCredential object containing user credentials.
 
     .INPUTS
-
     None. You cannot pipe objects to Add-Extension.
 
     .OUTPUTS
-
     // <OBJECTTYPE>. TBD.
 
     .EXAMPLE
-
     PS> Connect-AAD -Credential $Credential
 
     .LINK
-
     http://github.com/blindzero/Connect-MS365
 
     #>
 
     # testing if module is available
-    while (!(Test-MS365Module -Service $ServiceItem)) {
+    while (!(Test-MS365Module -Module $ModuleName)) {
         # and install if not available
         Install-MS365Module -Service $ServiceItem
     }

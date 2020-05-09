@@ -7,8 +7,7 @@ Powershell module to connect to all MS365 services and install required packages
 
 ## ToDos / Wishlist
 
-- Azure
-- Module Updater
+- Azure CLI
 
 ## v1.1.0
 
@@ -18,6 +17,10 @@ Powershell module to connect to all MS365 services and install required packages
   Comparing installed and available module version and prompt to update.
 - [#7 Support MS Azure](https://github.com/blindzero/Connect-MS365/issues/7)
   Uses Az module and Connect-AzAccount
+
+### Changes
+
+- Removed -MFA switch and Credential passing
 
 ### Fixes
 

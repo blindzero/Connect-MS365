@@ -36,14 +36,7 @@ function Connect-SCC {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        # if MFA is set connect without PScredential object as modern authentication will be used
-        if ($MFA) {
-            Connect-IPPSSession
-        }
-        # or pass PSCredential object it will asked if not created earlier
-        else {
-            Connect-IPPSSession -Credential $Credential
-        }
+        Connect-IPPSSession
     }
     catch {
         $ErrorMessage = $_.Exception.Message

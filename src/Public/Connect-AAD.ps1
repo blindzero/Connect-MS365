@@ -36,14 +36,7 @@ function Connect-AAD {
         Install-MS365Module -Service $ServiceItem
     }
     try {
-        # if MFA is set connect without PScredential object as modern authentication will be used
-        if ($MFA) {
-            Connect-AzureAD | Out-Null
-        }
-        # or pass PSCredential object it will asked if not created earlier
-        else {
-            Connect-AzureAD -Credential $Credential | Out-Null
-        }
+        Connect-AzureAD | Out-Null
     }
     catch {
         $ErrorMessage = $_.Exception.Message

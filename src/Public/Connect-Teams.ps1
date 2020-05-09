@@ -43,14 +43,7 @@ function Connect-Teams {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        # if MFA is set connect without PScredential object as modern authentication will be used
-        if ($MFA) {
-            Connect-MicrosoftTeams -ErrorAction Stop | Out-Null
-        }
-        # or pass PSCredential object it will asked if not created earlier
-        else {
-            Connect-MicrosoftTeams -Credential $Credential -ErrorAction Stop | Out-Null
-        }
+        Connect-MicrosoftTeams -ErrorAction Stop | Out-Null
     }
     catch {
         $ErrorMessage = $_.Exception.Message

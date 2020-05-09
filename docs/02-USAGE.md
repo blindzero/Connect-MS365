@@ -7,7 +7,7 @@ When installed properly (see 01-INSTALLATION.md), the module Connect-MS365 shoul
 Start Connect-MS365 by using
 
 ```powershell
-Connect-MS365 -Service <list of services> [-SPOOrgName <name of sharepoint org>] [-MFA]
+Connect-MS365 -Service <list of services> [-SPOOrgName <name of sharepoint org>]
 ```
 
 The service you want to connect is selected by `-Service` parameter, followed by one of the supported services
@@ -50,9 +50,16 @@ The service you want to connect is selected by `-Service` parameter, followed by
 
   See the CmdLet reference for all available commands.
 
+* __AZ__ - Microsoft Azure Platform
+
+  Uses [Az](https://docs.microsoft.com/de-de/powershell/azure) module to connect to Microsoft Azure ActiveDirectory.
+
+  See the [CmdLet reference](https://docs.microsoft.com/de-de/powershell/module/?view=azps-3.8.0) for all available commands.
+
 ### Multi Factor Authentication (MFA)
 
-If you have to use MFA you may get errors when connection with standard options. Add `-MFA` switch to your Connect-MS365 command.
+By version 1.1.0 modern authentication usage is default, incl. MFA functionality.
+Passing PSCredential object was removed.
 
 ### Module Installations
 

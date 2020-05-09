@@ -16,6 +16,8 @@ Powershell module to connect to all MS365 services and install required packages
 
 - [#15 Module Updater](https://github.com/blindzero/Connect-MS365/issues/15)
   Comparing installed and available module version and prompt to update.
+- [#7 Support MS Azure](https://github.com/blindzero/Connect-MS365/issues/7)
+  Uses Az module and Connect-AzAccount
 
 ### Fixes
 

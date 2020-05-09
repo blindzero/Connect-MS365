@@ -11,46 +11,37 @@ One or multiple service names can be chosen. Supports connection handling for
 - SharePoint Online (SPO)
 - Security and Compliance Center (SCC)
 - Azure ActiveDirectory (AAD) v2
+- Azure Platform (AZ)
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.
 
-.PARAMETER MFA
-Toggles MFA usage. Not requesting PSCredential object.
-
 .INPUTS
-None. You cannot pipe objects to Add-Extension.
-
-.OUTPUTS
-// <OBJECTTYPE>. TBD.
+None. You cannot pipe objects to Connect-MS365.
 
 .EXAMPLE
-Description: Connect to Microsoft Online without using MFA
+Description: Connect to Microsoft Online
 Connect-MS365 -Service MSOL
 
 .EXAMPLE
-Description: Connect to Microsoft Online by using MFA
-Connect-MS365 -Service MSOL -MFA
+Description: Connect to Microsoft Online and Exchange Online
+Connect-MS365 -Service MSOL,EOL
 
 .EXAMPLE
-Description: Connect to Microsoft Online and Exchange Online by using MFA
-Connect-MS365 -Service MSOL,EOL -MFA
-
-.EXAMPLE
-Description: Connect to SharePoint Online without MFA to connect to MyName-admin.sharepoint.com
+Description: Connect to SharePoint Online to connect to MyName-admin.sharepoint.com
 Connect-MS365 -Service SPO -SPOOrgName MyName
 
 .EXAMPLE
-Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sharepoint.com 
-Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
+Description: Connect to Security and Compliance Center
+Connect-MS365 -Service SCC
 
 .EXAMPLE
-Description: Connect to Security and Compliance Center with MFA  
-Connect-MS365 -Service SCC -MFA
+Description: Connect to Azure ActiveDirectory  
+Connect-MS365 -Service AAD
 
 .EXAMPLE
-Description: Connect to Azure ActiveDirectory with MFA  
-Connect-MS365 -Service AAD -MFA
+Description: Connect to Microsoft Azure platform
+Connect-MS365 -Service AZ
 
 .LINK
 https://github.com/blindzero/Connect-MS365
@@ -64,7 +55,7 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD','AZ')]
         [string[]]
         $Service,
         #spoorg parameter for connection to SPO service
@@ -73,11 +64,6 @@ function Connect-MS365 {
         [string]
         [Alias('SPOOrg')]
         $SPOOrgName,
-        #mfa parameter if mfa authentication is necessary
-        #used later to determine different connection commands and is not using PScredential object
-        [Parameter(Mandatory=$False, Position = 3, ParameterSetName = 'MFA')]
-        [Switch]
-        $MFA,
         #Credential parameter to receive previously created PSCredential object.
         #Primarily needed for testing calls 
         [Parameter(Mandatory=$False, Position = 3, ParameterSetName = 'Credential')]
@@ -85,16 +71,9 @@ function Connect-MS365 {
         $Credential
     )
 
-    # dont gather PSCredential object if MFA is set
-    If (($MFA -ne $True) -and (!($Credential))) {
-        Write-Verbose "Gathering PSCredentials object for non MFA sign on"
-        $Credential = Get-Credential -Message "Please enter your Office 365 credentials"
-    }
-    
     # TODO #10: changing to settings array containing module names making switch unnecessary
 
     # iterating through each service listed in service parameter
-    # each service is passing PSCredential object if MFA not set or leaves it out if set
     ForEach ($ServiceItem in $Service) {
         Write-Verbose "Create session to Service $ServiceItem"
         Switch($ServiceItem) {
@@ -102,71 +81,61 @@ function Connect-MS365 {
             MSOL {
                 $ServiceName = "Microsoft Online / AzureAD v1"
                 $ModuleName = "MSOnline"
+                $ModuleFindString = $ModuleName
 
-                if ($MFA) {
-                    Connect-MSOL
-                }
-                else {
-                    Connect-MSOL -Credential $Credential
-                }
+                Connect-MSOL
                 continue
             }
             # Exchange Online service
             EOL {
                 $ServiceName = "Exchange Online"
                 $ModuleName = "ExchangeOnlineManagement"
+                $ModuleFindString = $ModuleName
 
-                if ($MFA) {
-                    Connect-EOL
-                }
-                else {
-                    Connect-EOL -Credential $Credential
-                }
+                Connect-EOL
                 continue
             }
             # Teams service
             Teams {
                 $ServiceName = "Microsoft Teams"
                 $ModuleName = "MicrosoftTeams"
+                $ModuleFindString = $ModuleName
 
-                if ($MFA) {
-                    Connect-Teams
-                }
-                else {
-                    Connect-Teams -Credential $Credential
-                }
+                Connect-Teams
                 continue
             }
             # Security and Compliance Center
             SCC {
                 $ServiceName = "Security & Compliance Center"
                 $ModuleName = "ExchangeOnlineManagement"
+                $ModuleFindString = $ModuleName
 
-                if ($MFA) {
-                    Connect-SCC
-                }
-                else {
-                    Connect-SCC -Credential $Credential
-                }
+                Connect-SCC
                 continue
             }
             # AzureAD
             AAD {
                 $ServiceName = "AzureAD v2"
                 $ModuleName = "AzureAD"
+                $ModuleFindString = $ModuleName
 
-                if ($MFA) {
-                    Connect-AAD
-                }
-                else {
-                    Connect-AAD -Credential $Credential
-                }
+                Connect-AAD
+                continue
+            }
+            # Azure
+            AZ {
+                $ServiceName = "Azure"
+                $ModuleName = "Az"
+                $ModuleFindString = "Az.*"
+
+                Connect-AZ
                 continue
             }
             # SPO service
             SPO {
                 $ServiceName = "SharePoint Online"
                 $ModuleName = "Microsoft.Online.SharePoint.PowerShell"
+                $ModuleFindString = $ModuleName
 
                 If (!($SPOOrgName)) {
                     Write-Error 'To connect to SharePoint Online you have to provide the -SPOOrgName parameter.'
@@ -178,21 +147,15 @@ function Connect-MS365 {
                     Write-Verbose "Created $SPOOrgUrl"
                 }
                 
-                if ($MFA) {
-                    Write-Verbose "Connecting to SharePoint Online at $SPOOrgUrl without Credential"
-                    Connect-SPO -SPOOrgUrl $SPOOrgUrl
-                }
-                else {
-                    Write-Verbose "Connecting to SharePoint Online at $SPOOrgUrl with $Credential"
-                    Connect-SPO -SPOOrgUrl $SPOOrgUrl -Credential $Credential
-                }
+                Write-Verbose "Connecting to SharePoint Online at $SPOOrgUrl"
+                Connect-SPO -SPOOrgUrl $SPOOrgUrl
                 continue
             }
         }
         Write-Verbose "Create session to Service $ServiceItem done."
     }
 
-    Write-Verbose "Connect-MS365 terminated."
+    Write-Verbose "Connect-MS365 done."
 }
 
 # Export only the functions using PowerShell standard verb-noun naming.

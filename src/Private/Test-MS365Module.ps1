@@ -39,13 +39,13 @@ function Test-MS365Module {
     }
 
     # Finding installed module, will be $null if not available on system
-    $ModuleInstalled = (Get-Module @GetModulesSplat -Name $ModuleName)
+    $ModuleInstalled = (Get-Module @GetModulesSplat -Name $ModuleFindString)
     # Extracting Version of installed module
     if ($ModuleInstalled) {
         $ModuleInstalledVer = $ModuleInstalled.Version.ToString()
     }
     # Finding available module online
-    $ModuleAvailable = (Find-Module -Name $ModuleName)
+    $ModuleAvailable = (Find-Module -Name $ModuleFindString)
     # Extracting Version of available module online
     if ($ModuleAvailable) {
         $ModuleAvailableVer = $ModuleAvailable.Version.ToString()

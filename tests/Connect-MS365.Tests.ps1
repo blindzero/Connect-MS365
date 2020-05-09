@@ -38,11 +38,6 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
             { . $moduleName -Service NotValid } | Should Throw
         }
 
-        It "Has Parameter -MFA" {
-            Get-Command $moduleName | Should -HaveParameter MFA -Not -Mandatory
-            Get-Command $moduleName | Should -HaveParameter MFA -Type Switch
-        }
-
         It "Has Parameter -Credential" {
             Get-Command $moduleName | Should -HaveParameter Credential -Not -Mandatory
             Get-Command $moduleName | Should -HaveParameter Credential -Type PSCredential
@@ -63,6 +58,7 @@ Describe "Function Tests" -Tags ('Unit') {
         { Get-Command Connect-SPO } | Should Throw
         { Get-Command Connect-SCC } | Should Throw
         { Get-Command Connect-AAD } | Should Throw
+        { Get-Command Connect-Az } | Should Throw
         { Get-Command Test-MS365Module } | Should Throw
         { Get-Command Install-MS365Module } | Should Throw
         { Get-Command Set-WindowTitle } | Should Throw
@@ -106,6 +102,8 @@ Describe "Function Tests" -Tags ('Unit') {
                 Get-Command Connect-AAD | Should -HaveParameter Credential -Type PSCredential
                 Get-Command Connect-AAD | Should -HaveParameter Credential -Not -Mandatory
             }
+        }
+        Context "Function Connect-AZ.ps1 Tests" {
         }
         Context "Function Set-WindowTitle.ps1 Tests" {
             It "Has Parameter -Service" {

@@ -29,15 +29,10 @@ function Connect-SPO {
     // <OBJECTTYPE>. TBD.
 
     .EXAMPLE
-    Description: Connect to SharePoint Online organisation MyName with PSCredential object passed (no MFA)
-    PS> Connect-SPO -SPOOrgUrl https://myname-admin.sharepoint.com -Credential $Credential
-
-    .EXAMPLE
-    Description: Connect to SharePoint Online organisation MyName without PSCredential object passed (MFA)
+    Description: Connect to SharePoint Online organisation MyName
     PS> Connect-SPO -SPOOrgName https://myname-admin.sharepoint.com
 
     .LINK
-
     http://github.com/blindzero/Connect-MS365
 
     #>
@@ -48,14 +43,7 @@ function Connect-SPO {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        # if MFA is set connect without PScredential object as modern authentication will be used
-        if ($MFA) {
-            Connect-SPOService -Url $SPOOrgUrl -ErrorAction Stop | Out-Null
-        }
-        # or pass PSCredential object it will asked if not created earlier
-        else {
-            Connect-SPOService -Url $SPOOrgUrl -Credential $Credential -ErrorAction Stop | Out-Null
-        }
+        Connect-SPOService -Url $SPOOrgUrl -ErrorAction Stop | Out-Null
     }
     catch {
         $ErrorMessage = $_.Exception.Message

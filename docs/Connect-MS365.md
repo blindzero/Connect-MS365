@@ -17,11 +17,6 @@ Connects to a given online service of Microsoft.
 Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [<CommonParameters>]
 ```
 
-### MFA
-```
-Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [-MFA] [<CommonParameters>]
-```
-
 ### Credential
 ```
 Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [[-Credential] <PSCredential>]
@@ -38,57 +33,51 @@ Supports connection handling for
 - SharePoint Online (SPO)
 - Security and Compliance Center (SCC)
 - Azure ActiveDirectory (AAD) v2
+- Azure Platform (AZ)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Description: Connect to Microsoft Online without using MFA
+Description: Connect to Microsoft Online
 ```
 
 Connect-MS365 -Service MSOL
 
 ### EXAMPLE 2
 ```
-Description: Connect to Microsoft Online by using MFA
+Description: Connect to Microsoft Online and Exchange Online
 ```
 
-Connect-MS365 -Service MSOL -MFA
+Connect-MS365 -Service MSOL,EOL
 
 ### EXAMPLE 3
 ```
-Description: Connect to Microsoft Online and Exchange Online by using MFA
-```
-
-Connect-MS365 -Service MSOL,EOL -MFA
-
-### EXAMPLE 4
-```
-Description: Connect to SharePoint Online without MFA to connect to MyName-admin.sharepoint.com
+Description: Connect to SharePoint Online to connect to MyName-admin.sharepoint.com
 ```
 
 Connect-MS365 -Service SPO -SPOOrgName MyName
 
-### EXAMPLE 5
+### EXAMPLE 4
 ```
-Description: Connect to SharePoint Online with MFA to connect to MyName-admin.sharepoint.com
+Description: Connect to Security and Compliance Center
 ```
 
-Connect-MS365 -Service SPO -SPOOrgName MyName -MFA
+Connect-MS365 -Service SCC
+
+### EXAMPLE 5
+```
+Description: Connect to Azure ActiveDirectory
+```
+
+Connect-MS365 -Service AAD
 
 ### EXAMPLE 6
 ```
-Description: Connect to Security and Compliance Center with MFA
+Description: Connect to Microsoft Azure platform
 ```
 
-Connect-MS365 -Service SCC -MFA
-
-### EXAMPLE 7
-```
-Description: Connect to Azure ActiveDirectory with MFA
-```
-
-Connect-MS365 -Service AAD -MFA
+Connect-MS365 -Service AZ
 
 ## PARAMETERS
 
@@ -124,22 +113,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -MFA
-Toggles MFA usage.
-Not requesting PSCredential object.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: MFA
-Aliases:
-
-Required: False
-Position: 4
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Credential
 Credential parameter to receive previously created PSCredential object.
 Primarily needed for testing calls
@@ -161,10 +134,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. You cannot pipe objects to Add-Extension.
+### None. You cannot pipe objects to Connect-MS365.
 ## OUTPUTS
 
-### // <OBJECTTYPE>. TBD.
 ## NOTES
 
 ## RELATED LINKS

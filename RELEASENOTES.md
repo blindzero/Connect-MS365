@@ -14,6 +14,7 @@ Powershell module to connect to all MS365 services and install required packages
 ### New Features
 
 ### Changes
+
 - re-enabling code notary git signature check
 
 ### Fixes

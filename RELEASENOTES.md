@@ -10,7 +10,7 @@ Powershell module to connect to all MS365 services and install required packages
 - [#19](https://github.com/blindzero/Connect-MS365/issues/19) Azure CLI
 - [#9](https://github.com/blindzero/Connect-MS365/issues/9) Proxy Support
 - [#21](https://github.com/blindzero/Connect-MS365/issues/21) CSP connections support
-- user config files
+- [#23](https://github.com/blindzero/Connect-MS365/issues/23) user config files
 
 ## v1.2.0
 

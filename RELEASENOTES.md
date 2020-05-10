@@ -8,6 +8,7 @@ Powershell module to connect to all MS365 services and install required packages
 ## ToDos / Wishlist
 
 - Azure CLI
+- Proxy Support
 
 ## v1.2.0
 

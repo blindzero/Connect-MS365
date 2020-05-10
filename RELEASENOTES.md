@@ -9,6 +9,7 @@ Powershell module to connect to all MS365 services and install required packages
 
 - Azure CLI
 - Proxy Support
+- CSP connections support
 
 ## v1.2.0
 

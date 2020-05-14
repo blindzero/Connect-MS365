@@ -59,6 +59,7 @@ Describe "Function Tests" -Tags ('Unit') {
         { Get-Command Connect-SCC } | Should Throw
         { Get-Command Connect-AAD } | Should Throw
         { Get-Command Connect-Az } | Should Throw
+        { Get-Command Connect-S4B } | Should Throw
         { Get-Command Test-MS365Module } | Should Throw
         { Get-Command Install-MS365Module } | Should Throw
         { Get-Command Set-WindowTitle } | Should Throw
@@ -104,6 +105,12 @@ Describe "Function Tests" -Tags ('Unit') {
             }
         }
         Context "Function Connect-AZ.ps1 Tests" {
+        }
+        Context "Function Connect-S4B.ps1 Tests" {
+            It "Has Parameter -Credential" {
+                Get-Command Connect-S4B | Should -HaveParameter Credential -Type PSCredential
+                Get-Command Connect-S4B | Should -HaveParameter Credential -Not -Mandatory
+            }
         }
         Context "Function Set-WindowTitle.ps1 Tests" {
             It "Has Parameter -Service" {

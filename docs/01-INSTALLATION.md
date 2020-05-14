@@ -27,7 +27,7 @@ The following requirements must be installed _prior_ installation of Connect-MS3
 
 ### Installation
 
-#### Install by Install-Module from PowerShellGallery (NuGet)
+#### Install by Install-Module from PowerShellGallery
 
 Installation from online [PowerShellGallery](https://powershellgallery.com) by using PowerShellGet function `Install-Module`.
 

@@ -16,6 +16,8 @@ Powershell module to connect to all MS365 services and install required packages
 
 ### New Features
 
+- [#24](https://github.com/blindzero/Connect-MS365/issues/24) added Skype for Business option
+
 ### Changes
 
 - re-enabling code notary git signature check

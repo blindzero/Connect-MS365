@@ -34,6 +34,7 @@ Supports connection handling for
 - Security and Compliance Center (SCC)
 - Azure ActiveDirectory (AAD) v2
 - Azure Platform (AZ)
+- Skype for Business Online service (S4B)
 
 ## EXAMPLES
 
@@ -78,6 +79,13 @@ Description: Connect to Microsoft Azure platform
 ```
 
 Connect-MS365 -Service AZ
+
+### EXAMPLE 7
+```
+Description: Connect to Microsoft Skype for Business Online service
+```
+
+Connect-MS365 -Service S4B
 
 ## PARAMETERS
 

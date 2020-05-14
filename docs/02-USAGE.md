@@ -56,6 +56,13 @@ The service you want to connect is selected by `-Service` parameter, followed by
 
   See the [CmdLet reference](https://docs.microsoft.com/de-de/powershell/module/?view=azps-3.8.0) for all available commands.
 
+* __S4B__ - Microsoft Skype for Business (credits to [RasmusAaen](https://github.com/RasmusAaen))
+
+  Uses SkypeOnlineConnector module to connect to Microsoft Skype for Busines.
+  As SkypeOnlineConnector is not published on powershellgallery.com it must be [installed manually](https://www.microsoft.com/en-us/download/details.aspx?id=39366) if not available.
+
+  See the [CmdLet reference](https://docs.microsoft.com/en-us/powershell/module/skype/?view=skype-ps) for all available commands.
+
 ### Multi Factor Authentication (MFA)
 
 By version 1.1.0 modern authentication usage is default, incl. MFA functionality.

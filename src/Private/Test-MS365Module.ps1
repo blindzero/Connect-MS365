@@ -45,7 +45,7 @@ function Test-MS365Module {
         $ModuleInstalledVer = $ModuleInstalled.Version.ToString()
     }
     # Finding available module online
-    $ModuleAvailable = (Find-Module -Name $ModuleFindString)
+    $ModuleAvailable = (Find-Module -Name $ModuleFindString -ErrorAction SilentlyContinue)
     # Extracting Version of available module online
     if ($ModuleAvailable) {
         $ModuleAvailableVer = $ModuleAvailable.Version.ToString()

@@ -12,6 +12,7 @@ One or multiple service names can be chosen. Supports connection handling for
 - Security and Compliance Center (SCC)
 - Azure ActiveDirectory (AAD) v2
 - Azure Platform (AZ)
+- Skype for Business Online service (S4B)
 
 .PARAMETER Service
 Specifies the service to connect to. May be a list of multiple services to use.
@@ -43,6 +44,10 @@ Connect-MS365 -Service AAD
 Description: Connect to Microsoft Azure platform
 Connect-MS365 -Service AZ
 
+.EXAMPLE
+Description: Connect to Microsoft Skype for Business Online service
+Connect-MS365 -Service S4B
+
 .LINK
 https://github.com/blindzero/Connect-MS365
 
@@ -55,7 +60,7 @@ function Connect-MS365 {
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
         [Parameter(Mandatory=$True, Position = 1)]
-        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD','AZ')]
+        [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD','AZ','S4B')]
         [string[]]
         $Service,
         #spoorg parameter for connection to SPO service
@@ -151,6 +156,16 @@ function Connect-MS365 {
                 Connect-SPO -SPOOrgUrl $SPOOrgUrl
                 continue
             }
+            # S4B Service
+            S4B {
+                $ServiceName = "Microsoft Skype4Business"
+                $ModuleName = "SkypeOnlineConnector"
+                $ModuleFindString = $ModuleName
+
+                Connect-S4B
+                continue
+            }
+
         }
         Write-Verbose "Create session to Service $ServiceItem done."
     }

@@ -2,7 +2,7 @@
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/p/Connect-MS365)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
 
-![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/3)
+![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/5)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/blindzero/Connect-MS365)
 ![GitHub issues](https://img.shields.io/github/issues-raw/blindzero/Connect-MS365)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/blindzero/Connect-MS365)

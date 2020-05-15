@@ -40,9 +40,9 @@ Task Init {
     "`n"
 } -description "Initialize build environment"
 
-Task TestIntegration -Depends Init, Analyze, PesterIntegration -description "Run test suite"
+Task TestIntegration -Depends Analyze, PesterIntegration -description "Run test suite"
 
-Task Analyze -Depends Build {
+Task Analyze -Depends Compile {
     $analysis   = Invoke-ScriptAnalyzer -Path $outputModVerDir -Verbose:$false
     $errors     = $analysis | Where-Object { $_.Severity -eq 'Error' }
     $warnings   = $analysis | Where-Object { $_.Severity -eq 'Warning' }

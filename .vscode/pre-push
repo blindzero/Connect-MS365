@@ -12,12 +12,12 @@ url="$2"
 
 z40=0000000000000000000000000000000000000000
 
-while read local_ref local_sha remote_ref remote_sha
-do
-    if [ $remote_ref = 'refs/heads/master' ]
-        then
-            exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\.git\hooks\Invoke-Notarize-SSH.ps1"
-    fi
-done
+#while read local_ref local_sha remote_ref remote_sha
+#do
+#    if [ $remote_ref = 'refs/heads/master' ]
+#        then
+#            exec powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\.git\hooks\Invoke-Notarize-SSH.ps1"
+#    fi
+#done
 
 exit 0

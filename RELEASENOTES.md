@@ -11,12 +11,18 @@ Powershell module to connect to all MS365 services and install required packages
 - [#9](https://github.com/blindzero/Connect-MS365/issues/9) Proxy Support
 - [#21](https://github.com/blindzero/Connect-MS365/issues/21) CSP connections support
 - [#23](https://github.com/blindzero/Connect-MS365/issues/23) user config files
+- adding PSDeply for Github and PSGallery release
 
 ## v1.3.0
 
 ### New Features
 
 ### Changes
+
+- implementing AppVeyor
+  - splitting build tasks in separate files
+  - psakeFile depending on BHBuildEnvironment
+  - adding appveyor.xml
 
 ### Fixes
 

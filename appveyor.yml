@@ -1,0 +1,25 @@
+version: 1.2.{build}
+# allow WMF 5 functionality (e.g. POSHgallery)
+os: WMF 5
+
+skip_tags: true
+
+skip_commits:
+  files:
+    - "**/*.md"
+  message: /updated readme.*|update readme.*s/
+
+
+image: Previous Visual Studio 2013
+install:
+  - ps: . .\build.ps1 -Bootstrap
+
+environment:
+  NUGET_API_KEY:
+    secure: uFGiUc2uJ1sN33NC4OYLR/ZgVbA5QELkVNi7yC4Nt9HBQKyqx65T2rn+KTrvhUq6
+
+build_script:
+- ps: . .\build.ps1 Build
+
+deploy_script:
+- ps: . .\build.ps1 Publish

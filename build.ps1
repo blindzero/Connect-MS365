@@ -29,14 +29,23 @@ if ($Bootstrap.IsPresent) {
 }
 
 # run psake itself
-$psakeFile = '.\psakeFile.ps1'
+
+# setup build environment
+Set-BuildEnvironment -Force
+
+# define psakeFile depending on BHBuildSystem
+if ($BHBuildSystem -eq "AppVeyor") {
+    $psakeFile = '.\appveyor.psakeFile.ps1'
+}
+else {
+    $psakeFile = '.\psakeFile.ps1'
+}
+
 if ($PSCmdlet.ParameterSetName -eq 'Help') {
     Get-PSakeScriptTasks -buildFile $psakeFile |
         Format-Table -Property Name, Description, Alias, DependsOn
 }
 else {
-    Set-BuildEnvironment -Force
-
-    Invoke-Psake -buildFile $psakeFile -tasklist $Task -nologo
+    if $Invoke-Psake -buildFile $psakeFile -tasklist $Task -nologo
     exit ( [int](! $psake.build_success ))
 }

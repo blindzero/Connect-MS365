@@ -9,15 +9,18 @@ skip_commits:
     - "**/*.md"
   message: /updated readme.*|update readme.*s|update docs.*|update version.*|readme*/
 
-image: Previous Visual Studio 2013
+image: Visual Studio 2013
 # allow WMF 5 functionality (e.g. POSHgallery)
 os: WMF 5
+
+init:
+  # do some basic git configurations before any git action 
+  - ps: git config --local user.email 13959569+blindzero@users.noreply.github.com
+  - ps: git config --local user.name Matthias Fleschuetz
+
 install:
   # installing necessary tools by PSDepend bootstrap (dependencies.psd1)
   - ps: . .\build.ps1 -Bootstrap
-  # do some basic git configurations for later commits
-  - ps: git config --local user.email 13959569+blindzero@users.noreply.github.com
-  - ps: git config --local user.name Matthias Fleschuetz
 
 environment:
   # NUGET API KEY FOR PUBLISHING

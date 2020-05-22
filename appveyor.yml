@@ -31,7 +31,7 @@ test_script:
   # run tests
   - ps: |
       try {
-        . .\build.ps1 TestIntegration
+        . .\build.ps1 TestIntegrations
         Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }
       catch {

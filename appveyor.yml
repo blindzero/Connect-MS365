@@ -37,6 +37,7 @@ test_script:
       }
       catch {
         Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$($_.Exception.Message)"
+        throw
       }
 
 #deploy_script:

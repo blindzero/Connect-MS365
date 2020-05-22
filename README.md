@@ -1,8 +1,7 @@
 ![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/Connect-MS365?include_prereleases)
-![PowerShell Gallery](https://img.shields.io/powershellgallery/p/Connect-MS365)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
 
-![AppVeyor](https://img.shields.io/appveyor/build/blindzero/Connect-MS365)
+[![Build status](https://ci.appveyor.com/api/projects/status/v091wmtrwg5lq9ii?svg=true)](https://ci.appveyor.com/project/blindzero/connect-ms365)
 ![AppVeyor tests](https://img.shields.io/appveyor/tests/blindzero/Connect-MS365)
 
 ![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/5)

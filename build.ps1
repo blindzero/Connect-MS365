@@ -25,6 +25,7 @@ if ($Bootstrap.IsPresent) {
     }
     Import-Module -Name PSDepend -Verbose:$False
     Invoke-PSDepend -Path '.\dependencies.psd1' -Install -Import -Force -Recurse:$true -WarningAction SilentlyContinue
+    exit 0
 }
 
 # run psake itself

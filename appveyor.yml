@@ -68,6 +68,10 @@ test_script:
       if ($?) {
         Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
       }
+
+after_test:
+  - ps: |
+      7z a $(ProjectName)-v$(version).zip $env:BHBuildOutput\$(ProjectName)\*
       
 #deploy_script:
 #- ps: |

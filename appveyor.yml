@@ -31,12 +31,12 @@ test_script:
   # run tests
   - ps: |
       try {
-        . .\build.ps1 TestIntegration
+        . .\build.ps1 TestIntegrations
         (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults.xml))
-        Add-AppVeyorMessage -Message "Test Sucessfull"
+        Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }
       catch {
-        Add-AppVeyorMessage -Message "Test Results failed"
+        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$($_.Exception.Message)"
       }
 
 #deploy_script:

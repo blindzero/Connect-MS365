@@ -19,7 +19,7 @@ Task Init {
     PSakeTask-Init
 } -description "Initialize build environment"
 
-Task Clean -Depends {
+Task Clean {
     PSakeTask-Clean
 } -description "Cleans module output directory"
 

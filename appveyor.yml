@@ -31,7 +31,7 @@ test_script:
   # run tests
   - ps: |
       try {
-        . .\build.ps1 TestIntegrations
+        . .\build.ps1 TestIntegration
         (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults.xml))
         Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }
@@ -46,7 +46,6 @@ test_script:
 #    . .\build.ps1 Publish
 #    git config --global credential.helper store
 #    Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_API_KEY):x-oauth-basic@github.com`n"
-#    $gitOut = git push 2>&1
-#    if ($?) {$out} else {$out.Exception}
-#      
+#    git commit -m " v$env:APPVEYOR_BUILD_VERSION"
+#    git push      
 #  }

@@ -4,7 +4,7 @@ skip_tags: true
 skip_commits:
   files:
     - "**/*.md"
-  message: /updated readme.*|update readme.*s|update docs.*|update version.*/
+  message: /updated readme.*|update readme.*s|update docs.*|update version.*|readme*/
 
 image: Previous Visual Studio 2013
 # allow WMF 5 functionality (e.g. POSHgallery)
@@ -30,9 +30,14 @@ build_script:
 test_script:
   # run tests
   - ps: |
-      . .\build.ps1 TestIntegration
-      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults.xml))
-      "`nPublishing Testresults to AppVeyor"
+      try {
+        . .\build.ps1 TestIntegration
+        (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults.xml))
+        Add-AppVeyorMessage -Message "Test Sucessfull"
+      }
+      catch {
+        Add-AppVeyorMessage -Message "Test Results failed"
+      }
 
 #deploy_script:
 #- ps: |

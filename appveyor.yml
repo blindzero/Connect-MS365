@@ -11,7 +11,9 @@ image: Previous Visual Studio 2013
 os: WMF 5
 install:
   - ps: . .\build.ps1 -Bootstrap
-  - ps: Install-Module PowerShellGet -Force
+  - ps: Install-Module PowerShellGet -
+  - ps: git config --local user.email 13959569+blindzero@users.noreply.github.com
+  - ps: git config --local user.name Matthias Fleschuetz
 
 environment:
   NUGET_API_KEY:
@@ -26,4 +28,12 @@ test_script:
   - ps: . .\build.ps1 TestIntegration
 
 #deploy_script:
-#- ps: . .\build.ps1 Publish
+#- ps: |
+#  if ($deploy) {
+#    . .\build.ps1 Publish
+#    git config --global credential.helper store
+#    Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:GITHUB_API_KEY):x-oauth-basic@github.com`n"
+#    $gitOut = git push 2>&1
+#    if ($?) {$out} else {$out.Exception}
+#      
+#  }

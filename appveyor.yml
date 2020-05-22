@@ -71,7 +71,7 @@ test_script:
 
 after_test:
   - ps: |
-      7z a $(appveyor_project_name)-v$(appveyor_build_version)).zip $env:BHBuildOutput\$(appveyor_project_name)\*
+      7z a $(appveyor_project_name)-v$(appveyor_build_version).zip $env:BHBuildOutput\$(appveyor_project_name)\*
       
 #deploy_script:
 #- ps: |

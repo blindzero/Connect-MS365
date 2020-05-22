@@ -24,11 +24,11 @@ Properties {
         $releaseNotesFile
     )
 
-    $outputDir          = Join-Path -Path $projectRoot -ChildPath 'build'
+    $outputDir          = $env:BHBuildOutput
     $outputModDir       = Join-Path -Path $outputDir -ChildPath $moduleName
-    $outputModVerDir    = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
-    $outputModDocsDir   = Join-Path -Path $outputModVerDir -ChildPath "docs"
-    $extHelpPath        = Join-Path -Path $outputModVerDir -ChildPath "en-us"
+    #$outputModVerDir    = Join-Path -Path $outputModDir -ChildPath $manifest.ModuleVersion
+    $outputModDocsDir   = Join-Path -Path $outputModDir -ChildPath "docs"
+    $extHelpPath        = Join-Path -Path $outputModDir -ChildPath "en-us"
     $moduleGuid         = $manifest.GUID
 }
 
@@ -43,7 +43,7 @@ Task Init {
 Task TestIntegration -Depends Analyze, PesterIntegration -description "Run test suite"
 
 Task Analyze -Depends Compile {
-    $analysis   = Invoke-ScriptAnalyzer -Path $outputModVerDir -Verbose:$false
+    $analysis   = Invoke-ScriptAnalyzer -Path $outputDir -Verbose:$false
     $errors     = $analysis | Where-Object { $_.Severity -eq 'Error' }
     $warnings   = $analysis | Where-Object { $_.Severity -eq 'Warning' }
 
@@ -76,7 +76,7 @@ Task PesterIntegration -Depends Build {
     Remove-Module -Name $moduleName -ErrorAction SilentlyContinue -Verbose:$false
     Import-Module -Name $outputModDir -Force -Verbose:$false
     $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResults.xml'
-    Set-Location -PassThru $outputModVerDir | Out-Null
+    Set-Location -PassThru $outputModDir | Out-Null
     $testResults = Invoke-Pester -Path $tests -Tag Integration -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
 
     if ($testResults.FailedCount -gt 0) {
@@ -102,7 +102,7 @@ Task PesterUnit -Depends Compile {
     Remove-Module -Name $moduleName -ErrorAction SilentlyContinue -Verbose:$false
     Import-Module -Name $outputModDir -Force -Verbose:$false
     $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResultsUnit.xml'
-    Set-Location -PassThru $outputModVerDir | Out-Null
+    Set-Location -PassThru $outputModDir | Out-Null
     $testResults = Invoke-Pester -Path $tests -Tag Unit -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
 
     if ($testResults.FailedCount -gt 0) {
@@ -136,7 +136,7 @@ Task GenerateHelp -Depends UpdateMarkdownHelp, CreateExternalHelp
 
 Task Publish -Depends TestIntegration {
     "`tPublishing Version [$($manifest.ModuleVersion)] to PSGallery"
-    Publish-Module -Path $outputModVerDir -NuGetApiKey $env:NUGET_API_KEY -Repository PSGallery
+    Publish-Module -Path $outputDir -NuGetApiKey $env:NUGET_API_KEY -Repository PSGallery
 } -description 'Publish module to PSGallery'
 
 Task Clean -Depends Init {
@@ -148,22 +148,19 @@ Task Clean -Depends Init {
     else {
         New-Item $outputDir -ItemType Directory > $null
     }
-    "`tCleaned previous output directory [$outputDir]"
+    New-Item -Path $outputModDir -ItemType Directory | Out-Null
+    "`tCleaned previous output directory [$outputDir]`n`tcreated [$outputModDir]"
 } -description "Cleans module output directory"
 
 Task Compile -Depends Clean {
-    # create new output directories for module and version
-    $modDir = New-Item -Path $outputModDir -ItemType Directory
-    New-Item -Path $outputModVerDir -ItemType Directory > $null
-
     # concat one large module file out of single files
     Write-Verbose -Message 'Creating psm1...'
-    $psm1 = Copy-Item -Path (Join-Path -Path $srcDir -ChildPath "$($moduleName).psm1") -Destination $outputModVerDir -PassThru
+    $psm1 = Copy-Item -Path (Join-Path -Path $srcDir -ChildPath "$($moduleName).psm1") -Destination $outputModDir -PassThru
 
     Get-ChildItem -Path $srcPrivateDir -Recurse | Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
     Get-ChildItem -Path $srcPublicDir -Recurse | Get-Content -Raw | Add-Content -Path $psm1 -Encoding UTF8
 
-    Copy-Item -Path $manifestFile -Destination $outputModVerDir
+    Copy-Item -Path $manifestFile -Destination $outputModDir
 
     "`tCreated compiled module at [$modDir]"
 } -description 'Compiles module from source'
@@ -171,12 +168,12 @@ Task Compile -Depends Clean {
 Task Build -depends Compile, UpdateMarkDownHelp, CreateExternalHelp {
     # Adding External Help into psm1
     #$helpXml = New-ExternalHelp $outputModDocsDir -OutputPath $extHelpPath
-    $psm1File = "$($outputModVerDir)\$($moduleName).psm1"
+    $psm1File = "$($outputModDir)\$($moduleName).psm1"
     $extHelpHeader = "#.ExternalHelp $($moduleName)-help.xml"
     $psm1Content = (Get-Content -Path $psm1File -Raw)
     $extHelpHeader + "`r`n" + $psm1Content | Out-File -FilePath $psm1File
     "`tModule XML help created at [$psm1File]"
-    $addFiles = Copy-Item -Path $srcAdditionalFiles -Destination $outputModVerDir -PassThru
+    $addFiles = Copy-Item -Path $srcAdditionalFiles -Destination $outputModDir -PassThru
     "`tPut additional files [$addFiles]"
     Copy-Item -Path $outputModDocsDir\*.md -Destination $srcDocsDir
     "`tPut generated help $outputModDocsDir\*.md into $srcDocsDir"

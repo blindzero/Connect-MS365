@@ -35,7 +35,7 @@ test_script:
   # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
   # tests, publishing results saved by tests
   - ps: |
-      . .\build.ps1 TestIntegration
+      . .\build.ps1 TestIntegrations
       if ($?) {
         Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }

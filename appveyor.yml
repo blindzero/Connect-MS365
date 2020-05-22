@@ -35,13 +35,12 @@ test_script:
   # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
   # tests, publishing results saved by tests
   - ps: |
-      . .\build.ps1 TestIntegrations
+      . .\build.ps1 TestIntegration
       if ($?) {
         Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }
       else { 
-        $ExceptionMessage = $_.Exception.Message
-        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$ExceptionMessage"
+        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
         exit $LastExitCode
       }
       
@@ -51,7 +50,7 @@ test_script:
       }
       else {
         $ExceptionMessage = $_.Exception.Message
-        Add-AppVeyorMessage -Message "Test Results Publishing Failed!" -Category Warning -Details "$ExceptionMessage"
+        Add-AppVeyorMessage -Message "Test Results Publishing Failed!" -Category Warning -Details "$Error[0]"
         exit $LastExitCode
       }
 

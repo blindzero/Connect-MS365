@@ -11,7 +11,6 @@ image: Previous Visual Studio 2013
 os: WMF 5
 install:
   - ps: . .\build.ps1 -Bootstrap
-  - ps: Install-Module PowerShellGet -
   - ps: git config --local user.email 13959569+blindzero@users.noreply.github.com
   - ps: git config --local user.name Matthias Fleschuetz
 

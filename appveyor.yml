@@ -28,7 +28,15 @@ environment:
     secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/fzIC5f6lVADq3hZrgwSY
 
 build_script:
-  - ps: . .\build.ps1 Build
+  - ps: |
+      . .\build.ps1 Build
+      if ($?) {
+        Add-AppVeyorMessage -Message "Build Sucessfull" -Category Information
+      }
+      else {
+        Add-AppVeyorMessage -Message "Build Failed!" -Category Error -Details "$Error[0]"
+        exit $LastExitCode
+      }
 
 test_script:
   # run tests

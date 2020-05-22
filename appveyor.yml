@@ -35,7 +35,7 @@ test_script:
   # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
   # tests, publishing results saved by tests
   - ps: |
-      . .\build.ps1 TestIntegrations
+      . .\build.ps1 TestIntegration
       if ($?) {
         Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
       }
@@ -44,7 +44,7 @@ test_script:
         exit $LastExitCode
       }
       
-      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults.xml))
+      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResult.xml))
       if ($?) {
         Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
       }

@@ -37,6 +37,7 @@ environment:
 
 artifacts:
   - path: BuildOutput\$(ProjectName)\**
+  - path: BuildOutput\$(ProjectName)\**\**
 
 build_script:
   - ps: |

@@ -15,8 +15,8 @@ os: WMF 5
 
 init:
   # do some basic git configurations before any git action 
-  - ps: git config --local user.email 13959569+blindzero@users.noreply.github.com
-  - ps: git config --local user.name Matthias Fleschuetz
+  - ps: git config --global user.email 13959569+blindzero@users.noreply.github.com
+  - ps: git config --global user.name Matthias Fleschuetz
 
 install:
   # installing necessary tools by PSDepend bootstrap (dependencies.psd1)

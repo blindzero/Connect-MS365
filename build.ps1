@@ -46,6 +46,6 @@ if ($PSCmdlet.ParameterSetName -eq 'Help') {
         Format-Table -Property Name, Description, Alias, DependsOn
 }
 else {
-    if $Invoke-Psake -buildFile $psakeFile -tasklist $Task -nologo
+    $Invoke-Psake -buildFile $psakeFile -tasklist $Task -nologo
     exit ( [int](! $psake.build_success ))
 }

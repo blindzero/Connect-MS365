@@ -30,6 +30,9 @@ environment:
   GITHUB_API_KEY:
     secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/fzIC5f6lVADq3hZrgwSY
 
+artifacts:
+  - path: $(env:BHBuildOutput)\$(env:BHProjectName)\**
+
 build_script:
   - ps: |
       . .\build.ps1 Build

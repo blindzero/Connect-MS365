@@ -71,7 +71,8 @@ test_script:
 
 after_test:
   - ps: |
-      7z a $($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip $($env:BHBuildOutput)\$($env:BHProjectName)\*
+      cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
+      7z a -r -tzip "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip" *.* 
       
 #deploy_script:
 #- ps: |

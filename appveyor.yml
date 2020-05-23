@@ -75,7 +75,7 @@ for:
       only:
         - job_name: test_unit
     
-    build: off
+    build_script: off
 
     test_script: 
     # run tests
@@ -112,14 +112,14 @@ for:
           exit $LastExitCode
         }
     
-    test: off
+    test_script: off
   
   - 
     matrix:
       only:
         - job_name: test_integration
     
-    build: off
+    build_script: off
 
     test_script:
     - ps: |

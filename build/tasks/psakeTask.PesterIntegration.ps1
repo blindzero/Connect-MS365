@@ -11,7 +11,7 @@ Function PSakeTask-PesterIntegration {
 
     Remove-Module -Name $moduleName -ErrorAction SilentlyContinue -Verbose:$false
     Import-Module -Name $outputModDir -Force -Verbose:$false
-    $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResults.xml'
+    $testResultsXml = Join-Path -Path $outputDir -ChildPath 'testResultsIntegration.xml'
     Set-Location -PassThru $outputModDir | Out-Null
     $testResults = Invoke-Pester -Path $testsDir -Tag Integration -PassThru -OutputFile $testResultsXml -OutputFormat NUnitXML
 

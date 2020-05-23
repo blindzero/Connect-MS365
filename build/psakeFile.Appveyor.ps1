@@ -41,7 +41,7 @@ Task CreateMDHelp -Depends Compile {
     PSakeTask-CreateMDHelp
 } -description 'Create initial markdown help files'
 
-Task UpdateMDHelp -Depends Compile, CreateMDHelp {
+Task UpdateMDHelp -Depends CreateMDHelp {
     PSakeTask-UpdateMDHelp
 } -description 'Update markdown help files'
 

@@ -41,7 +41,7 @@ Task CreateMDHelp -Depends Compile {
     PSakeTask-CreateMDHelp
 } -description 'Create initial markdown help files'
 
-Task UpdateMDHelp -Depends Compile, CreateMDHelp {
+Task UpdateMDHelp -Depends CreateMDHelp {
     PSakeTask-UpdateMDHelp
 } -description 'Update markdown help files'
 
@@ -51,7 +51,7 @@ Task CreateExternalHelp -Depends UpdateMDHelp {
 
 Task GenerateHelp -Depends UpdateMDHelp, CreateExternalHelp
 
-Task Build -depends Compile, UpdateMDHelp, CreateExternalHelp {
+Task Build -depends Compile, CreateExternalHelp {
     PSakeTask-Build
 } -description 'Builds module by adding external help'
 

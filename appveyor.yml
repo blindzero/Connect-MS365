@@ -102,7 +102,7 @@ for:
         - job_name: build
           branch: master
 
-    build:
+    build_script:
     - ps: |
         . .\build.ps1 Build
         if ($?) {

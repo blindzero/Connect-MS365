@@ -24,7 +24,7 @@ if ($Bootstrap.IsPresent) {
         Install-Module -Name PSDepend -Scope CurrentUser -Repository PSGallery
     }
     Import-Module -Name PSDepend -Verbose:$False
-    Invoke-PSDepend -Path '.\dependencies.psd1' -Install -Import -Force -Recurse:$true -WarningAction SilentlyContinue
+    Invoke-PSDepend -Path '.\build\dependencies.psd1' -Install -Import -Force -Recurse:$true -WarningAction SilentlyContinue
     exit 0
 }
 

@@ -35,11 +35,6 @@ environment:
   GITHUB_API_KEY:
     secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/fzIC5f6lVADq3hZrgwSY
 
-artifacts:
-  # - path: BuildOutput\$(ProjectName)\**
-  # - path: BuildOutput\$(ProjectName)\**\**
-  - path: BuildOutput\$(ArtifactZip)
-
 build_script:
   - ps: |
       . .\build.ps1 Build
@@ -72,9 +67,14 @@ test_script:
 
 after_test:
   - ps: |
+      # moving into build output directory
       cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
+      # setting zip name for artifacts package
       $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+      # setting appveyor variable with artifacts package name
       Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
+      # packaging the name
+      # adding info message if success or error message if failed
       7z a -r -tzip $ArtifactZip *.* 
       if ($?) {
         Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
@@ -83,14 +83,17 @@ after_test:
         Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
         exit $LastExitCode
       }
-      # Push-AppveyorArtifact $ArtifactZip
-      # if ($?) {
-      #   Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
-      # }
-      # else {
-      #   Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
-      #   exit $LastExitCode
-      # }
+      
+      # pushing artifacts to appveyor
+      # adding info message if success or error message if failed
+      Push-AppveyorArtifact $ArtifactZip
+      if ($?) {
+        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
+      }
+      else {
+        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+        exit $LastExitCode
+      }
       
 #deploy_script:
 #- ps: |

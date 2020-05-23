@@ -72,12 +72,22 @@ test_script:
 after_test:
   - ps: |
       cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
-      7z a -r -tzip "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip" *.* 
+      $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+      Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
+      7z a -r -tzip $ArtifactZip *.* 
       if ($?) {
-        Add-AppVeyorMessage -Message "Generated artifacts ZIP" -Category Information
+        Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
       }
       else {
-        Add-AppVeyorMessage -Message "Generating artifacts ZIP failed!" -Category Error -Detais "$Error[0]"
+        Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+        exit $LastExitCode
+      }
+      Push-AppveyorArtifact $ArtifactZip
+      if ($?) {
+        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
+      }
+      else {
+        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
         exit $LastExitCode
       }
       

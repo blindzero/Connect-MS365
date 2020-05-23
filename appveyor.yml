@@ -100,7 +100,6 @@ for:
     matrix:
       only:
         - job_name: build
-          branch: master
 
     build_script:
     - ps: |

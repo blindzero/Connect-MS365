@@ -75,7 +75,7 @@ for:
       only:
         - job_name: test_unit
     
-    build_script: off
+    build: off
 
     test_script: 
     # run tests
@@ -100,8 +100,9 @@ for:
     matrix:
       only:
         - job_name: build
+          branch: master
 
-    build_script:
+    build:
     - ps: |
         . .\build.ps1 Build
         if ($?) {
@@ -112,14 +113,14 @@ for:
           exit $LastExitCode
         }
     
-    test_script: off
+    test: off
   
   - 
     matrix:
       only:
         - job_name: test_integration
     
-    build_script: off
+    build: off
 
     test_script:
     - ps: |

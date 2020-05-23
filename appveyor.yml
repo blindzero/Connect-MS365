@@ -1,5 +1,4 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
-# See http://www.appveyor.com/docs/appveyor-yml for many more options
 
 version: 1.3.{build}
 
@@ -33,68 +32,204 @@ environment:
     secure: uFGiUc2uJ1sN33NC4OYLR/ZgVbA5QELkVNi7yC4Nt9HBQKyqx65T2rn+KTrvhUq6
   # GITHUB API KEY FOR RELEASE MANAGEMENT AND REPO ACCESS
   GITHUB_API_KEY:
-    secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/fzIC5f6lVADq3hZrgwSY
+    secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/
+  
+  matrix:
+    
+    - job_name: compile
 
-build_script:
-  - ps: |
-      . .\build.ps1 Build
-      if ($?) {
-        Add-AppVeyorMessage -Message "Build Sucessfull" -Category Information
-      }
-      else {
-        Add-AppVeyorMessage -Message "Build Failed!" -Category Error -Details "$Error[0]"
-        exit $LastExitCode
-      }
+    - job_name: test_unit
+      job_depends_on: compile
 
-test_script:
+    - job_name: compile
+      job_depends_on: test_unit
+
+    - job_name: test_integration
+      job_depends_on: compile
+
+matrix:
+  fast_finish: true
+
+for:
+
+  - 
+    matrix:
+      only:
+        - job_name: compile
+    
+    build_script:
+    - ps: |
+        . .\build.ps1 Compile
+        if ($?) {
+          Add-AppVeyorMessage -Message "Compile Sucessfull" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Compile Failed!" -Category Error -Details "$Error[0]"
+          exit $LastExitCode
+        }
+
+    test_script: off
+  
+  -
+    matrix:
+      only:
+        - job_name: test_unit
+    
+    build_script: off
+
+    test_script: 
+    # run tests
+    # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
+    # tests, publishing results saved by tests
+    - ps: |
+        . .\build.ps1 TestIntegration
+        if ($?) {
+          Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
+        }
+        else { 
+          Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
+          exit $LastExitCode
+        }
+        
+        (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
+        if ($?) {
+          Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
+        }
+  
+  -
+    matrix:
+      only:
+        - job_name: build
+
+    build_script:
+    - ps: |
+        . .\build.ps1 Build
+        if ($?) {
+          Add-AppVeyorMessage -Message "Build Sucessfull" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Build Failed!" -Category Error -Details "$Error[0]"
+          exit $LastExitCode
+        }
+    
+    test_script: off
+  
+  - 
+    matrix:
+      only:
+        - job_name: test_integration
+    
+    build_script: off
+
+    test_script:
+    - ps: |
+          # run tests
+          # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
+          # tests, publishing results saved by tests
+          . .\build.ps1 TestIntegration
+          if ($?) {
+            Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
+          }
+          else { 
+            Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
+            exit $LastExitCode
+          }
+        
+          (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
+          if ($?) {
+            Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
+          }
+    
+    after_test:
+    - ps: |
+        # moving into build output directory
+        cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
+        # setting zip name for artifacts package
+        $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+        # setting appveyor variable with artifacts package name
+        Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
+        # packaging the name
+        # adding info message if success or error message if failed
+        7z a -r -tzip $ArtifactZip *.* 
+        if ($?) {
+          Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
+        
+        # pushing artifacts to appveyor
+        # adding info message if success or error message if failed
+        Push-AppveyorArtifact $ArtifactZip
+        if ($?) {
+          Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
+        
+#build_script:
+#  - ps: |
+#      . .\build.ps1 Build
+#      if ($?) {
+#        Add-AppVeyorMessage -Message "Build Sucessfull" -Category Information
+#      }
+#      else {
+#        Add-AppVeyorMessage -Message "Build Failed!" -Category Error -Details "$Error[0]"
+#        exit $LastExitCode
+#      }
+
+#test_script:
   # run tests
   # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
   # tests, publishing results saved by tests
-  - ps: |
-      . .\build.ps1 TestIntegration
-      if ($?) {
-        Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
-      }
-      else { 
-        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
-        exit $LastExitCode
-      }
+#  - ps: |
+#      . .\build.ps1 TestIntegration
+#      if ($?) {
+#        Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
+#      }
+#      else { 
+#        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
+#        exit $LastExitCode
+#      }
       
-      #(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
-      #if ($?) {
-      #  Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
-      #}
+#      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
+#      if ($?) {
+#        Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
+#      }
 
-after_test:
-  - ps: |
-      # moving into build output directory
-      cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
-      # setting zip name for artifacts package
-      $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
-      # setting appveyor variable with artifacts package name
-      Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
-      # packaging the name
-      # adding info message if success or error message if failed
-      7z a -r -tzip $ArtifactZip *.* 
-      if ($?) {
-        Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
-      }
-      else {
-        Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
-        exit $LastExitCode
-      }
-      
-      # pushing artifacts to appveyor
-      # adding info message if success or error message if failed
-      Push-AppveyorArtifact $ArtifactZip
-      if ($?) {
-        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
-      }
-      else {
-        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
-        exit $LastExitCode
-      }
-      
+#after_test:
+#  - ps: |
+#      # moving into build output directory
+#      cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
+#      # setting zip name for artifacts package
+#      $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
+#      # setting appveyor variable with artifacts package name
+#      Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
+#      # packaging the name
+#      # adding info message if success or error message if failed
+#      7z a -r -tzip $ArtifactZip *.* 
+#      if ($?) {
+#        Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
+#      }
+#      else {
+#        Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+#        exit $LastExitCode
+#      }
+#      
+#      # pushing artifacts to appveyor
+#      # adding info message if success or error message if failed
+#      Push-AppveyorArtifact $ArtifactZip
+#      if ($?) {
+#        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
+#      }
+#      else {
+#        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+#        exit $LastExitCode
+#      }
+#      
 #deploy_script:
 #- ps: |
 #  if ($deploy) {

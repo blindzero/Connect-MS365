@@ -23,8 +23,8 @@ install:
   - ps: |
       . .\build.ps1 -Bootstrap
       . .\build.ps1 Init
-      Set-AppveyorBuildVariable BuildOutput $env:BHBuildOutput
-      Set-AppveyorBuildVariable ProjectName $env:BHProjectName
+      Set-AppveyorBuildVariable BuildOutput $($env:BHBuildOutput)
+      Set-AppveyorBuildVariable ProjectName $($env:BHProjectName)
 
 environment:
   # NUGET API KEY FOR PUBLISHING
@@ -38,7 +38,7 @@ environment:
     secure: zExkA11F8Nj35AvceZfYfc6kqnB6zIG1YKROnb2wRXY=
   DOWNLOADLOCATION: C:\projects
   APPVEYOR_ACCOUNTNAME: blindzero
-  APPVEYOR_PROJECTSLUG: Connect-MS365
+  APPVEYOR_PROJECTSLUG: connect-ms365
   
   matrix:
     

@@ -33,6 +33,12 @@ environment:
   # GITHUB API KEY FOR RELEASE MANAGEMENT AND REPO ACCESS
   GITHUB_API_KEY:
     secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/
+  APPVEYOR_API_URL: 'https://ci.appveyor.com/api'
+  APPVEYOR_API_KEY:
+    secure: zExkA11F8Nj35AvceZfYfc6kqnB6zIG1YKROnb2wRXY=
+  DOWNLOADLOCATION: 'C:\projects'
+  APPVEYOR_ACCOUNTNAME: 'blindzero'
+  APPVEYOR_PROJECTSLUG: 'Connect-MS365'
   
   matrix:
     
@@ -67,6 +73,32 @@ for:
           Add-AppVeyorMessage -Message "Compile Failed!" -Category Error -Details "$Error[0]"
           exit $LastExitCode
         }
+    
+    after_build:
+    - ps: |
+        cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
+        $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION)-build.zip"
+        # setting appveyor variable with artifacts package name
+        Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
+        # packaging the name
+        # adding info message if success or error message if failed
+        7z a -r -tzip $ArtifactZip *.* 
+        if ($?) {
+          Add-AppVeyorMessage -Message "Generated build artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Generating build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
+        
+        # pushing artifacts to appveyor
+        if ($?) {
+          Add-AppVeyorMessage -Message "Publishing build artifacts Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Publishing build artifacts Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
 
     test: off
   
@@ -76,6 +108,38 @@ for:
         - job_name: test_unit
     
     build: off
+
+    before_test:
+    - ps: |
+        $headers = @{
+          "Authorization" = "Bearer $($env:APPVEYOR_API_KEY)"
+          "Content-type" = "application/json"
+        }
+
+        # get project with last build details
+        $project = Invoke-RestMethod -Method Get -Uri "$($env:APPVEYOR_API_URL)/projects/$($env:APPVEYOR_ACCOUNTNAME)/$(env:APPVEYOR_PROJECTSLUG)" -Headers $headers
+
+        # we assume here that build has a single job
+        # get this job id
+        $jobId = $project.build.jobs[0].jobId
+
+        # get job artifacts (just to see what we've got)
+        $artifacts = Invoke-RestMethod -Method Get -Uri "$($env:APPVEYOR_API_URL)/buildjobs/$jobId/artifacts" -Headers $headers
+
+        # here we just take the first artifact, but you could specify its file name
+        $artifactFileName = $artifacts[0].fileName
+
+        # artifact will be downloaded as
+        $localArtifactPath = "$($env:DOWNLOADLOCATION)\$artifactFileName"
+
+        # download artifact
+        # -OutFile - is local file name where artifact will be downloaded into
+        # the Headers in this call should only contain the bearer token, and no Content-type, otherwise it will fail!
+        Invoke-RestMethod -Method Get -Uri "$($env:APPVEYOR_API_URL)/buildjobs/$jobId/artifacts/$artifactFileName" `
+        -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
+
+        # unzip
+        7z x $localArtifactPath
 
     test_script: 
     # run tests

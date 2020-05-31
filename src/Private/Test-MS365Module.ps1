@@ -2,7 +2,7 @@ function Test-MS365Module {
     [CmdletBinding()]
     param (
         # service module to be tested, must be known service
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory=$true,Position=1)]
         [String]
         $Module
     )
@@ -34,8 +34,8 @@ function Test-MS365Module {
 
     # Set Splatting argument list for Get-Module used to determine if module is existing
     $GetModulesSplat = @{
-        ListAvailable = $True
-        Verbose	      = $False
+        ListAvailable = $true
+        Verbose	      = $false
     }
 
     # Finding installed module, will be $null if not available on system
@@ -57,7 +57,7 @@ function Test-MS365Module {
     # return $false if module is not installed
     If ($null -eq $ModuleInstalled) {
         Write-Verbose "$ModuleName was not found."
-        $TestResult = $False
+        $TestResult = $false
     }
     Else {
         # otherwise compare installed and available version
@@ -72,18 +72,18 @@ function Test-MS365Module {
             # if confirmed ...
             If (($confirm.Length -eq 0) -or ($confirm.toLower() -eq "y")) {
                 Write-Verbose "Updating Module $ModuleName from $ModuleInstalledVer to $ModuleAvailableVer"
-                # return $False to be catched and update triggered
-                $TestResult = $False
+                # return $false to be catched and update triggered
+                $TestResult = $false
             }
             # if not confimed only do verbose logging and return true as update is optional
             Else {
                 Write-Verbose "Skipping update of $ModuleName"
-                $TestResult = $True
+                $TestResult = $true
             }
         }
         Else {
             Write-Verbose "$ModuleName is latest available version $ModuleAvailableVer"
-            $TestResult = $True
+            $TestResult = $true
         }
     }
 

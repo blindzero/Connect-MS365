@@ -2,7 +2,7 @@ function Install-MS365Module {
     [CmdletBinding()]
     param (
         # service module to be installed, must be known service
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory=$true,Position=1)]
         [String]
         $Module
     )

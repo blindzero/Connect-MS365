@@ -1,7 +1,7 @@
 function Connect-AAD {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$False,Position=1)]
+        [Parameter(Mandatory=$false,Position=1)]
         [PSCredential]
         $Credential
     )

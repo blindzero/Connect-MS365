@@ -1,7 +1,7 @@
 function Set-WindowTitle {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$True,Position=1)]
+        [Parameter(Mandatory=$true,Position=1)]
         [String]
         $Service
     )

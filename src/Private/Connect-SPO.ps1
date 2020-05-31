@@ -1,10 +1,10 @@
 function Connect-SPO {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$True,Position = 1)]
+        [Parameter(Mandatory=$true,Position = 1)]
         [String]
         $SPOOrgUrl,
-        [Parameter(Mandatory=$False,Position = 2)]
+        [Parameter(Mandatory=$false,Position = 2)]
         [PSCredential]
         $Credential
     )

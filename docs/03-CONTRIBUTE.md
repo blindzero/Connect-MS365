@@ -176,7 +176,7 @@ If you contribute please update our documentation. This consists at least of the
   ```powershell
   param (
         # my inline comment for the $Module parameter
-        [Parameter(Mandatory=$True,Position=1,HelpMessage="My Modules Helpmessage")]
+        [Parameter(Mandatory=$true,Position=1,HelpMessage="My Modules Helpmessage")]
         [String]
         $Module
     )

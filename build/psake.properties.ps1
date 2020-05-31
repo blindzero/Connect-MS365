@@ -22,12 +22,12 @@ Properties {
     $licenseFile        = "$projectRoot\LICENSE"
     $readmeFile         = "$projectRoot\README.md"
     $releaseNotesFile   = "$projectRoot\RELEASENOTES.md"
-    $configFile         = "$srcDir\Configuration\Connect-MS365.Config.psd1"
+    $configSample       = "$srcDir\Configuration"
     $srcAdditionalFiles = @(
         $licenseFile,
         $readmeFile,
         $releaseNotesFile,
-        $configFile
+        $configSample
     )
 
     $outputDir          = $env:BHBuildOutput

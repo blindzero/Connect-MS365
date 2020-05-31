@@ -1,5 +1,5 @@
 @{
-    # DefaultUserPrincipalName is used as default for authorization
-    # if not set / empty user must provide login name each login
-    DefaultUserPrincipalName = 'some.upn@domain.tld'
+    # default userPrincipalName for authentication
+    # prompted if empty, needed in email format (something@domain.tld)
+    DefaultUserPrincipalName = ""
 }

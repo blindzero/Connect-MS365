@@ -1,28 +1,36 @@
 function Connect-MS365 {
 
-    [OutputType()]
     [CmdletBinding(DefaultParameterSetName)]
+    [OutputType()]
+    
     param (
         #service parameter to define to which services to connect to
         #are validated against available / implemented services
-        [Parameter(Mandatory=$True, Position = 1)]
+        [Parameter(Mandatory = $true, Position = 1)]
         [ValidateSet('MSOL','EOL','Teams','SPO','SCC','AAD','AZ','S4B')]
         [string[]]
         $Service,
         #spoorg parameter for connection to SPO service
         #needed by connect cmdlet to assemble admin Url
-        [Parameter(Mandatory=$False, Position = 2)]
+        [Parameter(Mandatory = $false, Position = 2)]
         [string]
         [Alias('SPOOrg')]
         $SPOOrgName,
         #Credential parameter to receive previously created PSCredential object.
         #Primarily needed for testing calls 
-        [Parameter(Mandatory=$False, Position = 3, ParameterSetName = 'Credential')]
+        [Parameter(Mandatory = $false, Position = 3, ParameterSetName = 'Credential')]
         [PSCredential]
-        $Credential
+        $Credential,
+        # re-initialize configuration file
+        [Parameter(Mandatory = $false, Position = 4, ParameterSetName = 'ReInitConfig')]
+        [switch]
+        $ReInitConfig = $false
     )
 
     # TODO #10: changing to settings array containing module names making switch unnecessary
+
+    # we initialize our config, all checks if exists or not / overwriting is done in function
+    Initialize-Config -Force:$ReInitConfig
 
     # iterating through each service listed in service parameter
     ForEach ($ServiceItem in $Service) {

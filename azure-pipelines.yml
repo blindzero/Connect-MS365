@@ -15,6 +15,15 @@ jobs:
   steps:
   - powershell: . .\build.ps1 -Bootstrap
     displayName: 'Setting up environment by bootstrap script'
+  - powershell: . .\build.ps1 Init
+    displayName: 'Initialize environment'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'
-
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.BinariesDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+      verbose: true

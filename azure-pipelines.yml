@@ -16,9 +16,9 @@ jobs:
       git config --global user.email 13959569+blindzero@users.noreply.github.com
       git config --global user.name Matthias Fleschuetz
     displayName: 'Configure Git environment'
-  - powershell: . .\build.ps1 -Bootstrap
-    displayName: 'Setting up environment by bootstrap script'
-  - powershell: . .\build.ps1 Init
-    displayName: 'Initialize environment'
+  - powershell: |
+      . .\build.ps1 -Bootstrap
+      . .\build.ps1 Init
+    displayName: 'Setting up environment by bootstrap and initialize'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'

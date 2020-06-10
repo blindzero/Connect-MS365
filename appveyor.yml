@@ -114,10 +114,11 @@ for:
         $accountName = 'blindzero'
         $projectSlug = 'Connect-MS365'
 
-        $downloadLocation = 'C:\projects'
-
         # get project with last build details
         $project = Invoke-RestMethod -Method Get -Uri "$apiUrl/projects/$accountName/$projectSlug" -Headers $headers
+
+        # downloadPath for artifact
+        $downloadPath = 'C:\projects'
 
         # we assume here that build has a single job
         # get this job id
@@ -130,8 +131,11 @@ for:
         # $artifactFileName = 'MyWebApp.zip'
         $artifactFileName = $artifacts[0].fileName
 
+        # creating new mod output dir to be consistent
+        $moduleOutputPath = New-Item -Path "$($env:BHBuildOutput)\$($env:BHProjectName)" -ItemType Directory
+
         # artifact will be downloaded as
-        $localArtifactPath = "$downloadLocation\$artifactFileName"
+        $localArtifactPath = "$downloadPath\$artifactFileName"
 
         # download artifact
         # -OutFile - is local file name where artifact will be downloaded into
@@ -139,8 +143,11 @@ for:
         Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts/$artifactFileName" `
         -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
 
-        cd $downloadLocation
-        7z x $artifactFileName
+        # extracting the downloaded artifact to output directory
+        7z x $localArtifactPath -o $moduleOutputPath
+
+        # showing content of outputpath
+        dir $moduleOutputPath
 
     test_script: 
     # run tests

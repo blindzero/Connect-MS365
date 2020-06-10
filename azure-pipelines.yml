@@ -10,6 +10,14 @@ pool:
   vmImage: 'windows-latest'
 
 stages:
+- stage: Bootstrap
+  displayName: Initialize Environment by Bootstrap
+  jobs:
+  - job: BootstrapJob
+    steps:
+    - powershell: |
+        . .\build.ps1 -Bootstrap
+
 - stage: Compile
   displayName: Compiling module and manifest
   jobs:

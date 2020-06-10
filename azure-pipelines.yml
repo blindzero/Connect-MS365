@@ -59,3 +59,8 @@ jobs:
       mergeTestResults: true
       testRunTitle: 'Integration Tests'
     displayName: 'Publish Integration Test Results'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'Connect-MS365'
+      publishLocation: 'Container'

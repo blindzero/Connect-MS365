@@ -45,6 +45,11 @@ jobs:
     inputs:
       filePath: './build.ps1'
       arguments: 'Build'
+  - task: PowerShell@2
+    displayName: 'Test Integration'
+    inputs:
+      targetType: Inline
+      script: ./build.ps1 TestIntegration
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'NUnit'

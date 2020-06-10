@@ -38,6 +38,12 @@ jobs:
 #      FailOnError: true
 #  - powershell: . .\build.ps1 TestUnit
 #    displayName: 'build TestUnit'
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: '**/testResultsUnit.xml'
+      mergeTestResults: true
+      testRunTitle: 'Publish Unit Test Results'
   - task: PowerShell@2
     displayName: 'Build Build'
     inputs:

@@ -17,15 +17,12 @@ jobs:
       git config --global user.name Matthias Fleschuetz
     displayName: 'Configure Git environment'
   - task: PowerShell@2
-    displayName: 'Build Bootstrap'
+    displayName: 'Build Bootstrap and Init'
     inputs:
-      targetType: Inline
-      script: ./build.ps1 -Bootstrap
-  - task: PowerShell@2
-    displayName: 'Build Init'
-    inputs:
-      targetType: Inline
-      script: ./build.ps1 Init
+      targetType: 'Inline'
+      script: |
+        ./build.ps1 -Bootstrap
+        ./build.ps1 Init
   - task: PowerShell@2
     displayName: 'Build Compile'
     inputs:

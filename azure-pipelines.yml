@@ -12,9 +12,11 @@ pool:
 jobs:
 - job: BootstrapJob
   displayName: 'Setting up environment by bootstrap script'
+  continueOnError: false
   steps:
   - powershell: . .\build.ps1 -Bootstrap
 - job: BuildJob
   displayName: 'Call build script compile'
+  dependsOn: BootstrapJob
   steps:
   - powershell: . .\build.ps1 Compile

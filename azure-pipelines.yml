@@ -43,9 +43,17 @@ jobs:
       testResultsFormat: 'NUnit'
       testResultsFiles: '**/testResultsUnit.xml'
       mergeTestResults: true
-      testRunTitle: 'Publish Unit Test Results'
+      testRunTitle: 'Unit Tests'
+    displayName: 'Publish Unit Test Results'
   - task: PowerShell@2
     displayName: 'Build Build'
     inputs:
       filePath: './build.ps1'
       arguments: 'Build'
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'NUnit'
+      testResultsFiles: '**/testResultsIntegration.xml'
+      mergeTestResults: true
+      testRunTitle: 'Integration Tests'
+    displayName: 'Publish Integration Test Results'

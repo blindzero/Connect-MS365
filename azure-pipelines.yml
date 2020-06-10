@@ -59,11 +59,11 @@ jobs:
       mergeTestResults: true
       testRunTitle: 'Integration Tests'
     displayName: 'Publish Integration Test Results'
-#  - task: CopyFiles@2
-#    displayName: 'Copy BuildOutput to ArtifactStaging'
-#    inputs:
-#      contents: 'BuildOutput/**'
-#      targetFolder: $(Build.ArtifactStagingDirectory)
+  - task: CopyFiles@2
+    displayName: 'Copy BuildOutput to ArtifactStaging'
+    inputs:
+      contents: 'BuildOutput/**'
+      targetFolder: $(Build.ArtifactStagingDirectory)
   - task: PublishBuildArtifacts@1
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'

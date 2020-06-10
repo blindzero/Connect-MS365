@@ -22,7 +22,3 @@ jobs:
     displayName: 'Initialize environment'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'
-  - powershell: dir $env:BuildOutput -ErrorAction SilentlyContinue -PassThru
-    displayName: 'Test BuildOutput variable'
-  - powershell: . .\build.ps1 TestUnit
-    displayName: 'Unit Tests'

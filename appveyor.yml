@@ -83,6 +83,16 @@ for:
           Add-AppVeyorMessage -Message "Generating build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"	
           exit $LastExitCode	
         }
+        # pushing artifacts to appveyor
+        # adding info message if success or error message if failed
+        Push-AppveyorArtifact $ArtifactZip
+        if ($?) {
+          Add-AppVeyorMessage -Message "Publishing build artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Publishing build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
 
     test: off
   

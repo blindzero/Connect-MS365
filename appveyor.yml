@@ -142,12 +142,23 @@ for:
         # the Headers in this call should only contain the bearer token, and no Content-type, otherwise it will fail!
         Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts/$artifactFileName" `
         -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
+        if ($?) {
+          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
 
         # extracting the downloaded artifact to output directory
-        7z x $localArtifactPath -o $moduleOutputPath
-
-        # showing content of outputpath
-        dir $moduleOutputPath
+        7z x $localArtifactPath -o$moduleOutputPath
+        if ($?) {
+          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
 
     test_script: 
     # run tests

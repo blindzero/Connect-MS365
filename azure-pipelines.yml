@@ -22,13 +22,7 @@ jobs:
     displayName: 'Initialize environment'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'
-  - powershell: dir $env:BuildOutput -ErrorAction SilentlyContinue
+  - powershell: dir $env:BuildOutput -ErrorAction SilentlyContinue -PassThru
     displayName: 'Test BuildOutput variable'
-  - task: ArchiveFiles@2
-    inputs:
-      rootFolderOrFile: '$(BuildOutput)'
-      includeRootFolder: true
-      archiveType: 'zip'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-      replaceExistingArchive: true
-      verbose: true
+  - powershell: . .\build.ps1 TestUnit
+    displayName: 'Unit Tests'

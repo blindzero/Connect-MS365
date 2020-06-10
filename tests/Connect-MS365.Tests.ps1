@@ -133,7 +133,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path $moduleName.psd1 | Should -Not -BeNullOrEmpty
+            Test-ModuleManifest -Path Connect-MS365.psd1 | Should -Not -BeNullOrEmpty
             $? | Should Be $true
         }
     }

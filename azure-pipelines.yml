@@ -38,6 +38,12 @@ jobs:
 #      FailOnError: true
 #  - powershell: . .\build.ps1 TestUnit
 #    displayName: 'build TestUnit'
+  - task: Pester Powershell unittest@2
+    displayName: 'Test Unit'
+    inputs:
+      ItemSpec: 'tests/*.Tests.ps1'
+      IncludeTags: 'Unit'
+      FailOnError: true
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'NUnit'

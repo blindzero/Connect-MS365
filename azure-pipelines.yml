@@ -15,5 +15,5 @@ stages:
   jobs:
   - job: BuildJob
     steps:
-    - script: . .\build.ps1 Compile
+    - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'

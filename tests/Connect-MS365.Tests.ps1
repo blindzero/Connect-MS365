@@ -5,11 +5,8 @@ if (!($env:BHProjectPath)) {
 $moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
 $ModuleManifest = "$($pwd)\$($moduleName).psd1"
 
-Write-Host $ModuleManifest
-
 $TestCredentialArgs = @("some-user@domain.tld",(ConvertTo-SecureString "somePassw0rd" -AsPlainText -Force))
 $TestCredential = New-Object -TypeName PSCredential -ArgumentList $TestCredentialArgs
-            
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {
@@ -135,6 +132,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
+            Write-Host $ModuleManifest
             Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
             $? | Should Be $true
         }

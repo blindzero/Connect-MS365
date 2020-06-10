@@ -9,29 +9,23 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-stages:
-- stage: Build
-  displayName: 'Building Module and Manifest'
-  jobs:
-  - job: BuildJob
-    displayName: 'Build'
-    steps:
-    - powershell: |
-        git config --global user.email 13959569+blindzero@users.noreply.github.com
-        git config --global user.name Matthias Fleschuetz
-      displayName: 'Configure Git environment'
-    - powershell: |
-        . .\build.ps1 -Bootstrap
-        . .\build.ps1 Init
-      displayName: 'build bootstrap and init'
-    - powershell: . .\build.ps1 Compile
-      displayName: 'build compile'
-- stage: UnitTest
-  displayName: 'Run Unit Tests'
-  dependsOn: Build
-  jobs:
-  - job: UnitTestJob
-    displayName: 'Unit Tests'
-    steps:
-    - powershell: . .\build.ps1 TestUnit
-      displayName: 'build TestUnit'
+jobs:
+- job: BuildJob
+  displayName: 'Build'
+  steps:
+  - powershell: |
+      git config --global user.email 13959569+blindzero@users.noreply.github.com
+      git config --global user.name Matthias Fleschuetz
+    displayName: 'Configure Git environment'
+  - powershell: |
+      . .\build.ps1 -Bootstrap
+      . .\build.ps1 Init
+    displayName: 'build bootstrap and init'
+  - powershell: . .\build.ps1 Compile
+    displayName: 'build compile'
+  - powershell: . .\build.ps1 TestUnit
+    displayName: 'build TestUnit'
+  - powershell: . .\build.ps1 Build
+    displayName: 'build Build'
+  - powershell: . .\build.ps1 TestIntegration
+    displayName: 'build TestIntegration'

@@ -2,8 +2,9 @@ if (!($env:BHProjectPath)) {
     Set-BuildEnvironment -Path $PSScriptRoot\..
 }
 
-$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
-$ModuleManifest = "$($pwd)\$($BHProjectName).psd1"
+#$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
+$moduleName = $($env:BHProjectName)
+$ModuleManifest = "$($pwd)\$($moduleName).psd1"
 
 $TestCredentialArgs = @("some-user@domain.tld",(ConvertTo-SecureString "somePassw0rd" -AsPlainText -Force))
 $TestCredential = New-Object -TypeName PSCredential -ArgumentList $TestCredentialArgs
@@ -132,7 +133,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path $moduleName.psd1 | Should -Not -BeNullOrEmpty
+            Test-ModuleManifest -Path $ModuleManifest.psd1 | Should -Not -BeNullOrEmpty
             $? | Should Be $true
         }
     }

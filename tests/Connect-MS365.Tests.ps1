@@ -132,8 +132,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-            Write-Host $ModuleManifest
-            Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
+            Test-ModuleManifest -Path $moduleName.psd1 | Should -Not -BeNullOrEmpty
             $? | Should Be $true
         }
     }

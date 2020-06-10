@@ -11,7 +11,6 @@ pool:
 
 jobs:
 - job: BuildJob
-  continueOnError: false
   steps:
   - powershell: |
       git config --global user.email 13959569+blindzero@users.noreply.github.com
@@ -23,11 +22,12 @@ jobs:
     displayName: 'Initialize environment'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'
-  - powershell: Write-Host $(BuildOutput)
+  - powershell: dir $env:BuildOutput -ErrorAction SilentlyContinue
+    displayName: 'Test BuildOutput variable'
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(BuildOutput)'
-      includeRootFolder: false
+      includeRootFolder: true
       archiveType: 'zip'
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
       replaceExistingArchive: true

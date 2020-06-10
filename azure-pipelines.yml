@@ -9,16 +9,19 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-jobs:
-- job: BuildJob
-  steps:
-  - powershell: |
-      git config --global user.email 13959569+blindzero@users.noreply.github.com
-      git config --global user.name Matthias Fleschuetz
-    displayName: 'Configure Git environment'
-  - powershell: |
-      . .\build.ps1 -Bootstrap
-      . .\build.ps1 Init
-    displayName: 'Setting up environment by bootstrap and initialize'
-  - powershell: . .\build.ps1 Compile
-    displayName: 'Call build script compile'
+stages:
+- stage: Build
+  displayName: 'Building Module and Manifest'
+  jobs:
+  - job: BuildJob
+    steps:
+    - powershell: |
+        git config --global user.email 13959569+blindzero@users.noreply.github.com
+        git config --global user.name Matthias Fleschuetz
+      displayName: 'Configure Git environment'
+    - powershell: |
+        . .\build.ps1 -Bootstrap
+        . .\build.ps1 Init
+      displayName: 'Setting up environment by bootstrap and initialize'
+    - powershell: . .\build.ps1 Compile
+      displayName: 'Call build script compile'

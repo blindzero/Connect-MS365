@@ -23,9 +23,15 @@ jobs:
     displayName: 'build bootstrap and init'
   - powershell: . .\build.ps1 Compile
     displayName: 'build compile'
-  - powershell: . .\build.ps1 TestUnit
-    displayName: 'build TestUnit'
+  - task: Pester Powershell unittest@2
+    inputs:
+      ItemSpec: 'tests/*.tests.ps1'
+      IncludeTags: 'Unit'
+      FailOnError: true
+#  - powershell: . .\build.ps1 TestUnit
+#    displayName: 'build TestUnit'
   - powershell: . .\build.ps1 Build
     displayName: 'build Build'
   - powershell: . .\build.ps1 TestIntegration
     displayName: 'build TestIntegration'
+

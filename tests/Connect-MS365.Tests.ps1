@@ -3,7 +3,9 @@ if (!($env:BHProjectPath)) {
 }
 
 $moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
-$ModuleManifest = "$pwd\$moduleName.psd1"
+$ModuleManifest = "$($pwd)\$($moduleName).psd1"
+
+Write-Host $ModuleManifest
 
 $TestCredentialArgs = @("some-user@domain.tld",(ConvertTo-SecureString "somePassw0rd" -AsPlainText -Force))
 $TestCredential = New-Object -TypeName PSCredential -ArgumentList $TestCredentialArgs

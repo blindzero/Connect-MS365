@@ -24,6 +24,7 @@ install:
       . .\build.ps1 Init
       Set-AppveyorBuildVariable BuildOutput $env:BHBuildOutput
       Set-AppveyorBuildVariable ProjectName $env:BHProjectName
+
 environment:
   # NUGET API KEY FOR PUBLISHING
   NUGET_API_KEY:

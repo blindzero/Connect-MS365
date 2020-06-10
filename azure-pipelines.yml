@@ -23,6 +23,7 @@ jobs:
     displayName: 'Initialize environment'
   - powershell: . .\build.ps1 Compile
     displayName: 'Call build script compile'
+  - powershell: Write-Host $(BuildOutput)
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: '$(BuildOutput)'

@@ -24,7 +24,7 @@ install:
       . .\build.ps1 Init
       Set-AppveyorBuildVariable BuildOutput $($env:BHBuildOutput)
       Set-AppveyorBuildVariable ProjectName $($env:BHProjectName)
-      
+
 environment:
   # NUGET API KEY FOR PUBLISHING
   NUGET_API_KEY:
@@ -66,6 +66,24 @@ for:
           Add-AppVeyorMessage -Message "Compile Failed!" -Category Error -Details "$Error[0]"
           exit $LastExitCode
         }
+    
+    after_build:
+    - ps: |
+        cd "$($env:BHBuildOutput)\$($env:BHProjectName)"	
+        $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION)-build.zip"	
+        # setting appveyor variable with artifacts package name	
+        Set-AppveyorBuildVariable ArtifactZip $ArtifactZip	
+        # packaging the name	
+        # adding info message if success or error message if failed	
+        7z a -r -tzip $ArtifactZip *.* 	
+        if ($?) {	
+          Add-AppVeyorMessage -Message "Generated build artifacts ZIP Successful" -Category Information	
+        }	
+        else {	
+          Add-AppVeyorMessage -Message "Generating build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"	
+          exit $LastExitCode	
+        }
+
     test: off
   
   -

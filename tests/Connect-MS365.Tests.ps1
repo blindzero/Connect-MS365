@@ -131,12 +131,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-<<<<<<< HEAD
             { Test-ModuleManifest -Path $ModuleManifestPath } | Should -Not -Throw
-=======
-            Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
-            $? | Should Be $true
->>>>>>> de93a56... correct should parameter to dash
         }
     }
     Context "Generated ExternalHelp XML Tests" {

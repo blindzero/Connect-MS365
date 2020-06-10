@@ -9,19 +9,12 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-stages:
-- stage: Bootstrap
-  displayName: Initialize Environment by Bootstrap
-  jobs:
-  - job: BootstrapJob
-    steps:
-    - powershell: |
-        . .\build.ps1 -Bootstrap
-
-- stage: Compile
-  displayName: Compiling module and manifest
-  jobs:
-  - job: BuildJob
-    steps:
-    - powershell: . .\build.ps1 Compile
-    displayName: 'Call build script compile'
+jobs:
+- job: BootstrapJob
+  displayName: 'Setting up environment by bootstrap script'
+  steps:
+  - powershell: . .\build.ps1 -Bootstrap
+- job: BuildJob
+  displayName: 'Call build script compile'
+  steps:
+  - powershell: . .\build.ps1 Compile

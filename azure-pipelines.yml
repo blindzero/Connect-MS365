@@ -28,19 +28,11 @@ jobs:
     inputs:
       targetType: Inline
       script: ./build.ps1 Compile
-#  - task: Pester Powershell unittest@2
-#    inputs:
-#      ItemSpec: 'tests/*.tests.ps1'
-#      IncludeTags: 'Unit'
-#      FailOnError: true
-#  - powershell: . .\build.ps1 TestUnit
-#    displayName: 'build TestUnit'
-  - task: Pester Powershell unittest@2
+  - task: PowerShell@2
     displayName: 'Test Unit'
     inputs:
-      ItemSpec: 'tests/*.Tests.ps1'
-      IncludeTags: 'Unit'
-      FailOnError: true
+      targetType: Inline
+      script: ./build.ps1 TestUnit
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'NUnit'

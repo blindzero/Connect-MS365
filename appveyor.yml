@@ -159,6 +159,8 @@ for:
           Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Failed!" -Category Error -Detais "$Error[0]"
           exit $LastExitCode
         }
+        # show Content of $moduleOutputPath
+        dir $moduleOutputPath -ErrorAction SilentlyContinue
 
     test_script: 
     # run tests

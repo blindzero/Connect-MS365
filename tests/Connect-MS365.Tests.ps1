@@ -128,12 +128,11 @@ Describe "Function Tests" -Tags ('Unit') {
 }
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
-    Context "Integrated Manifest Test" {
-        Write-Host "ModuleManifestPath: $ModuleManifestPath"
-        It 'Passes Test-ModuleManifest' {
-            $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue | Should -Not -Throw
-        }
-    }
+    #Context "Integrated Manifest Test" {
+    #    It 'Passes Test-ModuleManifest' {
+    #        Test-ModuleManifest -Path $ModuleManifest | Should -Not -Throw
+    #    }
+    #}
     Context "Generated ExternalHelp XML Tests" {
         It "Has ExternalHelp XML generated" {
             "$pwd\en-us\$moduleName-help.xml" | Should -Exist

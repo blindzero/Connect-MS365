@@ -207,43 +207,14 @@ for:
 
     before_test:
     - ps: |
-        $apiUrl = 'https://ci.appveyor.com/api'
-        $token = 'm1fjwuf4rw9f8dunag3c'
-        $headers = @{
-          "Authorization" = "Bearer $token"
-          "Content-type" = "application/json"
-        }
-        $accountName = 'blindzero'
-        $projectSlug = 'Connect-MS365'
-
-        # get project with last build details
-        $project = Invoke-RestMethod -Method Get -Uri "$apiUrl/projects/$accountName/$projectSlug" -Headers $headers
-
-        # downloadPath for artifact
+        # creating new mod output dir to be consistent with build before
+        $moduleOutputPath = New-Item -Path "$($env:BHBuildOutput)\$($env:BHProjectName)" -ItemType Directory
+        
+        # define downloadPath for artifacts
         $downloadPath = 'C:\projects'
 
-        # we assume here that build has a single job
-        # get this job id
-        $jobId = $project.build.jobs[2].jobId
-
-        # get job artifacts (just to see what we've got)
-        $artifacts = Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts" -Headers $headers
-
-        # here we just take the first artifact, but you could specify its file name
-        $artifactFileName = $artifacts[0].fileName
-
-        # creating new mod output dir to be consistent
-        $moduleOutputPath = New-Item -Path "$($env:BHBuildOutput)\$($env:BHProjectName)" -ItemType Directory
-        Write-Host $moduleOutputPath
-
-        # artifact will be downloaded as
-        $localArtifactPath = "$downloadPath\$artifactFileName"
-
-        # download artifact
-        # -OutFile - is local file name where artifact will be downloaded into
-        # the Headers in this call should only contain the bearer token, and no Content-type, otherwise it will fail!
-        Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts/$artifactFileName" `
-        -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
+        # invocation of artifact download
+        Get-AppVeyorArtifacts 'blindzero' 'Connect-MS365' -Token m1fjwuf4rw9f8dunag3c -DownloadDirectory $downloadPath -JobName build
         if ($?) {
           Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Successful" -Category Information
         }

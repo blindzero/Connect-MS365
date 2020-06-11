@@ -142,6 +142,7 @@ Describe "$moduleName Integration Tests" -Tags ('Integration') {
         }
     }
     Context "Root doc file Tests" {
+        Write-Host "pwd: $pwd"
         It "Has root LICENSE file" {
             "$pwd\LICENSE" | Should -Exist
         }

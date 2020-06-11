@@ -35,7 +35,7 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
         }
 
         It "Parameter -Service Validation" {
-            { . $moduleName -Service NotValid } | Should Throw
+            { . $moduleName -Service NotValid } | Should -Throw
         }
 
         It "Has Parameter -Credential" {
@@ -52,17 +52,17 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
 
 Describe "Function Tests" -Tags ('Unit') {
     It "Functions not direct invokable Tests" {
-        { Get-Command Connect-EOL } | Should Throw
-        { Get-Command Connect-MSOL } | Should Throw
-        { Get-Command Connect-Teams } | Should Throw
-        { Get-Command Connect-SPO } | Should Throw
-        { Get-Command Connect-SCC } | Should Throw
-        { Get-Command Connect-AAD } | Should Throw
-        { Get-Command Connect-Az } | Should Throw
-        { Get-Command Connect-S4B } | Should Throw
-        { Get-Command Test-MS365Module } | Should Throw
-        { Get-Command Install-MS365Module } | Should Throw
-        { Get-Command Set-WindowTitle } | Should Throw
+        { Get-Command Connect-EOL } | Should -Throw
+        { Get-Command Connect-MSOL } | Should -Throw
+        { Get-Command Connect-Teams } | Should -Throw
+        { Get-Command Connect-SPO } | Should -Throw
+        { Get-Command Connect-SCC } | Should -Throw
+        { Get-Command Connect-AAD } | Should -Throw
+        { Get-Command Connect-Az } | Should -Throw
+        { Get-Command Connect-S4B } | Should -Throw
+        { Get-Command Test-MS365Module } | Should -Throw
+        { Get-Command Install-MS365Module } | Should -Throw
+        { Get-Command Set-WindowTitle } | Should -Throw
     }
     InModuleScope -ModuleName $moduleName {
         Context "Function Connect-EOL.ps1 Tests" {
@@ -133,8 +133,8 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path $ModuleManifest | Should Not BeNullOrEmpty
-            $? | Should Be $true
+            Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
+            $? | Should -Be $true
         }
     }
     Context "Generated ExternalHelp XML Tests" {

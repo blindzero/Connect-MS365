@@ -115,7 +115,7 @@ for:
         $downloadPath = 'C:\projects'
 
         # invocation of artifact download
-        Get-AppVeyorArtifacts 'blindzero' 'Connect-MS365' -Token m1fjwuf4rw9f8dunag3c -DownloadDirectory $downloadPath -JobName compile
+        Get-AppVeyorArtifacts 'blindzero' 'Connect-MS365' -Token m1fjwuf4rw9f8dunag3c -Branch "$($env:BHBranchName)" -DownloadDirectory $downloadPath -JobName compile
         if ($?) {
           Add-AppVeyorMessage -Message "Downloading compile artifacts ZIP Successful" -Category Information
         }
@@ -214,7 +214,7 @@ for:
         $downloadPath = 'C:\projects'
 
         # invocation of artifact download
-        Get-AppVeyorArtifacts 'blindzero' 'Connect-MS365' -Token m1fjwuf4rw9f8dunag3c -DownloadDirectory $downloadPath -JobName build
+        Get-AppVeyorArtifacts 'blindzero' 'Connect-MS365' -Token m1fjwuf4rw9f8dunag3c -Branch "$($env:BHBranchName)" -DownloadDirectory $downloadPath -JobName build
         if ($?) {
           Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Successful" -Category Information
         }

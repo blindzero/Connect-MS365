@@ -32,6 +32,8 @@ environment:
   # GITHUB API KEY FOR RELEASE MANAGEMENT AND REPO ACCESS
   GITHUB_API_KEY:
     secure: 8p/Cqvhu4dXtC341VlxuV958IhvG1RQlJgX299CQwJw/
+  APPVEYOR_RDP_PASSWORD:
+    secure: e04JMZy+VUT2TQ/3nhJP1g==
   
   matrix:
     
@@ -164,6 +166,9 @@ for:
         $extractedFiles = (Get-ChildItem -Path $moduleOutputPath -Recurse -Force)
         Write-Host $extractedFiles
         dir $env:BHBuildOutput -Verbose
+
+    on_finish:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1
 
     test_script: 
     # run tests

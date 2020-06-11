@@ -5,10 +5,6 @@ if (!($env:BHProjectPath)) {
 $moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
 $ModuleManifest = "$($pwd)\$($moduleName).psd1"
 
-$TestCredentialArgs = @("some-user@domain.tld",(ConvertTo-SecureString "somePassw0rd" -AsPlainText -Force))
-$TestCredential = New-Object -TypeName PSCredential -ArgumentList $TestCredentialArgs
-            
-
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {
         It "Has root module $moduleName.psm1" {

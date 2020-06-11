@@ -158,7 +158,7 @@ for:
       only:
         - job_name: build
 
-    build:
+    build_script:
     - ps: |
         . .\build.ps1 Build
         if ($?) {

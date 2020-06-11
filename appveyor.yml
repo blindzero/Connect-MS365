@@ -152,7 +152,7 @@ for:
         }
 
         # extracting the downloaded artifact to output directory
-        7z x $localArtifactPath -o$moduleOutputPath
+        7z x $localArtifactPath -o$moduleOutputPath * -r -aoa
         if ($?) {
           Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Successful" -Category Information
         }

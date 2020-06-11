@@ -129,6 +129,7 @@ Describe "Function Tests" -Tags ('Unit') {
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
+        Write-Host "ModuleManifest: $ModuleManifest"
         It 'Passes Test-ModuleManifest' {
             Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
             $? | Should -Be $true
@@ -143,6 +144,7 @@ Describe "$moduleName Integration Tests" -Tags ('Integration') {
         }
     }
     Context "Root doc file Tests" {
+        Write-Host "pwd: $pwd"
         It "Has root LICENSE file" {
             "$pwd\LICENSE" | Should -Exist
         }

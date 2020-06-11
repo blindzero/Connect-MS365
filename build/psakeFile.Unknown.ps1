@@ -32,7 +32,7 @@ Task Analyze -Depends Compile {
 } -description 'Analyzes compiled code by PSScriptAnalyzer'
 
 Task PesterUnit -Depends Compile {
-    PSakeTask-TestUnit
+    PSakeTask-PesterUnit
 } -description 'Run Pester Unit Tests'
 
 Task TestUnit -Depends Analyze, PesterUnit -description "Run unit tests suite"

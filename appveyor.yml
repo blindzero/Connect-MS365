@@ -125,7 +125,7 @@ for:
         }
 
         # extracting the downloaded artifact to output directory
-        7z x $localArtifactPath -o"$moduleOutputPath" * -r -aoa
+        7z x "$downloadPath\*.zip" -o"$moduleOutputPath" * -r -aoa
         if ($?) {
           Add-AppVeyorMessage -Message "Extracting compile artifacts ZIP to $moduleOutputPath Successful" -Category Information
         }

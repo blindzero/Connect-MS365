@@ -130,7 +130,6 @@ for:
         $artifacts = Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts" -Headers $headers
 
         # here we just take the first artifact, but you could specify its file name
-        # $artifactFileName = 'MyWebApp.zip'
         $artifactFileName = $artifacts[0].fileName
 
         # creating new mod output dir to be consistent
@@ -146,23 +145,22 @@ for:
         Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts/$artifactFileName" `
         -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
         if ($?) {
-          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Successful" -Category Information
+          Add-AppVeyorMessage -Message "Downloading compile artifacts ZIP Successful" -Category Information
         }
         else {
-          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          Add-AppVeyorMessage -Message "Downloading compile artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
           exit $LastExitCode
         }
 
         # extracting the downloaded artifact to output directory
         7z x $localArtifactPath -o"$moduleOutputPath" * -r -aoa
         if ($?) {
-          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Successful" -Category Information
+          Add-AppVeyorMessage -Message "Extracting compile artifacts ZIP to $moduleOutputPath Successful" -Category Information
         }
         else {
-          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Failed!" -Category Error -Detais "$Error[0]"
+          Add-AppVeyorMessage -Message "Extracting compile artifacts ZIP to $moduleOutputPath Failed!" -Category Error -Detais "$Error[0]"
           exit $LastExitCode
         }
-        # show Content of $moduleOutputPath
 
     test_script: 
     # run tests
@@ -235,6 +233,63 @@ for:
     
     build: off
 
+    before_test:
+    - ps: |
+        $apiUrl = 'https://ci.appveyor.com/api'
+        $token = 'm1fjwuf4rw9f8dunag3c'
+        $headers = @{
+          "Authorization" = "Bearer $token"
+          "Content-type" = "application/json"
+        }
+        $accountName = 'blindzero'
+        $projectSlug = 'Connect-MS365'
+
+        # get project with last build details
+        $project = Invoke-RestMethod -Method Get -Uri "$apiUrl/projects/$accountName/$projectSlug" -Headers $headers
+
+        # downloadPath for artifact
+        $downloadPath = 'C:\projects'
+
+        # we assume here that build has a single job
+        # get this job id
+        $jobId = $project.build.jobs[2].jobId
+
+        # get job artifacts (just to see what we've got)
+        $artifacts = Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts" -Headers $headers
+
+        # here we just take the first artifact, but you could specify its file name
+        $artifactFileName = $artifacts[0].fileName
+
+        # creating new mod output dir to be consistent
+        $moduleOutputPath = New-Item -Path "$($env:BHBuildOutput)\$($env:BHProjectName)" -ItemType Directory
+        Write-Host $moduleOutputPath
+
+        # artifact will be downloaded as
+        $localArtifactPath = "$downloadPath\$artifactFileName"
+
+        # download artifact
+        # -OutFile - is local file name where artifact will be downloaded into
+        # the Headers in this call should only contain the bearer token, and no Content-type, otherwise it will fail!
+        Invoke-RestMethod -Method Get -Uri "$apiUrl/buildjobs/$jobId/artifacts/$artifactFileName" `
+        -OutFile $localArtifactPath -Headers @{ "Authorization" = "Bearer $token" }
+        if ($?) {
+          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Downloading build artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
+
+        # extracting the downloaded artifact to output directory
+        7z x $localArtifactPath -o"$moduleOutputPath" * -r -aoa
+        if ($?) {
+          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Successful" -Category Information
+        }
+        else {
+          Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Failed!" -Category Error -Detais "$Error[0]"
+          exit $LastExitCode
+        }
+
     test_script:
     - ps: |
           # run tests
@@ -283,67 +338,7 @@ for:
           Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
           exit $LastExitCode
         }
-        
-#build_script:
-#  - ps: |
-#      . .\build.ps1 Build
-#      if ($?) {
-#        Add-AppVeyorMessage -Message "Build Sucessfull" -Category Information
-#      }
-#      else {
-#        Add-AppVeyorMessage -Message "Build Failed!" -Category Error -Details "$Error[0]"
-#        exit $LastExitCode
-#      }
 
-#test_script:
-  # run tests
-  # catching each command with $? (last call successful) to add messages / exit != 0 to fail build
-  # tests, publishing results saved by tests
-#  - ps: |
-#      . .\build.ps1 TestIntegration
-#      if ($?) {
-#        Add-AppVeyorMessage -Message "Tests Sucessfull" -Category Information
-#      }
-#      else { 
-#        Add-AppVeyorMessage -Message "Tests Failed!" -Category Error -Details "$Error[0]"
-#        exit $LastExitCode
-#      }
-      
-#      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
-#      if ($?) {
-#        Add-AppVeyorMessage -Message "Test Result Publishing Sucessfull" -Category Information
-#      }
-
-#after_test:
-#  - ps: |
-#      # moving into build output directory
-#      cd "$($env:BHBuildOutput)\$($env:BHProjectName)"
-#      # setting zip name for artifacts package
-#      $ArtifactZip = "$($env:BHBuildOutput)\$($env:BHProjectName)-v$($env:APPVEYOR_BUILD_VERSION).zip"
-#      # setting appveyor variable with artifacts package name
-#      Set-AppveyorBuildVariable ArtifactZip $ArtifactZip
-#      # packaging the name
-#      # adding info message if success or error message if failed
-#      7z a -r -tzip $ArtifactZip *.* 
-#      if ($?) {
-#        Add-AppVeyorMessage -Message "Generated artifacts ZIP Successful" -Category Information
-#      }
-#      else {
-#        Add-AppVeyorMessage -Message "Generating artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
-#        exit $LastExitCode
-#      }
-#      
-#      # pushing artifacts to appveyor
-#      # adding info message if success or error message if failed
-#      Push-AppveyorArtifact $ArtifactZip
-#      if ($?) {
-#        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Successful" -Category Information
-#      }
-#      else {
-#        Add-AppVeyorMessage -Message "Publishing artifacts ZIP Failed!" -Category Error -Detais "$Error[0]"
-#        exit $LastExitCode
-#      }
-#      
 #deploy_script:
 #- ps: |
 #  if ($deploy) {

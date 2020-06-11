@@ -47,7 +47,7 @@ environment:
       job_depends_on: test_unit
 
     - job_name: test_integration
-      job_depends_on: compile
+      job_depends_on: build
 
 matrix:
   fast_finish: true

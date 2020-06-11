@@ -154,7 +154,7 @@ for:
         }
 
         # extracting the downloaded artifact to output directory
-        7z x $localArtifactPath -o$moduleOutputPath * -r -aoa
+        7z x $localArtifactPath -o"$moduleOutputPath" * -r -aoa
         if ($?) {
           Add-AppVeyorMessage -Message "Extracting build artifacts ZIP to $moduleOutputPath Successful" -Category Information
         }
@@ -163,11 +163,10 @@ for:
           exit $LastExitCode
         }
         # show Content of $moduleOutputPath
-        $extractedFiles = (Get-ChildItem -Path $moduleOutputPath -Recurse -Force)
-        Write-Host $extractedFiles
+        
         dir $env:BHBuildOutput -Verbose
 
-        $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+        #$blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
     test_script: 
     # run tests

@@ -178,15 +178,11 @@ for:
           exit $LastExitCode
         }
         
-        Write-Host $($env:APPVEYOR_JOB_ID)
         #(New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $env:BHBuildOutput\testResults*.xml))
         #if ($?) {
         #  Add-AppVeyorMessage -Message "Unit Test Result Publishing Sucessfull" -Category Information
         #}
     
-    on_finish:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-  
   -
     matrix:
       only:

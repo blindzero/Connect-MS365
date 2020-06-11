@@ -133,6 +133,7 @@ for:
 
         # creating new mod output dir to be consistent
         $moduleOutputPath = New-Item -Path "$($env:BHBuildOutput)\$($env:BHProjectName)" -ItemType Directory
+        Write-Host $moduleOutputPath
 
         # artifact will be downloaded as
         $localArtifactPath = "$downloadPath\$artifactFileName"

@@ -163,7 +163,7 @@ for:
         # show Content of $moduleOutputPath
         $extractedFiles = (Get-ChildItem -Path $moduleOutputPath -Recurse -Force)
         Write-Host $extractedFiles
-        dir . -Verbose
+        dir $downloadPath -Verbose
 
     test_script: 
     # run tests

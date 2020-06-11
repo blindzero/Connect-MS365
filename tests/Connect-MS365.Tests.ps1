@@ -130,14 +130,9 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-<<<<<<< HEAD
-            Test-ModuleManifest -Path $ModuleManifest | Should Not BeNullOrEmpty
-            $? | Should -Be $true
-=======
             {
                 $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue
             } | Should Not Throw
->>>>>>> b66ba32... change modulemanifest var and modulemanifest test
         }
     }
     Context "Generated ExternalHelp XML Tests" {

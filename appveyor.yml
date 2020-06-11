@@ -24,7 +24,7 @@ install:
       . .\build.ps1 Init
       Set-AppveyorBuildVariable BuildOutput $($env:BHBuildOutput)
       Set-AppveyorBuildVariable ProjectName $($env:BHProjectName)
-      Import-Module .\build\Get-AppVeyorArtifacts.ps1
+      Import-Module $($env:BHProjectPath)\build\Get-AppVeyorArtifacts.ps1
 
 environment:
   # NUGET API KEY FOR PUBLISHING

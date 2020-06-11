@@ -4,7 +4,7 @@ if (!($env:BHProjectPath)) {
 
 #$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
 $moduleName = $env:BHProjectName
-$ModuleManifest = "$($moduleName).psd1"
+$ModuleManifestPath = "$($pwd)\$($moduleName).psd1"
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {
@@ -129,10 +129,10 @@ Describe "Function Tests" -Tags ('Unit') {
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
-        Write-Host "ModuleManifest: $ModuleManifest"
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path $ModuleManifest | Should -Not -BeNullOrEmpty
-            $? | Should -Be $true
+            {
+                $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue
+            } | Should Not Throw
         }
     }
     Context "Generated ExternalHelp XML Tests" {
@@ -144,7 +144,6 @@ Describe "$moduleName Integration Tests" -Tags ('Integration') {
         }
     }
     Context "Root doc file Tests" {
-        Write-Host "pwd: $pwd"
         It "Has root LICENSE file" {
             "$pwd\LICENSE" | Should -Exist
         }

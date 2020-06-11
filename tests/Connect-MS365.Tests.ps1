@@ -129,10 +129,9 @@ Describe "Function Tests" -Tags ('Unit') {
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
+        Write-Host "ModuleManifestPath: $ModuleManifestPath"
         It 'Passes Test-ModuleManifest' {
-            {
-                $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue
-            } | Should -Not -Throw
+            $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue | Should -Not -Throw
         }
     }
     Context "Generated ExternalHelp XML Tests" {

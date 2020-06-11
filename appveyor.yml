@@ -161,7 +161,7 @@ for:
           exit $LastExitCode
         }
         # show Content of $moduleOutputPath
-        dir $moduleOutputPath -ErrorAction SilentlyContinue
+        Get-ChildItem -Path $moduleOutputPath -Recurse -Force
 
     test_script: 
     # run tests

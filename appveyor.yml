@@ -78,7 +78,7 @@ for:
         Set-AppveyorBuildVariable ArtifactZip $ArtifactZip	
         # packaging the name	
         # adding info message if success or error message if failed	
-        7z a -r -tzip $ArtifactZip *.* 	
+        7z a -r -tzip $ArtifactZip * 	
         if ($?) {	
           Add-AppVeyorMessage -Message "Generated compile artifacts ZIP Successful" -Category Information	
         }	
@@ -177,7 +177,7 @@ for:
         Set-AppveyorBuildVariable ArtifactZip $ArtifactZip	
         # packaging the name	
         # adding info message if success or error message if failed	
-        7z a -r -tzip $ArtifactZip *.* 	
+        7z a -r -tzip $ArtifactZip *
         if ($?) {	
           Add-AppVeyorMessage -Message "Generated build artifacts ZIP Successful" -Category Information	
         }	

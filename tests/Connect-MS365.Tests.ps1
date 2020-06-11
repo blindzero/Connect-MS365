@@ -132,7 +132,7 @@ Describe "$moduleName Integration Tests" -Tags ('Integration') {
         It 'Passes Test-ModuleManifest' {
             {
                 $null = Test-ModuleManifest -Path $ModuleManifestPath -ErrorAction Stop -WarningAction SilentlyContinue
-            } | Should Not Throw
+            } | Should -Not -Throw
         }
     }
     Context "Generated ExternalHelp XML Tests" {

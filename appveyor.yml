@@ -161,7 +161,8 @@ for:
           exit $LastExitCode
         }
         # show Content of $moduleOutputPath
-        Get-ChildItem -Path $moduleOutputPath -Recurse -Force
+        $extractedFiles = (Get-ChildItem -Path $moduleOutputPath -Recurse -Force)
+        Write-Host $extractedFiles
 
     test_script: 
     # run tests

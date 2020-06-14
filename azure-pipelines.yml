@@ -72,6 +72,7 @@ stages:
         testRunTitle: 'Unit Tests'
 - stage: Build
   displayName: 'Build'
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
   - job: Build
     displayName: 'Build'
@@ -99,6 +100,7 @@ stages:
         artifactName: 'Connect-MS365'
 - stage: TestIntegration
   displayName: 'Integration Tests'
+  condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
   - job: TestIntegration
     displayName: 'Integration Tests'

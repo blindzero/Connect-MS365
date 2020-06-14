@@ -31,11 +31,11 @@ stages:
       inputs:
         targetType: Inline
         script: ./build.ps1 Compile
-    - task: PublishBuildArtifacts@1
+    - task: PublishPipelineArtifact@1
       displayName: 'Publish compile artifact'
       inputs:
-        pathToPublish: 'BuildOutput\Connect-MS365'
-        artifactName: 'Connect-MS365'
+        targetPath: 'BuildOutput\Connect-MS365'
+        artifactName: 'Connect-MS365_compile'
 - stage: TestUnit
   displayName: 'Unit Tests'
   jobs:
@@ -53,11 +53,12 @@ stages:
             git config --global user.name Matthias Fleschuetz
             ./build.ps1 -Bootstrap
             ./build.ps1 Init
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadPipelineArtifacts@2
       displayName: 'Download compile artifacts'
       inputs:
-        artifactName: 'Connect-MS365'
-        downloadPath: 'BuildOutput'
+        artifact: 'Connect-MS365_compile'
+        path: 'BuildOutput'
+        runVersion: 'latestFromBranch'
     - task: PowerShell@2
       displayName: 'Test Unit'
       inputs:

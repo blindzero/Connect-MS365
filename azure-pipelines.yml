@@ -76,12 +76,3 @@ jobs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'Connect-MS365'
       publishLocation: 'Container'
-  - task: UniversalPackages@0
-    displayName: Publish Artifact to Feed
-    inputs:
-      command: publish
-      publishDirectory: '$(Build.ArtifactStagingDirectory)'
-      vstsFeedPublish: 'Connect-MS365/buildArtifact'
-      vstsFeedPackagePublish: 'Connect-MS365'
-      packagePublishDescription: 'Connect-MS365'
-

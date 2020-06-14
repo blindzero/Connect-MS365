@@ -53,7 +53,7 @@ stages:
             git config --global user.name Matthias Fleschuetz
             ./build.ps1 -Bootstrap
             ./build.ps1 Init
-    - task: DownloadPipelineArtifacts@2
+    - task: DownloadPipelineArtifact@2
       displayName: 'Download compile artifacts'
       inputs:
         artifact: 'Connect-MS365_compile'

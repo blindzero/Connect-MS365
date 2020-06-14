@@ -118,7 +118,7 @@ stages:
       displayName: 'Download build artifacts'
       inputs:
         artifactName: 'Connect-MS365'
-        downloadPath: 'BuildOutput\Connect-MS365'
+        downloadPath: 'BuildOutput'
     - task: PowerShell@2
       displayName: 'Test Integration'
       inputs:

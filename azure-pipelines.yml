@@ -58,12 +58,7 @@ stages:
       displayName: 'Download compile artifacts'
       inputs:
         artifact: 'Connect-MS365_compile'
-        path: 'BuildOutput'
-    - task: PowerShell@2
-      displayName: 'Move compile artifacts'
-      inputs:
-        targetType: Inline
-        script: Rename-Item -Path BuildOutput\Connect-MS365_compile -NewName BuildOutput\Connect-MS365
+        path: 'BuildOutput\Connect-MS365'
     - task: PowerShell@2
       displayName: 'Test Unit'
       inputs:

@@ -17,13 +17,6 @@ jobs:
   - powershell: |
       git config --global user.email 13959569+blindzero@users.noreply.github.com
       git config --global user.name Matthias Fleschuetz
-      $bugReport = &{
-        $p = Get-Module -Name Pester -ListAvailable | Select-Object -First 1
-        "Pester version     : " + $p.Version + " " + $p.Path
-        "PowerShell version : " + $PSVersionTable.PSVersion
-        "OS version         : " + [System.Environment]::OSVersion.VersionString
-      }
-      $bugReport
     displayName: 'Configure Git environment'
   - task: PowerShell@2
     displayName: 'Build Bootstrap and Init'
@@ -32,6 +25,13 @@ jobs:
       script: |
         ./build.ps1 -Bootstrap
         ./build.ps1 Init
+        $bugReport = &{
+          $p = Get-Module -Name Pester -ListAvailable | Select-Object -First 1
+          "Pester version     : " + $p.Version + " " + $p.Path
+          "PowerShell version : " + $PSVersionTable.PSVersion
+          "OS version         : " + [System.Environment]::OSVersion.VersionString
+        }
+        $bugReport
   - task: PowerShell@2
     displayName: 'Build Compile'
     inputs:

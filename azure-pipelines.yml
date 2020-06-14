@@ -39,8 +39,8 @@ stages:
 - stage: TestUnit
   displayName: 'Unit Tests'
   jobs:
-  - job: TestUnit
-    displayName: 'Unit Tests'
+  - job: TestUnit_Win
+    displayName: 'Windows Unit Tests'
     pool:
       vmImage: 'windows-latest' 
     steps:

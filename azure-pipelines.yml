@@ -8,64 +8,126 @@ trigger:
     include:
       - master
 
-jobs:
-- job: CookIt
-  displayName: 'Cook Connect-MS365'
-  pool:
-    vmImage: 'windows-latest'
-  steps:
-  - powershell: |
-      git config --global user.email 13959569+blindzero@users.noreply.github.com
-      git config --global user.name Matthias Fleschuetz
-    displayName: 'Configure Git environment'
-  - task: PowerShell@2
-    displayName: 'Build Bootstrap and Init'
-    inputs:
-      targetType: 'Inline'
-      script: |
-        ./build.ps1 -Bootstrap
-        ./build.ps1 Init
-  - task: PowerShell@2
-    displayName: 'Build Compile'
-    inputs:
-      targetType: Inline
-      script: ./build.ps1 Compile
-  - task: PowerShell@2
-    displayName: 'Test Unit'
-    inputs:
-      targetType: Inline
-      script: ./build.ps1 TestUnit
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'NUnit'
-      testResultsFiles: '**/testResultsUnit.xml'
-      mergeTestResults: true
-      testRunTitle: 'Unit Tests'
-    displayName: 'Publish Unit Test Results'
-  - task: PowerShell@2
-    displayName: 'Build Build'
-    inputs:
-      filePath: './build.ps1'
-      arguments: 'Build'
-  - task: PowerShell@2
-    displayName: 'Test Integration'
-    inputs:
-      targetType: Inline
-      script: ./build.ps1 TestIntegration
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: 'NUnit'
-      testResultsFiles: '**/testResultsIntegration.xml'
-      mergeTestResults: true
-      testRunTitle: 'Integration Tests'
-    displayName: 'Publish Integration Test Results'
-  - task: CopyFiles@2
-    displayName: 'Copy BuildOutput to ArtifactStaging'
-    inputs:
-      contents: 'BuildOutput/**'
-      targetFolder: $(Build.ArtifactStagingDirectory)
-  - task: PublishBuildArtifacts@1
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'Connect-MS365'
-      publishLocation: 'Container'
+stages:
+- stage: Compile
+  displayName: 'Compile'
+  jobs:
+  - job: Compile
+    displayName: 'Compile'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+          git config --global user.email 13959569+blindzero@users.noreply.github.com
+          git config --global user.name Matthias Fleschuetz
+          ./build.ps1 -Bootstrap
+          ./build.ps1 Init
+    - task: PowerShell@2
+      displayName: 'Build Compile'
+      inputs:
+        targetType: Inline
+        script: ./build.ps1 Compile
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish compile artifact'
+      inputs:
+        pathToPublish: 'BuildOutput\Connect-MS365'
+        artifactName: 'Connect-MS365_compile'
+- stage: TestUnit
+  displayName: 'Unit Tests'
+  jobs:
+  - job: TestUnit
+    displayName: 'Unit Tests'
+    pool:
+      vmImage: 'windows-latest' 
+    steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+            git config --global user.email 13959569+blindzero@users.noreply.github.com
+            git config --global user.name Matthias Fleschuetz
+            ./build.ps1 -Bootstrap
+            ./build.ps1 Init
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download compile artifacts'
+      inputs:
+        artifactName: 'Connect-MS365_compile'
+        downloadPath: 'BuildOutput\Connect-MS365'
+    - task: PowerShell@2
+      displayName: 'Test Unit'
+      inputs:
+        targetType: Inline
+        script: ./build.ps1 TestUnit
+    - task: PublishTestResults@2
+      displayName: 'Publish Unit Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**/testResultsUnit.xml'
+        mergeTestResults: true
+        testRunTitle: 'Unit Tests'
+- stage: Build
+  displayName: 'Build'
+  jobs:
+  - job: Build
+    displayName: 'Build'
+    pool:
+      vmImage: 'windows-latest' 
+    steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+            git config --global user.email 13959569+blindzero@users.noreply.github.com
+            git config --global user.name Matthias Fleschuetz
+            ./build.ps1 -Bootstrap
+            ./build.ps1 Init
+    - task: PowerShell@2
+      displayName: 'Build'
+      inputs:
+        filePath: './build.ps1'
+        arguments: 'Build'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish build artifact'
+      inputs:
+        pathToPublish: 'BuildOutput\Connect-MS365'
+        artifactName: 'Connect-MS365_build'
+- stage: TestIntegration
+  displayName: 'Integration Tests'
+  jobs:
+  - job: TestIntegration
+    displayName: 'Integration Tests'
+    pool:
+      vmImage: 'windows-latest' 
+    steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+            git config --global user.email 13959569+blindzero@users.noreply.github.com
+            git config --global user.name Matthias Fleschuetz
+            ./build.ps1 -Bootstrap
+            ./build.ps1 Init
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download build artifacts'
+      inputs:
+        artifactName: 'Connect-MS365_build'
+        downloadPath: 'BuildOutput\Connect-MS365'
+    - task: PowerShell@2
+      displayName: 'Test Integration'
+      inputs:
+        targetType: Inline
+        script: ./build.ps1 TestIntegration
+    - task: PublishTestResults@2
+      displayName: 'Publish Integration Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**/testResultsIntegration.xml'
+        mergeTestResults: true
+        testRunTitle: 'Integration Tests'      

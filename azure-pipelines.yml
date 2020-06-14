@@ -35,7 +35,7 @@ stages:
       displayName: 'Publish compile artifact'
       inputs:
         pathToPublish: 'BuildOutput\Connect-MS365'
-        artifactName: 'Connect-MS365_compile'
+        artifactName: 'Connect-MS365'
 - stage: TestUnit
   displayName: 'Unit Tests'
   jobs:
@@ -56,8 +56,8 @@ stages:
     - task: DownloadBuildArtifacts@0
       displayName: 'Download compile artifacts'
       inputs:
-        artifactName: 'Connect-MS365_compile'
-        downloadPath: 'BuildOutput\Connect-MS365'
+        artifactName: 'Connect-MS365'
+        downloadPath: 'BuildOutput'
     - task: PowerShell@2
       displayName: 'Test Unit'
       inputs:
@@ -96,7 +96,7 @@ stages:
       displayName: 'Publish build artifact'
       inputs:
         pathToPublish: 'BuildOutput\Connect-MS365'
-        artifactName: 'Connect-MS365_build'
+        artifactName: 'Connect-MS365'
 - stage: TestIntegration
   displayName: 'Integration Tests'
   jobs:
@@ -117,7 +117,7 @@ stages:
     - task: DownloadBuildArtifacts@0
       displayName: 'Download build artifacts'
       inputs:
-        artifactName: 'Connect-MS365_build'
+        artifactName: 'Connect-MS365'
         downloadPath: 'BuildOutput\Connect-MS365'
     - task: PowerShell@2
       displayName: 'Test Integration'

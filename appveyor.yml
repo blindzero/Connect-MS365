@@ -40,7 +40,7 @@ environment:
     
     - job_name: compile
 
-    - job_name: test_unit
+    - job_name: test_unit_windows
       job_depends_on: compile
 
     - job_name: build
@@ -102,7 +102,7 @@ for:
   -
     matrix:
       only:
-        - job_name: test_unit
+        - job_name: test_unit_windows
     
     build: off
 

@@ -1,13 +1,13 @@
-if (!($env:BHProjectPath)) {
-    Set-BuildEnvironment -Path $PSScriptRoot\..
+BeforeAll {
+    if (!($env:BHProjectPath)) {
+        Set-BuildEnvironment -Path $PSScriptRoot\..
+    }
+
+    #$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
+    $moduleName = $($env:BHProjectName)
+    $ModuleManifest = "$($pwd)\$($moduleName).psd1"
+
 }
-
-#$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
-$moduleName = $($env:BHProjectName)
-$ModuleManifest = "$($pwd)\$($moduleName).psd1"
-
-$TestCredentialArgs = @("some-user@domain.tld",(ConvertTo-SecureString "somePassw0rd" -AsPlainText -Force))
-$TestCredential = New-Object -TypeName PSCredential -ArgumentList $TestCredentialArgs
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {

@@ -5,8 +5,7 @@ BeforeAll {
 
     #$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
     $moduleName = $($env:BHProjectName)
-    $ModuleManifest = "$($pwd)\$($moduleName).psd1"
-
+    $ModuleManifestPath = "$($pwd)\$($moduleName).psd1"
 }
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
@@ -133,7 +132,7 @@ Describe "Function Tests" -Tags ('Unit') {
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path Connect-MS365.psd1 | Should -Not -BeNullOrEmpty
+            Test-ModuleManifest -Path $ModuleManifestPath | Should -Not -BeNullOrEmpty
             $? | Should -Be $true
         }
     }

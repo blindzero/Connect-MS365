@@ -1,10 +1,11 @@
-if (!($env:BHProjectPath)) {
-    Set-BuildEnvironment -Path $PSScriptRoot\..
-}
+BeforeAll {
+    if (!($env:BHProjectPath)) {
+        Set-BuildEnvironment -Path $PSScriptRoot\..
+    }
 
-#$moduleName = $MyInvocation.MyCommand.Name.Split(".")[0]
-$moduleName = $env:BHProjectName
-$ModuleManifestPath = "$($pwd)\$($moduleName).psd1"
+    $moduleName = $env:BHProjectName
+    $ModuleManifestPath = "$($pwd)\$($moduleName).psd1"
+}
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
     Context "Module Setup Tests" {
@@ -128,12 +129,12 @@ Describe "Function Tests" -Tags ('Unit') {
 }
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
-    #Context "Integrated Manifest Test" {
-    #    Write-Host $ModuleManifestPath
-    #    It 'Passes Test-ModuleManifest' {
-    #        Test-ModuleManifest -Path $ModuleManifestPath | Should -Not -Throw
-    #    }
-    #}
+    Context "Integrated Manifest Test" {
+        Write-Host $ModuleManifestPath
+        It 'Passes Test-ModuleManifest' {
+            Test-ModuleManifest -Path $ModuleManifestPath | Should -Not -Throw
+        }
+    }
     Context "Generated ExternalHelp XML Tests" {
         It "Has ExternalHelp XML generated" {
             "$pwd\en-us\$moduleName-help.xml" | Should -Exist

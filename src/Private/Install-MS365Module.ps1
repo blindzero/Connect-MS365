@@ -32,7 +32,7 @@ function Install-MS365Module {
 
     #>
 
-    $InstallCommand = "-Command &{ Install-Module -Name $Module -Scope AllUsers -Force}"
+    $InstallCommand = "-Command &{ Install-Module -Name $Module -Scope CurrentUser -Force}"
     $InstallChoice = Read-Host -Prompt "Module $Module is not present or update was triggered. Perform Install? (Y/n)"
     If (($InstallChoice.Length -eq 0) -or ($InstallChoice.ToLower() -eq "y")) {
         try {

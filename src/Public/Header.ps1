@@ -21,7 +21,7 @@ Specifies the service to connect to. May be a list of multiple services to use.
 Parameter that specifices the organization name for SharePointOnline. Used to create SPO Admin URL.
 
 .PARAMETER ReInitConfig
-Forces to initialize config file in $env:LOCALAPPDATA\Connect-MS365\Connect-MS365.Config.json although file exist.
+Forces to initialize config file in $env:LOCALAPPDATA\Connect-MS365\Connect-MS365.Config.psd1 although file exist.
 
 .INPUTS
 None. You cannot pipe objects to Connect-MS365.

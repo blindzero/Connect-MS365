@@ -27,6 +27,8 @@ Powershell module to connect to all MS365 services and install required packages
 
 ### Fixes
 
+- Fix AAD module installer
+
 ## v1.2.0
 
 ### New Features

@@ -127,20 +127,12 @@ Describe "Function Tests" -Tags ('Unit') {
 }
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
-<<<<<<< HEAD
-    #Context "Integrated Manifest Test" {
-    #    It 'Passes Test-ModuleManifest' {
-    #        Test-ModuleManifest -Path $ModuleManifest | Should -Not -Throw
-    #    }
-    #}
-=======
     Context "Integrated Manifest Test" {
         It 'Passes Test-ModuleManifest' {
             Test-ModuleManifest -Path $ModuleManifest | Should Not BeNullOrEmpty
             $? | Should -Be $true
         }
     }
->>>>>>> 397faf0... changed Be to -Be in Pester for new version
     Context "Generated ExternalHelp XML Tests" {
         It "Has ExternalHelp XML generated" {
             "$pwd\en-us\$moduleName-help.xml" | Should -Exist

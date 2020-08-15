@@ -31,12 +31,11 @@ function Install-MS365Module {
     http://github.com/blindzero/Connect-MS365
 
     #>
-
-    $InstallCommand = "-Command &{ Install-Module -Name $Module -Scope CurrentUser -Force}"
+    
     $InstallChoice = Read-Host -Prompt "Module $Module is not present or update was triggered. Perform Install? (Y/n)"
     If (($InstallChoice.Length -eq 0) -or ($InstallChoice.ToLower() -eq "y")) {
         try {
-            Start-Process -Filepath powershell -ArgumentList $InstallCommand -Verb RunAs -Wait
+            Install-Module -Name $Module -Scope CurrentUser -Force -ErrorAction Stop
         }
         catch {
             $ErrorMessage = $_.Exception.Message

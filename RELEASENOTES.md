@@ -23,6 +23,7 @@ Powershell module to connect to all MS365 services and install required packages
   - splitting build tasks in separate files
   - psakeFile depending on BHBuildEnvironment
   - adding appveyor.xml
+- scope of installed powershell modules changed to 'CurrentUser'
 
 ### Fixes
 

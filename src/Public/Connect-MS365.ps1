@@ -32,6 +32,9 @@ function Connect-MS365 {
     # we initialize our config, all checks if exists or not / overwriting is done in function
     Initialize-Config -Force:$ReInitConfig
 
+    # reading config data
+    Read-Config
+
     # iterating through each service listed in service parameter
     ForEach ($ServiceItem in $Service) {
         Write-Verbose "Create session to Service $ServiceItem"

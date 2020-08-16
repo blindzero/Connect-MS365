@@ -5,8 +5,8 @@ Function PSakeTask-Clean {
         Get-ChildItem -Path $outputDir -Recurse | Remove-Item -Force -Recurse
     }
     else {
-        New-Item $outputDir -ItemType Directory > $null
+        $null = New-Item $outputDir -ItemType Directory
     }
-    New-Item -Path $outputModDir -ItemType Directory | Out-Null
+    $null = New-Item -Path $outputModDir -ItemType Directory
     "`tCleaned previous output directory [$outputDir]`n`tcreated [$outputModDir]"
 }

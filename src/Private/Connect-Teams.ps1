@@ -43,7 +43,7 @@ function Connect-Teams {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        Connect-MicrosoftTeams -ErrorAction Stop | Out-Null
+        $null = Connect-MicrosoftTeams -ErrorAction Stop
     }
     catch {
         $ErrorMessage = $_.Exception.Message

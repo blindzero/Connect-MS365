@@ -18,7 +18,7 @@ param (
 $ErrorActionPreference = 'Stop'
 
 if ($Bootstrap.IsPresent) {
-    Get-PackageProvider -Name Nuget -ForceBootstrap | Out-Null
+    $null = Get-PackageProvider -Name Nuget -ForceBootstrap
     Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
     if (!(Get-Module -Name PSDepend -ListAvailable)) {
         Install-Module -Name PSDepend -Scope CurrentUser -Repository PSGallery

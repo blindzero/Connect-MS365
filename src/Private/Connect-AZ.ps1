@@ -30,7 +30,7 @@ function Connect-AZ {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        Connect-AzAccount | Out-Null
+        $null = Connect-AzAccount
     }
     catch {
         $ErrorMessage = $_.Exception.Message

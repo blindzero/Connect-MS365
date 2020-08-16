@@ -43,7 +43,7 @@ function Connect-SPO {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        Connect-SPOService -Url $SPOOrgUrl -ErrorAction Stop | Out-Null
+        $null = Connect-SPOService -Url $SPOOrgUrl -ErrorAction Stop
     }
     catch {
         $ErrorMessage = $_.Exception.Message

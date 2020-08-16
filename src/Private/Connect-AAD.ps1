@@ -36,7 +36,7 @@ function Connect-AAD {
         Install-MS365Module -Module $ModuleName
     }
     try {
-        Connect-AzureAD | Out-Null
+        $null = Connect-AzureAD
     }
     catch {
         $ErrorMessage = $_.Exception.Message

@@ -36,11 +36,27 @@ function Connect-S4B {
         #S4B module is not available on https://www.powershellgallery.com - must be installed manually
         Write-Error -Message "SkypeOnlineConnector module is not installed.`nPlease download and install it manually from https://www.microsoft.com/en-us/download/details.aspx?id=39366" -Category NotInstalled
         return
-        #Install-MS365Module -Service $ServiceItem
     }
+
+    $ConfigDefaultUPN = $Config['DefaultUserPrincipalName']
+
     try {
         Import-Module SkypeOnlineConnector
-        $sfbSession = New-CsOnlineSession
+    }
+    catch {
+        $ErrorMessage = $_.Exception.Message
+        Write-Error -Message "Could not import module SkypeOnlineConnector.`n$ErrorMessage" -Category ConnectionError
+        Break
+    }
+    try {
+        if ($ConfigDefaultUPN) {
+            Write-Verbose -Message "Connecting to S4B with $ConfigDefaultUPN"
+            $sfbSession = New-CsOnlineSession $ConfigDefaultUPN
+        }
+        else {
+            Write-Verbose -Message "Connecting to S4B with UPN prompt"
+            $sfbSession = New-CsOnlineSession
+        }
         Import-PSSession $sfbSession
     }
     catch {

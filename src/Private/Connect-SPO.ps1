@@ -42,6 +42,7 @@ function Connect-SPO {
         # and install if not available
         Install-MS365Module -Module $ModuleName
     }
+
     try {
         $null = Connect-SPOService -Url $SPOOrgUrl -ErrorAction Stop
     }

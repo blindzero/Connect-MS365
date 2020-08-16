@@ -1,14 +1,14 @@
 ---
 external help file: Connect-MS365-help.xml
 Module Name: Connect-MS365
-online version: https://github.com/blindzero/Connect-MS365
+online version:
 schema: 2.0.0
 ---
 
 # Connect-MS365
 
 ## SYNOPSIS
-Connects to a given online service of Microsoft.
+{{ Fill in the Synopsis }}
 
 ## SYNTAX
 
@@ -23,96 +23,32 @@ Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [[-Credential] <PSC
  [<CommonParameters>]
 ```
 
+### ReInitConfig
+```
+Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [-ReInitConfig] [<CommonParameters>]
+```
+
 ## DESCRIPTION
-Connects to a given online service of Microsoft.
-One or multiple service names can be chosen.
-Supports connection handling for
-- Microsoft Online (MSOL) - aka AzureAD v1
-- Exchange Online (EOL)
-- Teams
-- SharePoint Online (SPO)
-- Security and Compliance Center (SCC)
-- Azure ActiveDirectory (AAD) v2
-- Azure Platform (AZ)
-- Skype for Business Online service (S4B)
+{{ Fill in the Description }}
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```
-Description: Connect to Microsoft Online
-```
-
-Connect-MS365 -Service MSOL
-
-### EXAMPLE 2
-```
-Description: Connect to Microsoft Online and Exchange Online
+### Example 1
+```powershell
+PS C:\> {{ Add example code here }}
 ```
 
-Connect-MS365 -Service MSOL,EOL
-
-### EXAMPLE 3
-```
-Description: Connect to SharePoint Online to connect to MyName-admin.sharepoint.com
-```
-
-Connect-MS365 -Service SPO -SPOOrgName MyName
-
-### EXAMPLE 4
-```
-Description: Connect to Security and Compliance Center
-```
-
-Connect-MS365 -Service SCC
-
-### EXAMPLE 5
-```
-Description: Connect to Azure ActiveDirectory
-```
-
-Connect-MS365 -Service AAD
-
-### EXAMPLE 6
-```
-Description: Connect to Microsoft Azure platform
-```
-
-Connect-MS365 -Service AZ
-
-### EXAMPLE 7
-```
-Description: Connect to Microsoft Skype for Business Online service
-```
-
-Connect-MS365 -Service S4B
+{{ Add example description here }}
 
 ## PARAMETERS
 
-### -Service
-Specifies the service to connect to.
-May be a list of multiple services to use.
+### -Credential
+{{ Fill Credential Description }}
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
+Type: PSCredential
+Parameter Sets: Credential
 Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SPOOrgName
-spoorg parameter for connection to SPO service
-needed by connect cmdlet to assemble admin Url
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: SPOOrg
 
 Required: False
 Position: 3
@@ -121,17 +57,47 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Credential
-Credential parameter to receive previously created PSCredential object.
-Primarily needed for testing calls
+### -ReInitConfig
+{{ Fill ReInitConfig Description }}
 
 ```yaml
-Type: PSCredential
-Parameter Sets: Credential
+Type: SwitchParameter
+Parameter Sets: ReInitConfig
 Aliases:
 
 Required: False
 Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SPOOrgName
+{{ Fill SPOOrgName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: SPOOrg
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Service
+{{ Fill Service Description }}
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+Accepted values: MSOL, EOL, Teams, SPO, SCC, AAD, AZ, S4B
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -142,12 +108,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. You cannot pipe objects to Connect-MS365.
+### None
+
 ## OUTPUTS
 
+### System.Object
 ## NOTES
 
 ## RELATED LINKS
-
-[https://github.com/blindzero/Connect-MS365](https://github.com/blindzero/Connect-MS365)
-

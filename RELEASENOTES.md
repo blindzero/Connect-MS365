@@ -20,6 +20,10 @@ Powershell module to connect to all MS365 services and install required packages
 - config file in $env:LOCALAPPDATA\Connect-MS365\Connect-MS365.Config.psd1 for deffault user settings
   - initializes automatically if not existing
   - switch to re-initialize config if existing ```Connect-MS365 -ReInitConfig```
+- config ```DefaultUserPrinicipalName``` to avoid UPN input, used by
+  - EOL
+  - S4B
+  - SCC
 
 ### Changes
 

@@ -35,8 +35,18 @@ function Connect-SCC {
         # and install if not available
         Install-MS365Module -Module $ModuleName
     }
+
+    $ConfigDefaultUPN = $Config['DefaultUserPrincipalName']
+
     try {
-        Connect-IPPSSession
+        if ($ConfigDefaultUPN) {
+            Write-Verbose -Message "Connecting to SCC with $ConfigDefaultUPN"
+            Connect-IPPSSession -UserPrincipalName $ConfigDefaultUPN
+        }
+        else {
+            Write-Verbose -Message "Connecting to SCC with UPN prompt"
+            Connect-IPPSSession
+        }
     }
     catch {
         $ErrorMessage = $_.Exception.Message

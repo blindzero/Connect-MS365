@@ -42,8 +42,18 @@ function Connect-EOL {
         # and install if not available
         Install-MS365Module -Module $ModuleName
     }
+
+    $ConfigDefaultUPN = $Config['DefaultUserPrincipalName']
+
     try {
-        Connect-ExchangeOnline -ShowProgress $true
+        if ($ConfigDefaultUPN) {
+            Write-Verbose -Message "Connecting to EXO with $ConfigDefaultUPN"
+            Connect-ExchangeOnline -UserPrincipalName $ConfigDefaultUPN -ShowProgress $true -ShowBanner:$false
+        }
+        else {
+            Write-Verbose -Message "Connecting to EXO with UPN prompt"
+            Connect-ExchangeOnline -ShowProgress $true -ShowBanner:$false
+        }
     }
     catch {
         $ErrorMessage = $_.Exception.Message

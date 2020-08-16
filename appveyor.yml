@@ -44,7 +44,7 @@ environment:
       job_depends_on: compile
 
     - job_name: build
-      job_depends_on: test_unit
+      job_depends_on: test_unit_windows
 
     - job_name: test_integration
       job_depends_on: build

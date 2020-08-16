@@ -40,7 +40,8 @@ function Read-Config {
                 foreach ($ConfEntry in $Config.GetEnumerator()) {
                     Write-Verbose -Message "Config $($ConfEntry.Key) = $($ConfEntry.Value)"
                 }
-            } 
+            }
+            return $Config 
         }
         catch {
             $ErrorMessage = $_.Exception.Message

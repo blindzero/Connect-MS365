@@ -33,7 +33,7 @@ function Connect-MS365 {
     Initialize-Config -Force:$ReInitConfig
 
     # reading config data
-    Read-Config
+    $Config = Read-Config
 
     # iterating through each service listed in service parameter
     ForEach ($ServiceItem in $Service) {

@@ -76,6 +76,10 @@ When connecting the necessary module is checked and can be installed autoamtical
 
 For each module invocation the online available version is checked. If a newer version is available, user is prompted for (optional) update.
 
+### Configuration
+
+For configuration see [03-CONFIGURATION.md](03-CONFIGURATION.md).
+
 ### Details
 
 For further details see [Connect-MS365.md](Connect-MS365.md)

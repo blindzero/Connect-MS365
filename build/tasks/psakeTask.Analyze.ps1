@@ -1,4 +1,5 @@
 Function PSakeTask-Analyze {
+    $analysis   = $null
     $analysis   = Invoke-ScriptAnalyzer -Path $outputModDir -Verbose:$false
     $errors     = $analysis | Where-Object { $_.Severity -eq 'Error' }
     $warnings   = $analysis | Where-Object { $_.Severity -eq 'Warning' }

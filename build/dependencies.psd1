@@ -4,7 +4,7 @@
     }
 
     BuildHelpers        = 'latest'
-    Pester              = 'latest'
+    Pester              = '5.0.1'
     platyPS             = 'latest'
     psake               = 'latest'
     PSScriptAnalyzer    = 'latest'

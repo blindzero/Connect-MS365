@@ -103,8 +103,8 @@ stages:
   displayName: 'Integration Tests'
   #condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
-  - job: TestIntegration
-    displayName: 'Integration Tests'
+  - job: TestIntegration_Win
+    displayName: 'Windows Integration Tests'
     pool:
       vmImage: 'windows-latest' 
     steps:

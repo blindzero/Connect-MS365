@@ -2,9 +2,9 @@ BeforeAll {
     if (!($env:BHProjectPath)) {
         Set-BuildEnvironment -Path $PSScriptRoot\..
     }
-
+    
     $moduleName = $env:BHProjectName
-    $ModuleManifestPath = "$($pwd)\$($moduleName).psd1"
+    $ModuleManifestPath = "$pwd\$moduleName.psd1"
 }
 
 Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
@@ -24,7 +24,7 @@ Describe "$moduleName Module Unit Tests" -Tags ('Unit','Integration') {
         }
     }
     Context "Module Paramter Tests" {
-        if (!(Get-Command $moduleName -ErrorAction SilentlyContinue)) {
+        if (!(Get-Command -Name $moduleName -ErrorAction SilentlyContinue)) {
             Import-Module "$($pwd)\$($moduleName).psm1"
         }
 
@@ -130,9 +130,8 @@ Describe "Function Tests" -Tags ('Unit') {
 
 Describe "$moduleName Integration Tests" -Tags ('Integration') {
     Context "Integrated Manifest Test" {
-        Write-Host $ModuleManifestPath
         It 'Passes Test-ModuleManifest' {
-            Test-ModuleManifest -Path $ModuleManifestPath | Should -Not -Throw
+            { Test-ModuleManifest -Path $ModuleManifestPath } | Should -Not -Throw
         }
     }
     Context "Generated ExternalHelp XML Tests" {

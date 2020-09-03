@@ -57,6 +57,15 @@ stages:
             $Pester = (Get-Command Invoke-Pester -Verbose)
             Write-Host $Pester.Verb
             Write-Host $Pester.Version
+            $bugReport = &{
+              $p = Get-Module -Name Pester -ListAvailable | Select-Object -First 1
+              "Pester version     : " + $p.Version + " " + $p.Path
+              "PowerShell version : " + $PSVersionTable.PSVersion
+              "OS version         : " + [System.Environment]::OSVersion.VersionString
+            }
+            $bugReport
+            $bugReport | clip
+
     - task: DownloadPipelineArtifact@2
       displayName: 'Download compile artifacts'
       inputs:

@@ -54,18 +54,7 @@ stages:
             git config --global user.name "Matthias Fleschuetz"
             ./build.ps1 -Bootstrap
             ./build.ps1 Init
-            $Pester = (Get-Command Invoke-Pester -Verbose)
-            Write-Host $Pester.Verb
-            Write-Host $Pester.Version
-            $bugReport = &{
-              $p = Get-Module -Name Pester -ListAvailable | Select-Object -First 1
-              "Pester version     : " + $p.Version + " " + $p.Path
-              "PowerShell version : " + $PSVersionTable.PSVersion
-              "OS version         : " + [System.Environment]::OSVersion.VersionString
-            }
-            $bugReport
-            $bugReport | clip
-
+            Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
     - task: DownloadPipelineArtifact@2
       displayName: 'Download compile artifacts'
       inputs:

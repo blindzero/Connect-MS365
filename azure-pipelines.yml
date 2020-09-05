@@ -60,8 +60,14 @@ stages:
       inputs:
         artifact: 'Connect-MS365_compile'
         path: 'BuildOutput\Connect-MS365'
+    - task: Pester Powershell unittest@2
+      inputs:
+        ItemSpec: '*.tests.ps1'
+        IncludeTags: 'Unit'
+        FailOnError: true
     - task: PowerShell@2
       displayName: 'Test Unit'
+      enabled: false
       inputs:
         targetType: Inline
         script: ./build.ps1 TestUnit

@@ -61,6 +61,7 @@ stages:
         artifact: 'Connect-MS365_compile'
         path: 'BuildOutput\Connect-MS365'
     - task: Pester@10
+      enabled: false
       inputs:
         scriptFolder: '$(System.DefaultWorkingDirectory)\tests\*'
         resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'

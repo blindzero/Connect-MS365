@@ -60,6 +60,14 @@ stages:
       inputs:
         artifact: 'Connect-MS365_compile'
         path: 'BuildOutput\Connect-MS365'
+    - task: Pester@10
+      inputs:
+        scriptFolder: '$(System.DefaultWorkingDirectory)\tests\*'
+        resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
+        tag: 'Unit'
+        usePSCore: False
+        PesterVersion: 'OtherVersion'
+        preferredPesterVersion: '5.0.1'
     - task: Pester Powershell unittest@2
       inputs:
         ItemSpec: '*.tests.ps1'

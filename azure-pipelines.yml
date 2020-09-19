@@ -65,7 +65,7 @@ stages:
       inputs:
         targetType: Inline
         script: |
-          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
+          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force
           ./build.ps1 TestUnit
     - task: PublishTestResults@2
       displayName: 'Publish Unit Test Results'
@@ -130,8 +130,8 @@ stages:
       inputs:
         targetType: Inline
         script: |
-          ./build.ps1 TestIntegration
           Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
+          ./build.ps1 TestIntegration
     - task: PublishTestResults@2
       displayName: 'Publish Integration Test Results'
       inputs:

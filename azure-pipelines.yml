@@ -40,6 +40,7 @@ stages:
       # revision build numbering
       brpatch: $[counter(variables['build.sourcebranchname'], 0)]
       prpatch: $[counter(variables['system.pullrequest.pullrequestid'], 0)]
+      prid: $(system.pullrequest.pullrequestid)
     steps:
       # disabling checkout
       - checkout: none
@@ -58,7 +59,7 @@ stages:
         displayName: Set PR Build Name
         inputs:
           targetType: 'Inline'
-          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-PullRequest.$(prpatch)"
+          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-$(prid).$(prpatch)"
 
 - stage: CompileAndUnitTests
   displayName: 'Compile and Unit Tests'

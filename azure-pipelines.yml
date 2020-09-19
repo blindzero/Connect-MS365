@@ -59,7 +59,7 @@ stages:
         displayName: Set PR Build Name
         inputs:
           targetType: 'Inline'
-          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-$(prnumber).$(prpatch)"
+          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-pr$(prnumber).$(prpatch)"
 
 - stage: CompileAndUnitTests
   displayName: 'Compile and Unit Tests'

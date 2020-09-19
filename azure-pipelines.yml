@@ -55,6 +55,13 @@ stages:
             ./build.ps1 -Bootstrap
             ./build.ps1 Init
             Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
+            $PesterConfiguration = [PesterConfiguration]::Default
+            $PesterConfiguration.Run.Path = $testsDir
+            $PesterConfiguration.Run.PassThru = $True
+            $PesterConfiguration.Filter.Tag = 'Unit'
+            $PesterConfiguration.Should.ErrorAction = 'Continue'
+            $PesterConfiguration.TestResult.Enabled = $true
+            $PesterConfiguration.TestResult.OutputPath = $testResultsXml
     - task: DownloadPipelineArtifact@2
       displayName: 'Download compile artifacts'
       inputs:
@@ -70,6 +77,7 @@ stages:
         PesterVersion: 'OtherVersion'
         preferredPesterVersion: '5.0.1'
     - task: Pester Powershell unittest@2
+      enabled: false
       inputs:
         ItemSpec: '*.tests.ps1'
         IncludeTags: 'Unit'

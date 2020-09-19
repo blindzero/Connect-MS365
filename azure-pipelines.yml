@@ -18,6 +18,9 @@ trigger:
     - 'docs/*'
     - '.github/*'
     - '.vscode/*'
+    - 'LICENSE'
+    - '*.md'
+    - 'build/*'
 
 variables:
   isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]

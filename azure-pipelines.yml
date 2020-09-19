@@ -35,6 +35,7 @@ stages:
   jobs:
   # job for branch versionings if not branch
   - job: Build_Branch_Version_Number
+    displayName: Build Branch Version Number
     condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
     variables:
       # revision build numbering
@@ -60,6 +61,18 @@ stages:
         inputs:
           targetType: 'Inline'
           script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-pr$(prnumber).$(prpatch)"
+  - job: Build_Master_Version_Number
+    displayName: Build Master Version Number
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    variables:
+      build: $[counter(variables['minor'], 0)]
+    steps:
+      # disabling checkout
+      - checkout: none
+      # to major.minor.build if not a pr
+      - powershell: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor).$(build)"
+        name: SetMasterBuildName
+        displayName: Set Master Build Name
 
 - stage: CompileAndUnitTests
   displayName: 'Compile and Unit Tests'

@@ -23,9 +23,35 @@ trigger:
     - 'build/*'
 
 variables:
+  # setting isMaster variable if branch is master
   isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
+  # setting vars for custom semver versioning names
+  major: 1
+  minor: 2
 
 stages:
+- stage: VersionNumbering
+  displayName: Set Version Numbers
+  jobs:
+  # job for branch versionings if not branch
+  - job: Build_Branch_Version_Number
+    condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
+    variables:
+      # revision build numbering
+      brpatch: $[counter(variables['build.sourcebranchname'], 0)]
+      prpatch: $[counter(variables['system.pullrequest.pullrequestid'], 0)]
+    steps:
+      # to major.minor-branch.build if not a pr
+      - PowerShell: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-$(Build.SourceBranchName).$(brpatch)"
+        condition: ne(variables['Build.Reason'], 'PullRequest')
+        name: SetBranchBuildName
+        displayName: Set Branch Build Name
+      # to major.minor-prid.build if a pr
+      - PowerShell: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-PullRequest.$(prpatch)"
+        condition: eq(variables['Build.Reason'], 'PullRequest')
+        name: SetPRBuildName
+        displayName: Set PR Build Name
+
 - stage: CompileAndUnitTests
   displayName: 'Compile and Unit Tests'
   jobs:
@@ -88,6 +114,7 @@ stages:
         testResultsFiles: '**/testResultsUnit.xml'
         mergeTestResults: true
         testRunTitle: 'Unit Tests'
+
 - stage: BuildAndIntegrationTests
   displayName: 'Build and Integration Tests'
   condition: and(succeeded(), eq(variables.isMaster, true))

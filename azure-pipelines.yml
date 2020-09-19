@@ -50,21 +50,6 @@ stages:
       inputs:
         targetPath: 'BuildOutput\Connect-MS365'
         artifactName: 'Connect-MS365_compile'
-    - task: PowerShell@2
-      displayName: 'Test Unit'
-      enabled: true
-      inputs:
-        targetType: Inline
-        script: |
-          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force
-          ./build.ps1 TestUnit
-    - task: PublishTestResults@2
-      displayName: 'Publish Unit Test Results'
-      inputs:
-        testResultsFormat: 'NUnit'
-        testResultsFiles: '**/testResultsUnit.xml'
-        mergeTestResults: true
-        testRunTitle: 'Unit Tests'
   - job: TestUnit_Win
     displayName: 'Windows Unit Tests'
     dependsOn: Compile 

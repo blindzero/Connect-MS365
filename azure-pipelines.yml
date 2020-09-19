@@ -85,7 +85,6 @@ stages:
         mergeTestResults: true
         testRunTitle: 'Unit Tests'
 - stage: TestUnit
-  enabled: false
   displayName: 'Unit Tests'
   jobs:
   - job: TestUnit_Win

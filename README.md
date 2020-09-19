@@ -1,8 +1,8 @@
 ![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/Connect-MS365?include_prereleases)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
 
-![AppVeyor (master)](https://img.shields.io/appveyor/build/blindzero/Connect-MS365/master?label=master&logo=AppVeyor&logoColor=lightgrey)
-![AppVeyor tests (master)](https://img.shields.io/appveyor/tests/blindzero/Connect-MS365/master?label=master:tests&logo=AppVeyor&logoColor=lightgrey&compact_message)
+![Azure DevOps builds (master)](https://img.shields.io/azure-devops/build/BlindZero/3dd0864d-18ff-453c-8140-a5ae329ab8af/1/master?label=master&logo=AzureDevOps&logoColor=lightgrey)
+![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/BlindZero/Connect-MS365/1/master?label=master%3Atests&logo=AzureDevOps&logoColor=lightgrey)
 
 ![GitHub milestone](https://img.shields.io/github/milestones/progress/blindzero/Connect-MS365/5)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/blindzero/Connect-MS365)

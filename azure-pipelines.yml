@@ -93,8 +93,6 @@ stages:
     pool:
       vmImage: 'windows-latest' 
     steps:
-    # disabling checkout
-    - checkout: none
     - task: PowerShell@2
       displayName: 'Build Bootstrap and Init'
       inputs:
@@ -159,8 +157,6 @@ stages:
     pool:
       vmImage: 'windows-latest' 
     steps:
-    # disabling checkout
-    - checkout: none
     - task: PowerShell@2
       displayName: 'Build Bootstrap and Init'
       inputs:

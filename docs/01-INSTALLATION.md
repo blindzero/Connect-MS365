@@ -45,7 +45,7 @@ With this method you may install Connect-MS365 manually to your PowerShell envir
    
    * [GitHub](https://github.com/blindzero/Connect-MS365/releases)
 
-2. __Extract Package__
+2. __Extract Package__ by unzipping the downloaded package.
 
 3. __Install Connect-MS365 Module__
 

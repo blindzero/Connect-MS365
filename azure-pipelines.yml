@@ -4,10 +4,20 @@
 # https://aka.ms/yaml
 
 trigger:
+  # just to be sure not too many parallel runs of pipeline
+  batch: true
   branches:
     include:
       - master
       - feature/*
+  paths:
+    include:
+    - '*' # same as '/' for the repository root
+    exclude:
+    # exclude some directories that dont need any pipeline run
+    - 'docs/*'
+    - '.github/*'
+    - '.vscode/*'
 
 stages:
 - stage: Compile

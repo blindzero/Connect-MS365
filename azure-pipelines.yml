@@ -59,21 +59,6 @@ stages:
       inputs:
         artifact: 'Connect-MS365_compile'
         path: 'BuildOutput\Connect-MS365'
-    - task: Pester@10
-      enabled: false
-      inputs:
-        scriptFolder: '$(System.DefaultWorkingDirectory)\tests\*'
-        resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
-        tag: 'Unit'
-        usePSCore: False
-        PesterVersion: 'OtherVersion'
-        preferredPesterVersion: '5.0.1'
-    - task: Pester Powershell unittest@2
-      enabled: false
-      inputs:
-        ItemSpec: '*.tests.ps1'
-        IncludeTags: 'Unit'
-        FailOnError: true
     - task: PowerShell@2
       displayName: 'Test Unit'
       enabled: true
@@ -144,7 +129,9 @@ stages:
       displayName: 'Test Integration'
       inputs:
         targetType: Inline
-        script: ./build.ps1 TestIntegration
+        script: |
+          ./build.ps1 TestIntegration
+          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
     - task: PublishTestResults@2
       displayName: 'Publish Integration Test Results'
       inputs:

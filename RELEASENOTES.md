@@ -27,10 +27,10 @@ Powershell module to connect to all MS365 services and install required packages
 
 ### Changes
 
-- implementing AppVeyor
+- implementing Azure Pipelines
   - splitting build tasks in separate files
   - psakeFile depending on BHBuildEnvironment
-  - adding appveyor.xml
+  - adding azure-pipelines.yml
 - scope of installed powershell modules changed to 'CurrentUser'
 
 ### Fixes

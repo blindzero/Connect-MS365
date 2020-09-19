@@ -54,7 +54,6 @@ stages:
             git config --global user.name "Matthias Fleschuetz"
             ./build.ps1 -Bootstrap
             ./build.ps1 Init
-            Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
     - task: DownloadPipelineArtifact@2
       displayName: 'Download compile artifacts'
       inputs:
@@ -80,7 +79,9 @@ stages:
       enabled: true
       inputs:
         targetType: Inline
-        script: ./build.ps1 TestUnit
+        script: |
+          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force -Verbose
+          ./build.ps1 TestUnit
     - task: PublishTestResults@2
       displayName: 'Publish Unit Test Results'
       inputs:

@@ -50,12 +50,41 @@ stages:
       inputs:
         targetPath: 'BuildOutput\Connect-MS365'
         artifactName: 'Connect-MS365_compile'
+        - task: PowerShell@2
+        displayName: 'Test Unit'
+        enabled: true
+        inputs:
+          targetType: Inline
+          script: |
+            Import-Module -Name Pester -MinimumVersion 5.0.1 -Force
+            ./build.ps1 TestUnit
+    - task: PublishTestResults@2
+      displayName: 'Publish Unit Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**/testResultsUnit.xml'
+        mergeTestResults: true
+        testRunTitle: 'Unit Tests'
   - job: TestUnit_Win
     displayName: 'Windows Unit Tests'
     dependsOn: Compile 
     pool:
       vmImage: 'windows-latest' 
     steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+            git config --global user.email 13959569+blindzero@users.noreply.github.com
+            git config --global user.name "Matthias Fleschuetz"
+            ./build.ps1 -Bootstrap
+            ./build.ps1 Init
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download compile artifacts'
+      inputs:
+        artifact: 'Connect-MS365_compile'
+        path: 'BuildOutput\Connect-MS365'
     - task: PowerShell@2
       displayName: 'Test Unit'
       enabled: true
@@ -71,8 +100,8 @@ stages:
         testResultsFiles: '**/testResultsUnit.xml'
         mergeTestResults: true
         testRunTitle: 'Unit Tests'
-- stage: Build
-  displayName: 'Build'
+- stage: BuildAndIntegrationTests
+  displayName: 'Build and Integration Tests'
   condition: and(succeeded(), eq(variables.isMaster, true))
   jobs:
   - job: Build
@@ -99,12 +128,9 @@ stages:
       inputs:
         pathToPublish: 'BuildOutput\Connect-MS365'
         artifactName: 'Connect-MS365'
-- stage: TestIntegration
-  displayName: 'Integration Tests'
-  condition: and(succeeded(), eq(variables.isMaster, true))
-  jobs:
   - job: TestIntegration_Win
     displayName: 'Windows Integration Tests'
+    dependsOn: Build
     pool:
       vmImage: 'windows-latest' 
     steps:
@@ -135,4 +161,4 @@ stages:
         testResultsFormat: 'NUnit'
         testResultsFiles: '**/testResultsIntegration.xml'
         mergeTestResults: true
-        testRunTitle: 'Integration Tests'      
+        testRunTitle: 'Integration Tests'   

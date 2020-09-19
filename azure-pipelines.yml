@@ -41,6 +41,8 @@ stages:
       brpatch: $[counter(variables['build.sourcebranchname'], 0)]
       prpatch: $[counter(variables['system.pullrequest.pullrequestid'], 0)]
     steps:
+      # disabling checkout
+      - checkout: none
       # to major.minor-branch.build if not a pr
       - task: PowerShell@2
         condition: ne(variables['Build.Reason'], 'PullRequest')
@@ -91,6 +93,8 @@ stages:
     pool:
       vmImage: 'windows-latest' 
     steps:
+    # disabling checkout
+    - checkout: none
     - task: PowerShell@2
       displayName: 'Build Bootstrap and Init'
       inputs:
@@ -155,6 +159,8 @@ stages:
     pool:
       vmImage: 'windows-latest' 
     steps:
+    # disabling checkout
+    - checkout: none
     - task: PowerShell@2
       displayName: 'Build Bootstrap and Init'
       inputs:

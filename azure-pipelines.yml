@@ -50,7 +50,42 @@ stages:
       inputs:
         targetPath: 'BuildOutput\Connect-MS365'
         artifactName: 'Connect-MS365_compile'
+  - job: TestUnit_Win
+    displayName: 'Windows Unit Tests'
+    pool:
+      vmImage: 'windows-latest' 
+    steps:
+    - task: PowerShell@2
+      displayName: 'Build Bootstrap and Init'
+      inputs:
+        targetType: 'Inline'
+        script: |
+            git config --global user.email 13959569+blindzero@users.noreply.github.com
+            git config --global user.name "Matthias Fleschuetz"
+            ./build.ps1 -Bootstrap
+            ./build.ps1 Init
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download compile artifacts'
+      inputs:
+        artifact: 'Connect-MS365_compile'
+        path: 'BuildOutput\Connect-MS365'
+    - task: PowerShell@2
+      displayName: 'Test Unit'
+      enabled: true
+      inputs:
+        targetType: Inline
+        script: |
+          Import-Module -Name Pester -MinimumVersion 5.0.1 -Force
+          ./build.ps1 TestUnit
+    - task: PublishTestResults@2
+      displayName: 'Publish Unit Test Results'
+      inputs:
+        testResultsFormat: 'NUnit'
+        testResultsFiles: '**/testResultsUnit.xml'
+        mergeTestResults: true
+        testRunTitle: 'Unit Tests'
 - stage: TestUnit
+  enabled: false
   displayName: 'Unit Tests'
   jobs:
   - job: TestUnit_Win

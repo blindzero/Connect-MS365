@@ -42,15 +42,21 @@ stages:
       prpatch: $[counter(variables['system.pullrequest.pullrequestid'], 0)]
     steps:
       # to major.minor-branch.build if not a pr
-      - PowerShell: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-$(Build.SourceBranchName).$(brpatch)"
+      - task: PowerShell@2
         condition: ne(variables['Build.Reason'], 'PullRequest')
         name: SetBranchBuildName
         displayName: Set Branch Build Name
+        inputs:
+          targetType: 'Inline'
+          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-$(Build.SourceBranchName).$(brpatch)"
       # to major.minor-prid.build if a pr
-      - PowerShell: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-PullRequest.$(prpatch)"
+      - task: PowerShell@2
         condition: eq(variables['Build.Reason'], 'PullRequest')
         name: SetPRBuildName
         displayName: Set PR Build Name
+        inputs:
+          targetType: 'Inline'
+          script: Write-Host "##vso[build.updatebuildnumber]$(major).$(minor)-PullRequest.$(prpatch)"
 
 - stage: CompileAndUnitTests
   displayName: 'Compile and Unit Tests'

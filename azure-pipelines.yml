@@ -23,8 +23,8 @@ variables:
   isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 
 stages:
-- stage: Compile
-  displayName: 'Compile'
+- stage: CompileAndUnitTests
+  displayName: 'Compile and Unit Tests'
   jobs:
   - job: Compile
     displayName: 'Compile'
@@ -52,6 +52,7 @@ stages:
         artifactName: 'Connect-MS365_compile'
   - job: TestUnit_Win
     displayName: 'Windows Unit Tests'
+    dependsOn: Compile 
     pool:
       vmImage: 'windows-latest' 
     steps:

@@ -27,7 +27,7 @@ variables:
   isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   # setting vars for custom semver versioning names
   major: 1
-  minor: 2
+  minor: 3
 
 stages:
 - stage: VersionNumbering

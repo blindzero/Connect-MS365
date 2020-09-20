@@ -28,6 +28,8 @@ Additionally I wanted to add some advanced functions like installing and updatin
 
 See the [docs](/docs) directory for full documentation.
 
+* Release Notes: [RELEASENOTES.md](RELEASENOTES.md)
+  Previous Versions: [00-RELEASENOTES.md](/docs/00-RELEASENOTES.md)
 * Installation: [01-INSTALLATION.md](/docs/01-INSTALLATION.md)
 * Usage: [02-USAGE.md](/docs/02-USAGE.md)
 

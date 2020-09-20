@@ -37,6 +37,8 @@ stages:
   - job: Build_Branch_Version_Number
     displayName: Build Branch Version Number
     condition: ne(variables['Build.SourceBranch'], 'refs/heads/master')
+    pool:
+      vmImage: 'windows-latest'
     variables:
       # revision build numbering
       brpatch: $[counter(variables['build.sourcebranchname'], 0)]
@@ -64,6 +66,8 @@ stages:
   - job: Build_Master_Version_Number
     displayName: Build Master Version Number
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    pool:
+      vmImage: 'windows-latest'
     variables:
       build: $[counter(variables['minor'], 0)]
     steps:

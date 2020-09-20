@@ -206,13 +206,3 @@ stages:
         testResultsFiles: '**/testResultsIntegration.xml'
         mergeTestResults: true
         testRunTitle: 'Integration Tests'
-    - task: PowerShell@2
-      displayName: 'Push Manifest to Git'
-      inputs:
-        targetType: Inline
-        script: |
-          git add .
-          git status
-          git commit
-          
-

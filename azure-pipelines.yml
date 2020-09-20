@@ -205,4 +205,12 @@ stages:
         testResultsFormat: 'NUnit'
         testResultsFiles: '**/testResultsIntegration.xml'
         mergeTestResults: true
-        testRunTitle: 'Integration Tests'   
+        testRunTitle: 'Integration Tests'
+    - task: PowerShell@2
+      displayName: 'Push Manifest to Git'
+      inputs:
+        targetType: Inline
+        script: |
+          git add .\Connect-MS365.psd1
+          git commit
+          git push

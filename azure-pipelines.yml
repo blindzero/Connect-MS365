@@ -91,6 +91,13 @@ stages:
           git config --global user.name Matthias Fleschuetz
           ./build.ps1 -Bootstrap
           ./build.ps1 Init
+    - task: VersionPowerShellModule@2
+      displayName: 'Set Version in module manifest'
+      inputs:
+        Path: '$(Build.SourcesDirectory)/Connect-MS365.psd1'
+        VersionNumber: '$(Build.BuildNumber)'
+        InjectVersion: true
+        OutputVersion: 'OutputedVersion'
     - task: PowerShell@2
       displayName: 'Build Compile'
       inputs:

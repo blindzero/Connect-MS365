@@ -11,9 +11,9 @@ name: Build and Compile Master
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 #  schedule:
 #    - cron: '45 16 * * 6'
     

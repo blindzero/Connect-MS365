@@ -11,9 +11,9 @@ name: Build and Compile Master
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 #  schedule:
 #    - cron: '45 16 * * 6'
     
@@ -22,27 +22,20 @@ permissions:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        psversion: [5]
+        os: [windows-latest]
     permissions:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-    name: PSScriptAnalyzer
-    runs-on: ubuntu-latest
+    name: Build Master
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-
-      - name: Run PSScriptAnalyzer
-        uses: microsoft/psscriptanalyzer-action@2044ae068e37d0161fa2127de04c19633882f061
-        with:
-          # Check https://github.com/microsoft/action-psscriptanalyzer for more info about the options.
-          # The below set up runs PSScriptAnalyzer to your entire repository and runs some basic security rules.
-          path: .\
-          recurse: true 
-          # Include your own basic security rules. Removing this option will run all the rules 
-          includeRule: '"PSAvoidGlobalAliases", "PSAvoidUsingConvertToSecureStringWithPlainText"'
-          output: results.sarif
-      
-      # Upload the SARIF file generated in the previous step
-      - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: results.sarif
+      - name: Bootstrap environment dependencies
+        run: .\build.ps1 -Bootstrap
+        shell: powershell
+      - name: Compile Module
+        run: .\build.ps1 Compile
+        shell: powershell

@@ -33,7 +33,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup PowerShell module cache Windows
+      - name: Setup PowerShell module cache ${{ runner.os }}
         if: startsWith( ${{ matrix.os }}, windows- )
         id: cacher
         uses: actions/cache@v3
@@ -42,7 +42,7 @@ jobs:
             C:\Users\runneradmin\Documents\PowerShell\Modules
             C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
             C:\Modules\*
-          key: ${{ runner.os }}-${{ runner.psversion }}-ConnectMS365
+          key: ${{ runner.os }}-${{ matrix.psversion }}-ConnectMS365
       - name: Trust PSGallery
         shell: powershell
         run: |

@@ -54,13 +54,19 @@ jobs:
       - name: Compile Module
         run: .\build.ps1 Compile
         shell: powershell
+      - name: Upload Compile Output
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-Compile-Artificats
+          path: .\BuildOutput\Connect-MS365\*
+        if: ${{ always() }}
       - name: PSScriptAnalyzer
         shell: powershell
         run: .\build.ps1 Analyze
       - name: Pester Unit
         shell: powershell
         run: .\build.ps1 TestUnit
-      - name: Upload test results
+      - name: Upload Pester Test Results
         uses: actions/upload-artifact@v3
         with:
           name: windows-Unit-Tests

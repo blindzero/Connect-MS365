@@ -60,3 +60,9 @@ jobs:
       - name: Pester Unit
         shell: powershell
         run: .\build.ps1 TestUnit
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-Unit-Tests
+          path: .\BuildOutput\testResultsUnit.xml
+        if: ${{ always() }}

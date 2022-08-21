@@ -29,6 +29,8 @@ Function PSakeTask-PesterUnit {
     $null = Set-Location -PassThru $outputModDir
     # invoke real testing based on configuration object
     $testResults = Invoke-Pester -Configuration $PesterConfiguration
+    Write-Verbose -Message "FailedCount: $($testResults.FailedCount)"
+    Write-Verbose -Message "PesterConfiguration: $PesterConfiguration"
 
     if ($testResults.FailedCount -gt 0) {
         $testFailedCount = $testResults.FailedCount

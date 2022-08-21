@@ -1,6 +1,8 @@
 ![PowerShell Gallery Version (including pre-releases)](https://img.shields.io/powershellgallery/v/Connect-MS365?include_prereleases)
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/Connect-MS365)
 
+[![Build and Compile Master](https://github.com/blindzero/Connect-MS365/actions/workflows/master-compile.yml/badge.svg)](https://github.com/blindzero/Connect-MS365/actions/workflows/master-compile.yml)
+
 ![Azure DevOps builds (master)](https://img.shields.io/azure-devops/build/BlindZero/3dd0864d-18ff-453c-8140-a5ae329ab8af/1/master?label=master&logo=AzureDevOps&logoColor=lightgrey)
 ![Azure DevOps tests (master)](https://img.shields.io/azure-devops/tests/BlindZero/Connect-MS365/1/master?label=master%3Atests&logo=AzureDevOps&logoColor=lightgrey)
 

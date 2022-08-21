@@ -33,7 +33,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
+      - name: Setup PowerShell module cache Windows
+        if: startsWith( ${{ matrix.os }}, windows- )
+        id: cacher
+        uses: actions/cache@v3
+        with:
+          path: |
+            C:\Users\runneradmin\Documents\PowerShell\Modules
+            C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
+            C:\Modules\*
+          key: ${{ runner.os }}-${{ runner.version }}-ConnectMS365
+      - name: Trust PSGallery
+        shell: powershell
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
       - name: Bootstrap environment dependencies
+        if: steps.cacher.outputs.cache-hit != 'true'
         run: .\build.ps1 -Bootstrap
         shell: powershell
       - name: Compile Module

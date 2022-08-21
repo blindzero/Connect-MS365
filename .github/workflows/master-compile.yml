@@ -57,3 +57,6 @@ jobs:
       - name: PSScriptAnalyzer
         shell: powershell
         run: .\build.ps1 Analyze
+      - name: Pester Unit
+        shell: powershell
+        run: .\build.ps1 TestUnit

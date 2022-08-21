@@ -42,7 +42,7 @@ jobs:
             C:\Users\runneradmin\Documents\PowerShell\Modules
             C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
             C:\Modules\*
-          key: ${{ runner.os }}-${{ runner.version }}-ConnectMS365
+          key: ${{ runner.os }}-${{ runner.psversion }}-ConnectMS365
       - name: Trust PSGallery
         shell: powershell
         run: |

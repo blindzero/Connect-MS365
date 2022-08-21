@@ -54,3 +54,6 @@ jobs:
       - name: Compile Module
         run: .\build.ps1 Compile
         shell: powershell
+      - name: PSScriptAnalyzer
+        shell: powershell
+        run: .\build.ps1 Analyze

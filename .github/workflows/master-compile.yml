@@ -41,7 +41,6 @@ jobs:
           path: |
             C:\Users\runneradmin\Documents\PowerShell\Modules
             C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
-            C:\Modules\*
           key: ${{ runner.os }}-${{ matrix.psversion }}-ConnectMS365
       - name: Trust PSGallery
         shell: powershell

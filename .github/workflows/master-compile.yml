@@ -65,7 +65,9 @@ jobs:
         run: .\build.ps1 Analyze
       - name: Pester Unit
         shell: powershell
-        run: .\build.ps1 TestUnit
+        run: |
+          $VerbosePreference = "Continue"
+          .\build.ps1 TestUnit
       - name: Upload Pester Test Results
         uses: actions/upload-artifact@v3
         with:

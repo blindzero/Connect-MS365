@@ -1,3 +1,4 @@
+[CmdletBinding]
 ## hopefully including by wildcards
 ## issue #299 at psake
 Include psake.properties.ps1

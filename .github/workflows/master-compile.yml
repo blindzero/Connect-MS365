@@ -66,10 +66,33 @@ jobs:
         shell: powershell
         run: |
           $VerbosePreference = "Continue"
-          .\build.ps1 TestUnit
+          .\build.ps1 PesterUnit
       - name: Upload Pester Test Results
         uses: actions/upload-artifact@v3
         with:
           name: windows-Unit-Tests
           path: .\BuildOutput\testResultsUnit.xml
+        if: ${{ always() }}
+      - name: Create Help Files
+        shell: powershell
+        run: |
+          .\build.ps1 CreateMDHelp
+          .\build.ps1 UpdateMDHelp
+          .\build.ps1 CreateExternalHelp
+      - name: Build Package
+        shell: powershell
+        run: .\build.ps1 Build
+      - name: Build Package
+        shell: powershell
+        run: .\build.ps1 Build
+      - name: Pester Integration
+        shell: powershell
+        run: |
+          $VerbosePreference = "Continue"
+          .\build.ps1 PesterIntegration
+      - name: Upload Pester Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-Integration-Tests
+          path: .\BuildOutput\testResultsIntegration.xml
         if: ${{ always() }}

@@ -41,7 +41,6 @@ jobs:
           path: |
             C:\Users\runneradmin\Documents\PowerShell\Modules
             C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
-            C:\Modules\*
           key: ${{ runner.os }}-${{ matrix.psversion }}-ConnectMS365
       - name: Trust PSGallery
         shell: powershell
@@ -65,7 +64,9 @@ jobs:
         run: .\build.ps1 Analyze
       - name: Pester Unit
         shell: powershell
-        run: .\build.ps1 TestUnit
+        run: |
+          $VerbosePreference = "Continue"
+          .\build.ps1 TestUnit
       - name: Upload Pester Test Results
         uses: actions/upload-artifact@v3
         with:

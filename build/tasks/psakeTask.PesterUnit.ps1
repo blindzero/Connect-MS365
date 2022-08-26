@@ -1,4 +1,6 @@
 Function PSakeTask-PesterUnit {
+    [CmdletBinding]
+    
     Push-Location
     if (!($env:BHProjectPath)) {
         Set-BuildEnvironment -Path $PSScriptRoot
@@ -29,8 +31,7 @@ Function PSakeTask-PesterUnit {
     $null = Set-Location -PassThru $outputModDir
     # invoke real testing based on configuration object
     $testResults = Invoke-Pester -Configuration $PesterConfiguration
-    Write-Verbose -Message "FailedCount: $($testResults.FailedCount)"
-    Write-Verbose -Message "PesterConfiguration: $PesterConfiguration"
+    Write-Host "FailedCount: $($testResults.FailedCount)"
 
     if ($testResults.FailedCount -gt 0) {
         $testFailedCount = $testResults.FailedCount

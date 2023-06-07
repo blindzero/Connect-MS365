@@ -8,32 +8,38 @@ schema: 2.0.0
 # Connect-MS365
 
 ## SYNOPSIS
+
 {{ Fill in the Synopsis }}
 
 ## SYNTAX
 
 ### True (Default)
-```
+
+```powershell
 Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [<CommonParameters>]
 ```
 
 ### Credential
-```
+
+```powershell
 Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [[-Credential] <PSCredential>]
  [<CommonParameters>]
 ```
 
 ### ReInitConfig
-```
+
+```powershell
 Connect-MS365 [-Service] <String[]> [[-SPOOrgName] <String>] [-ReInitConfig] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 {{ Fill in the Description }}
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 PS C:\> {{ Add example code here }}
 ```
@@ -58,6 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReInitConfig
+
 {{ Fill ReInitConfig Description }}
 
 ```yaml
@@ -73,6 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -SPOOrgName
+
 {{ Fill SPOOrgName Description }}
 
 ```yaml
@@ -88,6 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -Service
+
 {{ Fill Service Description }}
 
 ```yaml
@@ -104,15 +113,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### Keine
+### None
 
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS

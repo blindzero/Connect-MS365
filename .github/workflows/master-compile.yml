@@ -48,7 +48,11 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
       - name: Bootstrap environment dependencies
         if: steps.cacher.outputs.cache-hit != 'true'
-        run: .\build.ps1 -Bootstrap
+        run: |
+          .\build.ps1 -Bootstrap
+          Remove-Module -Name Pester -Force
+          Install-Module -Name Pester -Force
+          Import-Module -Name Pester -Force
         shell: powershell
       - name: Compile Module
         run: .\build.ps1 Compile

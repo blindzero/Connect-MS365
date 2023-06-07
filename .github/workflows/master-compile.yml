@@ -24,7 +24,7 @@ jobs:
   build:
     strategy:
       matrix:
-        psversion: [5,7]
+        psversion: [5]
         os: [windows-latest]
     permissions:
       contents: read # for actions/checkout to fetch code
@@ -42,22 +42,33 @@ jobs:
             C:\Users\runneradmin\Documents\PowerShell\Modules
             C:\Users\runneradmin\Documents\WindowsPowerShell\Modules
           key: ${{ runner.os }}-${{ matrix.psversion }}-ConnectMS365
-      - name: Trust PSGallery
+      - name: Trust PSGallery (PS5)
+        if: matrix.psversion == 5
         shell: powershell
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-      - name: Bootstrap environment dependencies
-        if: steps.cacher.outputs.cache-hit != 'true'
+      - name: Trust PSGallery (PS7)
+        if: matrix.psversion == 7
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+      - name: Bootstrap environment dependencies (PS5)
+        if: steps.cacher.outputs.cache-hit != 'true' && matrix.psversion == 5
         run: .\build.ps1 -Bootstrap
         shell: powershell
-      - name: DEBUG - PESTER SETUP
+      - name: Bootstrap environment dependencies (PS7)
+        if: steps.cacher.outputs.cache-hit != 'true' && matrix.psversion == 7
+        run: .\build.ps1 -Bootstrap
+        shell: pwsh
+      - name: DEBUG - PESTER SETUP PS5
         if: steps.cacher.outputs.cache-hit != 'true'
         run: |
           Remove-Module -Name Pester -Force -ErrorAction Continue
-          Install-Module -Name Pester -Force
-          Import-Module -Name Pester -Force
+          Install-Module -Name Pester -Force -ErrorAction Stop
+          Import-Module -Name Pester -Force -ErrorAction Stop
         shell: powershell
-      - name: Compile Module
+      - name: Compile Module PS5
+        if: matrix.psversion == 5
         run: .\build.ps1 Compile
         shell: powershell
       - name: Upload Compile Output
@@ -66,33 +77,38 @@ jobs:
           name: Connect-MS365_${{ runner.os }}_${{ matrix.psversion }}
           path: .\BuildOutput\Connect-MS365\*
         if: ${{ always() }}
-      - name: PSScriptAnalyzer
-        shell: powershell
+      - name: PSScriptAnalyzer PS5
+        if: matrix.psversion == 5
         run: .\build.ps1 Analyze
-      - name: Pester Unit
         shell: powershell
+      - name: Pester Unit PS5
+        if: matrix.psversion == 5
         run: |
           $VerbosePreference = "Continue"
           .\build.ps1 PesterUnit
+        shell: powershell
       - name: Upload Pester Unit Test Results
         uses: actions/upload-artifact@v3
         with:
           name: windows-Unit-Tests
           path: .\BuildOutput\testResultsUnit.xml
-      - name: Create Help Files
-        shell: powershell
+      - name: Create Help Files PS5
+        if: matrix.psversion == 5
         run: |
           .\build.ps1 CreateMDHelp
           .\build.ps1 UpdateMDHelp
           .\build.ps1 CreateExternalHelp
-      - name: Build Package
         shell: powershell
+      - name: Build Package PS5
+        if: matrix.psversion == 5
         run: .\build.ps1 Build
-      - name: Pester Integration
         shell: powershell
+      - name: Pester Integration
+        if: matrix.psversion == 5
         run: |
           $VerbosePreference = "Continue"
           .\build.ps1 PesterIntegration
+        shell: powershell
       - name: Upload Pester Integration Test Results
         uses: actions/upload-artifact@v3
         with:

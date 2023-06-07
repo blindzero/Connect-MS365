@@ -24,7 +24,7 @@ jobs:
   build:
     strategy:
       matrix:
-        psversion: [5]
+        psversion: [5,7]
         os: [windows-latest]
     permissions:
       contents: read # for actions/checkout to fetch code

@@ -85,6 +85,7 @@ jobs:
         if: matrix.psversion == 5
         run: |
           $VerbosePreference = "Continue"
+          Get-Module -Name Pester -ListAvailable
           .\build.ps1 PesterUnit
         shell: powershell
       - name: Upload Pester Unit Test Results

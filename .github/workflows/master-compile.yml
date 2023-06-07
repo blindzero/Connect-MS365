@@ -63,9 +63,9 @@ jobs:
       - name: DEBUG - PESTER SETUP PS5
         if: steps.cacher.outputs.cache-hit != 'true'
         run: |
-          Remove-Module -Name Pester -Force -ErrorAction Continue
-          Install-Module -Name Pester -Force -ErrorAction Stop
-          Import-Module -Name Pester -Force -ErrorAction Stop
+          Remove-Module -Name Pester -Force -Verbose -ErrorAction Continue
+          Install-Module -Name Pester -Force -Verbose -ErrorAction Stop
+          Import-Module -Name Pester -Force -Verbose -ErrorAction Stop
         shell: powershell
       - name: Compile Module PS5
         if: matrix.psversion == 5

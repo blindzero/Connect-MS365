@@ -135,16 +135,6 @@ function Connect-MS365 {
                 Connect-SPO -SPOOrgUrl $SPOOrgUrl
                 continue
             }
-            # S4B Service
-            S4B {
-                $ServiceName = "Microsoft Skype4Business"
-                $ModuleName = "SkypeOnlineConnector"
-                $ModuleFindString = $ModuleName
-
-                Connect-S4B
-                continue
-            }
-
         }
         Write-Verbose "Create session to Service $ServiceItem ended."
     }

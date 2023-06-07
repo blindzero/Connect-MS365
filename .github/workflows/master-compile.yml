@@ -53,7 +53,7 @@ jobs:
       - name: DEBUG - PESTER SETUP
         if: steps.cacher.outputs.cache-hit != 'true'
         run: |
-          Remove-Module -Name Pester -Force
+          Remove-Module -Name Pester -Force -ErrorAction Continue
           Install-Module -Name Pester -Force
           Import-Module -Name Pester -Force
         shell: powershell

@@ -29,7 +29,7 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
-    name: Build Master
+    name: Build ${{ github.ref_name }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3

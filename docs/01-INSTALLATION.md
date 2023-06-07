@@ -6,12 +6,15 @@
 
 The following requirements must be installed _prior_ installation of Connect-MS365.
 
-* [PowerShell v5.1](https://www.microsoft.com/en-us/download/details.aspx?id=54616)
+* [PowerShell v5.1](https://www.microsoft.com/en-us/download/details.aspx?id=54616) or
+  [PowerShell v7.3.4](https://github.com/PowerShell/powershell/releases)
 
   Check your PS version with `$PSVersionTable`.
   We need at least Version 5.1 on Desktop edition.
+  Core edition is tested with PowerShell 7.3.4, but may work with earlier versions as well.
 
-* [PowerShellGet]() (should be available automatically)
+* [PowerShellGet](https://learn.microsoft.com/en-us/powershell/gallery/powershellget/overview)
+  (should be available automatically)
 
   Check if available with
   
@@ -24,6 +27,11 @@ The following requirements must be installed _prior_ installation of Connect-MS3
   ```powershell
   Install-Module -Name PowerShellGet -Force
   ```
+
+* [ExchangeOnlineManagement Module v3](https://www.powershellgallery.com/packages/ExchangeOnlineManagement) - if used with PS Core 7
+
+  It is recommended to use EXOv3 module with PowerShell 7 as authentication issues may occure if older EXO modules are used.
+  If you face any issue that authentication libraries cannot be loaded, make sure that EXOv3 is installed and available for `Connect-MS365`.
 
 ### Installation
 
@@ -42,7 +50,7 @@ With this method you may install Connect-MS365 manually to your PowerShell envir
 1. __Download Connect-MS365__ from one of the following sources
 
    * [PowerShellGallery Package](https://www.powershellgallery.com/packages/Connect-MS365#manual-download)
-   
+
    * [GitHub](https://github.com/blindzero/Connect-MS365/releases)
 
 2. __Extract Package__ by unzipping the downloaded package.

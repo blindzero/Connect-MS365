@@ -15,7 +15,7 @@ RootModule = 'Connect-MS365.psm1'
 ModuleVersion = '1.3.0'
 
 # Supported PSEditions
-CompatiblePSEditions = @('PSEdition_Desktop','Desktop')
+CompatiblePSEditions = @('PSEdition_Desktop','Desktop','PSEdition_Core','Core')
 
 # ID used to uniquely identify this module
 GUID = '57ba2e99-b943-4f13-86a6-adca8db16f93'
@@ -97,7 +97,8 @@ PrivateData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
         Tags = @(
-            'PSEdition_Desktop','Windows',
+            'PSEdition_Desktop','Desktop','Windows',
+            'PSEdition_Core','Core','Linux','MacOS'
             'Microsoft_365','MS_365','Microsoft365','MS365',
             'O365','Office_365','Office365','Microsoft_Online','MSOL',
             'Exchange_Online','ExchangeOnline','EOL',

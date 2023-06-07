@@ -9,6 +9,7 @@
 ![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/blindzero/Connect-MS365)
 
 # Connect-MS365
+
 Powershell module to connect to all MS365 services and install required modules or packages.
 
 ## Purpose
@@ -22,6 +23,15 @@ Additionally it checks and installs the right modules or packages if necessary.
 It is inspired by Connect-Office365 by [Bradley Wyatt](https://github.com/bwya77) which I found and used for a while.
 As it wasn't published it was something I had to keep and distribute again and again.
 Additionally I wanted to add some advanced functions like installing and updating the dependant Microsoft modules.
+
+## Limitations
+
+Unfortunately, adding PowerShell Core support (a.k.a. PowerShell 7) brought some limitations for supported Microsoft 365 services as the required modules do not support PowerShell Core. 
+Following Microsoft 365 services are _**NOT**_ supported when using PowerShell 7 / PowerShell core:
+
+* SharePoint Online (SPO)
+* Microsoft Online (MSOL)
+* Microsoft Azure AD (AAD)
 
 ## Documentation
 
@@ -52,6 +62,7 @@ I use the following toolstake to develop and distribute this module:
 For further details please see [03-CONTRIBUTE](/docs/03-CONTRIBUTE.md)
 
 ### Maintainer
+
 * [blindzero](https://github.com/blindzero)
 * ...anybody else?
 

@@ -24,7 +24,7 @@ jobs:
   build:
     strategy:
       matrix:
-        psversion: [5]
+        psversion: [5,7]
         os: [windows-latest]
     permissions:
       contents: read # for actions/checkout to fetch code
@@ -67,12 +67,11 @@ jobs:
         run: |
           $VerbosePreference = "Continue"
           .\build.ps1 PesterUnit
-      - name: Upload Pester Test Results
+      - name: Upload Pester Unit Test Results
         uses: actions/upload-artifact@v3
         with:
           name: windows-Unit-Tests
           path: .\BuildOutput\testResultsUnit.xml
-        if: ${{ always() }}
       - name: Create Help Files
         shell: powershell
         run: |
@@ -82,17 +81,13 @@ jobs:
       - name: Build Package
         shell: powershell
         run: .\build.ps1 Build
-      - name: Build Package
-        shell: powershell
-        run: .\build.ps1 Build
       - name: Pester Integration
         shell: powershell
         run: |
           $VerbosePreference = "Continue"
           .\build.ps1 PesterIntegration
-      - name: Upload Pester Test Results
+      - name: Upload Pester Integration Test Results
         uses: actions/upload-artifact@v3
         with:
           name: windows-Integration-Tests
           path: .\BuildOutput\testResultsIntegration.xml
-        if: ${{ always() }}

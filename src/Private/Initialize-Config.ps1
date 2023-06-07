@@ -52,8 +52,8 @@ function Initialize-Config {
     # if we want to enforce new file OR the file is not existing
     if (($Force) -or (!(Get-Item -Path $ConfigPath -ErrorAction SilentlyContinue))) {
         # we place the default file in our config dir
+        Write-Verbose "Initializing config file from $DefaultConfigFilePath to $ConfigPath"
         Copy-Item -Path $DefaultConfigFilePath -Destination $ConfigPath -Force:$Force
-        Write-Verbose "Initialized config file $ConfigPath"
     }
     else {
         # just verbose output that nothing is done

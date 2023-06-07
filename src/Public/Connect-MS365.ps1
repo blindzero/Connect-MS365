@@ -45,8 +45,14 @@ function Connect-MS365 {
                 $ModuleName = "MSOnline"
                 $ModuleFindString = $ModuleName
 
-                Connect-MSOL
-                continue
+                if ($PSVersionTable.PSEdition -eq "Desktop") {
+                    Connect-MSOL
+                    continue
+                }
+                else {
+                    Write-Error "PowerShell module ``$ModuleName`` is not supported by PowerShell Core."
+                    continue
+                }
             }
             # Exchange Online service
             EOL {
@@ -72,6 +78,7 @@ function Connect-MS365 {
                 $ModuleName = "ExchangeOnlineManagement"
                 $ModuleFindString = $ModuleName
 
+                Write-Verbose "Using ExchangeOnlineManagement module for SCC replacement."
                 Connect-SCC
                 continue
             }
@@ -81,8 +88,14 @@ function Connect-MS365 {
                 $ModuleName = "AzureAD"
                 $ModuleFindString = $ModuleName
 
-                Connect-AAD
-                continue
+                if ($PSVersionTable.PSEdition -eq "Desktop") {
+                    Connect-AAD
+                    continue
+                }
+                else {
+                    Write-Error "PowerShell module ``$ModuleName`` is not supported by PowerShell Core."
+                    continue
+                }
             }
             # Azure
             AZ {
@@ -99,6 +112,15 @@ function Connect-MS365 {
                 $ModuleName = "Microsoft.Online.SharePoint.PowerShell"
                 $ModuleFindString = $ModuleName
 
+                if ($PSVersionTable.PSEdition -eq "Desktop") {
+                    Connect-AAD
+                    continue
+                }
+                else {
+                    Write-Error "PowerShell module ``$ModuleName`` is not supported by PowerShell Core."
+                    continue
+                }
+
                 If (!($SPOOrgName)) {
                     Write-Error 'To connect to SharePoint Online you have to provide the -SPOOrgName parameter.'
                     continue
@@ -113,19 +135,9 @@ function Connect-MS365 {
                 Connect-SPO -SPOOrgUrl $SPOOrgUrl
                 continue
             }
-            # S4B Service
-            S4B {
-                $ServiceName = "Microsoft Skype4Business"
-                $ModuleName = "SkypeOnlineConnector"
-                $ModuleFindString = $ModuleName
-
-                Connect-S4B
-                continue
-            }
-
         }
-        Write-Verbose "Create session to Service $ServiceItem done."
+        Write-Verbose "Create session to Service $ServiceItem ended."
     }
 
-    Write-Verbose "Connect-MS365 done."
+    Write-Verbose "Connect-MS365 ended."
 }
